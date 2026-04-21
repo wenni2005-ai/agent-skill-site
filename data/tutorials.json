@@ -1,0 +1,59 @@
+[
+  {
+    "slug": "deploy-on-vercel",
+    "title": "5 分钟把 Skill 站点部署到 Vercel",
+    "description": "从本地项目到在线可访问站点的最短路径。",
+    "tags": ["vercel", "deploy", "nextjs"],
+    "level": "beginner",
+    "cover": "渐变背景 + Vercel 图标",
+    "createdAt": "2026-04-21",
+    "readingTime": "6 min",
+    "featured": true,
+    "content": "# 5 分钟把 Skill 站点部署到 Vercel\n\nVercel 对 Next.js 的支持非常顺手，MVP 阶段几乎零配置。\n\n## 步骤 1：推送代码\n\n先把项目推到 GitHub。\n\n```bash\ngit init\ngit add .\ngit commit -m \"init skill site\"\ngit remote add origin <your-repo>\ngit push -u origin main\n```\n\n## 步骤 2：导入仓库\n\n在 Vercel 后台选择 **Add New Project**，授权 GitHub 后选中仓库。\n\n## 步骤 3：配置环境变量\n\n如果你需要 canonical 指向正式域名，可配置：\n\n```bash\nNEXT_PUBLIC_SITE_URL=https://your-domain.com\n```\n\n## 步骤 4：上线\n\n点击 Deploy，默认会自动识别 Next.js 并完成构建。"
+  },
+  {
+    "slug": "local-json-to-content-pipeline",
+    "title": "用本地 JSON 快速搭一个可维护的内容系统",
+    "description": "适合 MVP 阶段，不接数据库也能把内容组织清楚。",
+    "tags": ["json", "content", "mvp"],
+    "level": "beginner",
+    "cover": "数据卡片 + 文件夹插画",
+    "createdAt": "2026-04-20",
+    "readingTime": "8 min",
+    "content": "# 用本地 JSON 快速搭一个可维护的内容系统\n\n把结构化内容放在 `data/*.json`，页面层只负责读取和展示。\n\n## 什么时候适合\n\n- 还没确定字段\n- 还没到数据库阶段\n- 内容量不大\n\n## 一个简单范式\n\n```ts\nimport skills from \"@/data/skills.json\";\n\nexport function getFeaturedSkills() {\n  return skills.filter((item) => item.featured);\n}\n```"
+  },
+  {
+    "slug": "mdx-for-agent-guides",
+    "title": "什么时候该从 JSON 升级到 MDX 教程内容",
+    "description": "让教程页支持更灵活的排版、组件和示例嵌入。",
+    "tags": ["mdx", "tutorial", "content"],
+    "level": "intermediate",
+    "cover": "代码块 + 文档面板",
+    "createdAt": "2026-04-18",
+    "readingTime": "7 min",
+    "content": "# 什么时候该从 JSON 升级到 MDX 教程内容\n\n当你开始需要更复杂的排版，比如提示框、视频嵌入、交互组件时，MDX 会更舒服。\n\n## 升级信号\n\n1. 教程里代码块越来越多\n2. 需要插入自定义 React 组件\n3. 编辑体验开始受限"
+  },
+  {
+    "slug": "seo-basics-for-skill-sites",
+    "title": "Agent Skill 资源站的 SEO 基础清单",
+    "description": "title、description、canonical、sitemap 到底要怎么配。",
+    "tags": ["seo", "sitemap", "metadata"],
+    "level": "intermediate",
+    "cover": "搜索结果页示意图",
+    "createdAt": "2026-04-17",
+    "readingTime": "9 min",
+    "featured": true,
+    "content": "# Agent Skill 资源站的 SEO 基础清单\n\n对内容站来说，最先要补齐的是页面级 metadata。\n\n## 必做项\n\n- 每个详情页都有独立 title/description\n- 生成 sitemap\n- 加 canonical\n- OG 图先用统一模板也可以\n\n```ts\nexport async function generateMetadata() {\n  return {\n    title: \"Skill Detail\",\n    alternates: { canonical: \"/skills/your-skill\" }\n  };\n}\n```"
+  },
+  {
+    "slug": "design-a-tech-style-ui",
+    "title": "用 Tailwind 做出有科技感的资源站界面",
+    "description": "从配色、边框、光效到卡片层次，做一个不土的技术站。",
+    "tags": ["design", "tailwind", "ui"],
+    "level": "advanced",
+    "cover": "科技感网格背景",
+    "createdAt": "2026-04-16",
+    "readingTime": "10 min",
+    "content": "# 用 Tailwind 做出有科技感的资源站界面\n\n科技感不等于堆蓝光，关键是层次、留白、对比和节奏。\n\n## 推荐做法\n\n- 使用柔和渐变而不是纯色大面积铺满\n- 卡片边缘轻描边，提升结构感\n- 控制动画时长，避免花哨"
+  }
+]

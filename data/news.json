@@ -1,0 +1,104 @@
+[
+  {
+    "slug": "openclaw-skill-index-launch",
+    "title": "OpenClaw 社区上线统一 Skill 索引页",
+    "description": "社区开始整理分散在 GitHub、Gist 和论坛里的技能包。",
+    "tags": ["openclaw", "community"],
+    "source": "OpenClaw Weekly",
+    "sourceUrl": "https://example.com/openclaw-weekly",
+    "createdAt": "2026-04-21",
+    "featured": true,
+    "content": "# OpenClaw 社区上线统一 Skill 索引页\n\n为了降低发现成本，社区正在把零散 skill 汇总到统一目录，并补齐基础 metadata。"
+  },
+  {
+    "slug": "vercel-edge-improves-ssg-hybrid",
+    "title": "Vercel 持续优化静态与动态混合渲染体验",
+    "description": "内容站可以更细粒度地控制 SSG/SSR 策略。",
+    "tags": ["vercel", "nextjs"],
+    "source": "Frontend Radar",
+    "sourceUrl": "https://example.com/frontend-radar",
+    "createdAt": "2026-04-20",
+    "featured": true,
+    "content": "# Vercel 持续优化静态与动态混合渲染体验\n\n对需要 SEO 的资源站来说，这让首页、列表页和详情页的渲染策略更好调。"
+  },
+  {
+    "slug": "agent-marketplaces-trend-report",
+    "title": "2026 Agent 工具市场趋势：垂直技能包增长明显",
+    "description": "行业开始从通用模型转向可复用的任务技能分发。",
+    "tags": ["report", "market"],
+    "source": "AI Builders Report",
+    "sourceUrl": "https://example.com/ai-builders-report",
+    "createdAt": "2026-04-19",
+    "content": "# 2026 Agent 工具市场趋势\n\n越来越多团队开始把内部自动化能力打包成 skill 复用，而不是每次从 prompt 重新写。"
+  },
+  {
+    "slug": "langchain-tooling-refresh",
+    "title": "LangChain 更新工具调用范式，强调可观察性",
+    "description": "新的实践更适合复杂 Agent 的线上维护。",
+    "tags": ["langchain", "tooling"],
+    "source": "Chain Digest",
+    "sourceUrl": "https://example.com/chain-digest",
+    "createdAt": "2026-04-18",
+    "content": "# LangChain 更新工具调用范式\n\n新的 tracing 能力能帮助开发者定位 skill 调用链中的失败节点。"
+  },
+  {
+    "slug": "opensource-skill-packaging-guide",
+    "title": "开源社区开始形成统一 Skill 打包建议",
+    "description": "字段命名、版本说明和 README 模板正逐步统一。",
+    "tags": ["opensource", "packaging"],
+    "source": "OSS Today",
+    "sourceUrl": "https://example.com/oss-today",
+    "createdAt": "2026-04-17",
+    "content": "# 开源社区开始形成统一 Skill 打包建议\n\n统一 metadata 有助于搜索、下载与兼容性展示。"
+  },
+  {
+    "slug": "rag-stack-cost-control",
+    "title": "RAG 工具链进入成本优化阶段",
+    "description": "更多项目开始关注索引体积、缓存命中和查询预算。",
+    "tags": ["rag", "cost"],
+    "source": "Infra Notebook",
+    "sourceUrl": "https://example.com/infra-notebook",
+    "createdAt": "2026-04-16",
+    "content": "# RAG 工具链进入成本优化阶段\n\n轻量级 skill 在中小团队里更受欢迎，因为接入成本更低。"
+  },
+  {
+    "slug": "github-actions-agent-templates",
+    "title": "GitHub Actions 出现更多 Agent 自动化模板",
+    "description": "技能包与 CI/CD 的结合越来越紧密。",
+    "tags": ["github", "automation"],
+    "source": "DevOps Pulse",
+    "sourceUrl": "https://example.com/devops-pulse",
+    "createdAt": "2026-04-15",
+    "content": "# GitHub Actions 出现更多 Agent 自动化模板\n\n自动测试、发布与安全扫描都开始以 skill 形式复用。"
+  },
+  {
+    "slug": "prompt-security-checklist",
+    "title": "Prompt 安全检查清单成为企业采购重点",
+    "description": "安全类技能包热度上升，尤其是注入检测与敏感内容拦截。",
+    "tags": ["security", "prompt"],
+    "source": "Security Weekly",
+    "sourceUrl": "https://example.com/security-weekly",
+    "createdAt": "2026-04-14",
+    "content": "# Prompt 安全检查清单成为企业采购重点\n\n围绕 prompt guardrail 的 skill 需求明显上升。"
+  },
+  {
+    "slug": "multi-platform-skill-runtime",
+    "title": "跨平台 Skill Runtime 成为新热点",
+    "description": "同一个 skill 同时适配 OpenClaw、LangChain 和 LlamaIndex。",
+    "tags": ["runtime", "cross-platform"],
+    "source": "Agent Stack News",
+    "sourceUrl": "https://example.com/agent-stack-news",
+    "createdAt": "2026-04-13",
+    "content": "# 跨平台 Skill Runtime 成为新热点\n\n开发者越来越在意 skill 的可移植性，而不是被单一框架绑定。"
+  },
+  {
+    "slug": "ai-dev-content-sites-rise",
+    "title": "AI 开发者内容站进入精细化运营阶段",
+    "description": "教程、案例与工具目录正在融合成新型资源站。",
+    "tags": ["content", "developer"],
+    "source": "Creator Loop",
+    "sourceUrl": "https://example.com/creator-loop",
+    "createdAt": "2026-04-12",
+    "content": "# AI 开发者内容站进入精细化运营阶段\n\n单纯做资讯聚合已经不够，越来越多站点开始同时做教程和工具索引。"
+  }
+]

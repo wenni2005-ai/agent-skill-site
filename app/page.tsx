@@ -1,65 +1,59 @@
-import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { Hero } from "@/components/sections/hero";
+import { NewsCard } from "@/components/news-card";
+import { SectionHeading } from "@/components/section-heading";
+import { SkillCard } from "@/components/skill-card";
+import { TutorialCard } from "@/components/tutorial-card";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { featuredNews, featuredSkills, featuredTutorials, trendingTags } from "@/lib/content";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="pb-20">
+      <Hero tags={trendingTags} />
+
+      <section className="mx-auto mt-16 grid max-w-7xl gap-6 px-4 sm:px-6 lg:grid-cols-3 lg:px-8">
+        {[
+          { title: "Skill 下载", desc: "技能包列表、详情、GitHub 链接与下载入口。", href: "/skills" },
+          { title: "部署教程", desc: "覆盖从本地开发到 Vercel 部署的完整流程。", href: "/tutorials" },
+          { title: "动态资讯", desc: "追踪 Agent 生态、框架和社区趋势。", href: "/news" },
+        ].map((item) => (
+          <Card key={item.title}>
+            <Badge>{item.title}</Badge>
+            <h3 className="mt-4 text-xl font-semibold text-slate-950 dark:text-white">{item.title}</h3>
+            <p className="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-400">{item.desc}</p>
+            <Link href={item.href} className="mt-5 inline-flex items-center gap-2 text-sm text-cyan-500 hover:text-cyan-400">
+              进入板块 <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Card>
+        ))}
+      </section>
+
+      <section className="mx-auto mt-20 max-w-7xl space-y-8 px-4 sm:px-6 lg:px-8">
+        <div className="flex items-end justify-between gap-4">
+          <SectionHeading eyebrow="精选 Skill" title="热门可复用技能包" description="适合做站点展示的代表性 Skill，支持详情页、标签和平台展示。" />
+          <Link href="/skills" className="hidden text-sm text-cyan-500 hover:text-cyan-400 md:block">查看全部</Link>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {featuredSkills.slice(0, 4).map((skill) => <SkillCard key={skill.slug} skill={skill} />)}
         </div>
-      </main>
+      </section>
+
+      <section className="mx-auto mt-20 max-w-7xl space-y-8 px-4 sm:px-6 lg:px-8">
+        <SectionHeading eyebrow="教程精选" title="快速上手与部署指南" description="正文支持 Markdown 和代码高亮，后续升级到 MDX 也很顺。" />
+        <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+          {featuredTutorials.concat(featuredTutorials.length < 3 ? [] : []).slice(0, 3).map((tutorial) => <TutorialCard key={tutorial.slug} tutorial={tutorial} />)}
+        </div>
+      </section>
+
+      <section className="mx-auto mt-20 max-w-7xl space-y-8 px-4 sm:px-6 lg:px-8">
+        <SectionHeading eyebrow="动态追踪" title="Agent 生态最新资讯" description="适合作为内容增长入口，补强站点持续更新感。" />
+        <div className="grid gap-6 lg:grid-cols-3">
+          {featuredNews.slice(0, 3).map((item) => <NewsCard key={item.slug} item={item} />)}
+        </div>
+      </section>
     </div>
   );
 }
