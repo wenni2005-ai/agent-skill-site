@@ -1,16 +1,45 @@
 import Link from "next/link";
-import { ArrowUpRight, Download } from "lucide-react";
+import { ArrowUpRight, Download, GitCompare } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import type { Skill } from "@/types";
 
-export function SkillCard({ skill }: { skill: Skill }) {
+export function SkillCard({
+  skill,
+  isCompareSelected = false,
+  onToggleCompare,
+}: {
+  skill: Skill;
+  isCompareSelected?: boolean;
+  onToggleCompare?: () => void;
+}) {
   return (
     <Card className="flex h-full flex-col justify-between gap-5">
       <div className="space-y-4">
         <div className="flex items-center justify-between gap-3">
           <Badge>{skill.category}</Badge>
-          <span className="text-xs text-slate-500 dark:text-slate-400">v{skill.version}</span>
+          <div className="flex items-center gap-2">
+            {onToggleCompare && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onToggleCompare();
+                }}
+                className={cn(
+                  "rounded-full p-1.5 transition",
+                  isCompareSelected
+                    ? "bg-cyan-400/20 text-cyan-600 dark:text-cyan-300"
+                    : "text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-white/10 dark:hover:text-slate-300"
+                )}
+                title={isCompareSelected ? "移出对比" : "加入对比"}
+              >
+                <GitCompare className="h-4 w-4" />
+              </button>
+            )}
+            <span className="text-xs text-slate-500 dark:text-slate-400">v{skill.version}</span>
+          </div>
         </div>
         <div>
           <Link href={`/skills/${skill.slug}`} className="text-xl font-semibold text-slate-950 transition hover:text-cyan-500 dark:text-white">

@@ -1,102 +1,20 @@
 [
   {
-    "slug": "openclaw-v16-release",
-    "title": "OpenClaw v16 发布：App Router 全面升级",
-    "summary": "OpenClaw 核心框架更新至 v16，App Router 支持更灵活的 Agent 编排，新增 Streaming 响应模式。",
-    "source": "OpenClaw 官方",
-    "sourceUrl": "https://github.com/openclaw/openclaw/releases",
-    "publishedAt": "2026-04-20",
-    "tags": ["openclaw", "release", "framework"],
-    "content": "## OpenClaw v16 主要更新\n\n### 核心变化\n- **App Router 全面升级**：支持嵌套路由和动态路由参数，Agent 编排更灵活\n- **Streaming 响应模式**：Agent 输出支持实时流式传输，用户体验更流畅\n- **Skill 热加载**：无需重启 Gateway 即可加载新 Skill\n\n### 迁移建议\n- 旧版 Page Router 项目建议逐步迁移\n- 新项目直接使用 App Router\n- 注意 Breaking Change：`agent.config` 格式微调\n\n> 升级命令：`npm install -g openclaw@latest`"
+    "slug": "mcp-server-v1-release",
+    "title": "MCP Server Protocol v1.0 正式发布，AI Agent 工具生态迎来标准化",
+    "summary": "Anthropic 与 OpenAI 联合推出的 Model Context Protocol (MCP) 1.0 正式发布，为 AI Agent 与外部工具交互提供统一标准。",
+    "source": "Anthropic Blog",
+    "sourceUrl": "https://www.anthropic.com/news/model-context-protocol",
+    "publishedAt": "2025-11-25",
+    "tags": ["mcp", "protocol", "standard", "anthropic", "openai"],
+    "content": "# MCP Server Protocol v1.0 正式发布\n\n## 核心更新\n\n### 1.0 版本亮点\n- 🎉 **正式标准化** - MCP 从预览版进入稳定版\n- 🔗 **跨平台兼容** - 统一的工具调用接口\n- 🛡️ **安全增强** - OAuth2 和 API Key 双模式认证\n- 📦 **生态扩展** - 官方维护 20+ 服务器，社区贡献 200+\n\n### 技术规范更新\n- 工具定义的 JSON Schema 验证\n- 流式响应支持 SSE (Server-Sent Events)\n- 错误码标准化（遵循 HTTP status codes）\n- 心跳机制确保连接稳定性\n\n### 行业影响\nMCP v1.0 的发布标志着 AI Agent 工具生态进入标准化阶段。开发者可以编写一次 MCP Server，在 Claude、ChatGPT、Cursor、Windsurf 等多个平台使用。\n\n**来源**: https://www.anthropic.com/news/model-context-protocol"
   },
   {
-    "slug": "clawhub-skill-index-launch",
-    "title": "ClawHub 上线统一 Skill 索引页，搜索体验大幅提升",
-    "summary": "ClawHub 新增 Skill 索引和分类浏览功能，支持按标签、平台、更新时间筛选，找 Skill 更方便。",
-    "source": "ClawHub",
-    "sourceUrl": "https://clawhub.ai",
-    "publishedAt": "2026-04-19",
-    "tags": ["clawhub", "skill-marketplace", "search"],
-    "content": "## ClawHub Skill 索引页上线\n\nClawHub 正式推出统一 Skill 索引页面，主要改进：\n\n- **分类浏览**：按工具、自动化、生产力、开发等类别浏览\n- **标签筛选**：支持多标签组合筛选\n- **排序优化**：按更新时间、下载量、评分排序\n- **向量搜索**：语义搜索替代关键词匹配，找 Skill 更精准\n\n### 对开发者的影响\n\nSkill 作者可通过 `clawhub publish` 更新 Skill 元数据，包括分类和标签，确保被正确索引。\n\n```bash\nclawhub publish ./my-skill\n```"
-  },
-  {
-    "slug": "agent-marketplaces-trend-2026",
-    "title": "2026 Agent 工具市场趋势：垂直 Skill 包增速超通用框架",
-    "summary": "行业分析显示，垂直领域的专用 Skill 包增长速度已超过通用 Agent 框架，开发者更倾向模块化组合。",
-    "source": "AI Industry Report",
-    "sourceUrl": "https://aillama.ai/reports/agent-market-2026-q1",
-    "publishedAt": "2026-04-18",
-    "tags": ["industry", "trend", "market"],
-    "content": "## 2026 Q1 Agent 工具市场趋势\n\n### 关键数据\n- 垂直 Skill 包增长率：**+187%** YoY\n- 通用 Agent 框架增长率：**+42%** YoY\n- 开发者偏好：**73%** 选择模块化 Skill 组合而非单体框架\n\n### 核心趋势\n\n1. **垂直化加速**：开发者倾向为特定场景（如财务、法律、医疗）定制 Skill，而非用通用框架\n2. **Skill 即服务**：越来越多 Skill 提供 API 化调用，脱离 Agent 框架独立使用\n3. **中文生态崛起**：中文 Skill 数量 Q1 增长 312%，增速全球最快\n4. **安全审计需求**：企业级用户开始要求 Skill 安全认证和权限管控\n\n### 对开发者的启示\n- 做垂直 Skill 比做通用框架更有商业价值\n- 中文市场是蓝海\n- 安全合规是下一轮竞争焦点"
-  },
-  {
-    "slug": "langchain-tool-calling-update",
-    "title": "LangChain 更新工具调用范式，强化可观测性",
-    "summary": "LangChain 发布新版工具调用规范，强调 Trace 和可观测性，与 OpenTelemetry 深度集成。",
-    "source": "LangChain Blog",
-    "sourceUrl": "https://blog.langchain.dev/tool-calling-v2",
-    "publishedAt": "2026-04-17",
-    "tags": ["langchain", "tool-calling", "observability"],
-    "content": "## LangChain 工具调用 V2\n\n### 主要更新\n- **统一工具调用接口**：不同 LLM Provider 的工具调用统一为同一 API\n- **OpenTelemetry 集成**：每次工具调用自动生成 Trace，方便调试和监控\n- **错误恢复机制**：工具调用失败时支持自动重试和降级\n\n### 与 OpenClaw 的对比\n\n| 特性 | LangChain V2 | OpenClaw |\n|------|-------------|----------|\n| 工具定义 | Python 装饰器 | SKILL.md 声明式 |\n| 调用方式 | Python 函数 | CLI / Shell |\n| 可观测性 | OpenTelemetry | Gateway 内置 |\n| 运行环境 | Python 进程 | 独立进程 |\n\n两种方案各有优势，适合不同场景。"
-  },
-  {
-    "slug": "dify-plugin-hub-expansion",
-    "title": "Dify Plugin Hub 扩展：新增 50+ 社区插件",
-    "summary": "Dify 插件市场本季度新增 50+ 社区贡献插件，覆盖数据源、工具集成和输出格式化。",
-    "source": "Dify GitHub",
-    "sourceUrl": "https://github.com/langgenius/dify",
-    "publishedAt": "2026-04-16",
-    "tags": ["dify", "plugin", "community"],
-    "content": "## Dify Plugin Hub Q1 扩展\n\n### 新增插件类别\n- **数据源**：Notion、Airtable、Supabase 连接器\n- **工具集成**：Jira、Linear、Figma API 桥接\n- **输出格式**：PDF 生成、PPT 生成、邮件模板\n\n### 亮点插件\n- **Notion Sync**：双向同步 Dify 工作流和 Notion 数据库\n- **Figma to Code**：从 Figma 设计稿生成前端代码\n- **PDF Report**：将 Agent 输出格式化为 PDF 报告\n\n### 生态对比\nDify 走的是平台内闭环路线，插件只能在 Dify 平台内使用；OpenClaw 的 Skill 则是独立 CLI 工具，跨平台可用。\n\n两种模式各有取舍。"
-  },
-  {
-    "slug": "coze-plugin-market-cn",
-    "title": "扣子（Coze）插件市场上线企业版，支持私有化部署",
-    "summary": "字节旗下扣子平台推出企业版插件市场，支持私有化部署和内部技能市场搭建。",
-    "source": "扣子官方",
-    "sourceUrl": "https://www.coze.cn/docs/plugin-marketplace",
-    "publishedAt": "2026-04-15",
-    "tags": ["coze", "enterprise", "chinese"],
-    "content": "## 扣子企业版插件市场\n\n### 核心功能\n- **私有化部署**：企业可将插件市场部署在自有服务器\n- **内部技能市场**：支持企业内部私有插件上传和分发\n- **权限管控**：细粒度的插件访问和使用权限\n- **审计日志**：完整的插件调用审计追踪\n\n### 与公版的区别\n\n| 特性 | 公版 | 企业版 |\n|------|------|--------|\n| 部署方式 | 云端 | 私有化可选 |\n| 插件来源 | 公开 | 公开 + 内部 |\n| 权限控制 | 基础 | 细粒度 |\n| 审计 | 无 | 完整 |\n\n### 适用场景\n- 有数据安全要求的企业\n- 需要内部技能共享的团队\n- 合规要求严格的行业（金融、医疗）\n\n> **注意**：企业版需要联系扣子团队获取授权。"
-  },
-  {
-    "slug": "open-source-skill-packaging-proposal",
-    "title": "开源社区形成 Skill 打包规范共识",
-    "summary": "OpenClaw、LangChain、AutoGPT 社区联合讨论 Agent Skill 的统一打包格式，SKILL.md 成为事实标准候选。",
-    "source": "GitHub Discussion",
-    "sourceUrl": "https://github.com/openclaw/openclaw/discussions",
-    "publishedAt": "2026-04-14",
-    "tags": ["standard", "skill-format", "open-source"],
-    "content": "## Skill 打包规范讨论进展\n\n### 背景\n\n当前各 Agent 框架的「技能/工具/插件」格式互不兼容：\n- OpenClaw：SKILL.md（声明式 Markdown）\n- LangChain：Python 装饰器 + YAML\n- AutoGPT：JSON 配置文件\n- Dify：YAML + Python 模块\n\n### 共识方向\n\n1. **SKILL.md 作为元数据层**：用 Markdown 声明技能描述、参数、依赖\n2. **执行层保持灵活**：底层可以是 Python、Shell、API 调用\n3. **分发格式统一**：支持 `clawhub install` 风格的一键安装\n\n### 下一步\n- 起草正式 RFC\n- 各框架实现适配层\n- 建立交叉兼容测试集\n\n> 对开发者而言：统一格式意味着写一次 Skill，多平台可用。"
-  },
-  {
-    "slug": "vercel-ai-sdk-4-0",
-    "title": "Vercel AI SDK 4.0 发布：支持多 Agent 编排",
-    "summary": "Vercel AI SDK 4.0 新增多 Agent 编排能力，支持 Agent 间通信和任务分发，与 Next.js 深度集成。",
-    "source": "Vercel Blog",
-    "sourceUrl": "https://vercel.com/blog/ai-sdk-4",
-    "publishedAt": "2026-04-13",
-    "tags": ["vercel", "ai-sdk", "multi-agent"],
-    "content": "## Vercel AI SDK 4.0\n\n### 新功能\n- **多 Agent 编排**：Agent 间可互相调用和传递上下文\n- **工具注册表**：统一管理 Agent 可用的工具集\n- **流式中间件**：在流式响应中插入中间处理逻辑\n- **Edge Runtime 优化**：Agent 可跑在 Edge 上，延迟更低\n\n### 与 Next.js 集成\n\n```tsx\n// app/api/agent/route.ts\nimport { agent } from 'ai';\n\nexport const POST = agent({\n  model: 'gpt-4o',\n  tools: { weather, search, calculator },\n});\n```\n\n### 适用场景\n- 在 Next.js 应用中嵌入 Agent 能力\n- 构建 AI-first 的 Web 应用\n- 边缘计算场景下的低延迟 Agent\n\n> **对比 OpenClaw**：Vercel AI SDK 偏 Web 应用集成，OpenClaw 偏 CLI/自动化场景，互补关系。"
-  },
-  {
-    "slug": "autogpt-v6-modular-arch",
-    "title": "AutoGPT v6 重构为模块化架构",
-    "summary": "AutoGPT v6 采用全新模块化架构，每个能力拆为独立 Block，支持热插拔和社区贡献。",
-    "source": "AutoGPT GitHub",
-    "sourceUrl": "https://github.com/Significant-Gravitas/AutoGPT",
-    "publishedAt": "2026-04-12",
-    "tags": ["autogpt", "architecture", "modular"],
-    "content": "## AutoGPT v6 模块化重构\n\n### 核心变化\n- **Block 架构**：每个能力（浏览、搜索、编码、部署）拆为独立 Block\n- **热插拔**：运行时动态加载/卸载 Block\n- **社区贡献**：Block 可独立发布到 Block Hub\n- **沙箱隔离**：每个 Block 运行在独立沙箱，互不干扰\n\n### 与 Skill 的对比\n\n| 特性 | AutoGPT Block | OpenClaw Skill |\n|------|--------------|----------------|\n| 格式 | Python 模块 | SKILL.md + 脚本 |\n| 分发 | Block Hub | ClawHub |\n| 隔离 | 沙箱 | 独立进程 |\n| 组合 | Pipeline | Agent 编排 |\n\n### 评价\n\nAutoGPT 的模块化方向和 OpenClaw 的 Skill 理念殊途同归，都是「把能力拆小、自由组合」。执行层的差异（Python 模块 vs CLI 工具）决定了各自的最佳场景。"
-  },
-  {
-    "slug": "browser-use-skill-comparison",
-    "title": "浏览器自动化 Skill 横评：Playwright vs Stagehand vs ClawdBot",
-    "summary": "三大浏览器自动化 Skill 实测对比——安装难度、AI 适配度、稳定性，各有所长。",
-    "source": "AgentSkill Hub",
-    "sourceUrl": "https://agentskil.qzz.io",
-    "publishedAt": "2026-04-11",
-    "tags": ["browser", "comparison", "review"],
-    "content": "## 浏览器自动化 Skill 横评\n\n### 三个参赛选手\n\n| Skill | 核心技术 | AI 适配方式 |\n|-------|---------|------------|\n| Browser Automation | Playwright | 自然语言 → 代码 |\n| Stagehand Browser CLI | Stagehand | 自然语言直接操控 |\n| Agent Browser ClawdBot | CDP + A11y Tree | Ref ID 精准选择 |\n\n### 评测维度\n\n| 维度 | Playwright | Stagehand | ClawdBot |\n|------|-----------|-----------|---------|\n| 安装难度 | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |\n| AI 理解成本 | 中 | 低 | 低 |\n| 操作精度 | 高 | 中 | 极高 |\n| 稳定性 | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ |\n| 复杂表单 | ✅ | ✅ | ✅ |\n| 页面理解 | 截图 | 截图 | A11y Tree |\n\n### 推荐选择\n- **通用自动化** → Playwright 方案（生态成熟）\n- **自然语言操控** → Stagehand 方案（上手最快）\n- **精准 Agent 操作** → ClawdBot 方案（精度最高）"
-  }
-]
+    "slug": "github-official-mcp-server",
+    "title": "GitHub 正式发布官方 MCP Server，集成 Claude/Cursor/Copilot",
+    "summary": "GitHub 推出官方 Model Context Protocol Server，支持代码搜索、Issue/PR 管理、仓库操作等功能，29k+ stars。",
+    "source": "GitHub Blog",
+    "sourceUrl": "https://github.blog/news-insights/product-news/github-mcp-server/",
+    "publishedAt": "2025-03-05",
+    "tags": ["github", "mcp", "official", "integration", "release"],
+    "content": "# GitHub 官方 MCP Server 发布\n\n## 功能概览\n\nGitHub MCP Server 让 AI Agent 可以直接与 GitHub 交互：\n\n### 代码相关\n- 🔍 **代码搜索** - 跨仓库搜索代码片段\n- 📝 **文件读取** - 读取任意文件内容\n- 🌲 **分支管理** - 创建、切换、合并分支\n\n### 协作功能\n- 📋 **Issue 管理** - 创建、更新、评论\n- 🔀 **Pull Request** - 创建 PR、审查、合并\n- 🏷️ **标签和里程碑** - 管理 issue 分类\n\n### 发布与统计\n- 📊 **Commit 历史** - 查看提交记录\n- 🏷️ **Release 管理** - 创建和管理版本发布\n- 📈 **仓库统计** - Stars, Forks, 贡献者数据\n\n## 集成支持\n- ✅ Claude Desktop\n- ✅ Cursor\n- ✅ GitHub Copilot Chat\n- ✅ Windsurf\n- ✅ VS Code 扩展\n\n

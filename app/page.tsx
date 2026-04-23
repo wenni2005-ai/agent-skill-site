@@ -1,13 +1,29 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Hero } from "@/components/sections/hero";
+import { CategoryNav } from "@/components/category-nav";
+import { RecentUpdates } from "@/components/recent-updates";
+import { TagCloud } from "@/components/tag-cloud";
+import { Newsletter } from "@/components/newsletter";
 import { NewsCard } from "@/components/news-card";
 import { SectionHeading } from "@/components/section-heading";
 import { SkillCard } from "@/components/skill-card";
 import { TutorialCard } from "@/components/tutorial-card";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { featuredNews, featuredSkills, featuredTutorials, trendingTags } from "@/lib/content";
+import {
+  allSkills,
+  allTutorials,
+  allNews,
+  featuredNews,
+  featuredSkills,
+  featuredTutorials,
+  trendingTags,
+  skillCategories,
+  getTodayCount,
+  getRecentUpdates,
+  getTagCloud,
+} from "@/lib/content";
 import { buildMetadata, jsonLdScript, siteConfig } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/utils";
 
@@ -43,11 +59,28 @@ const homeJsonLd = [
 ];
 
 export default function HomePage() {
+  const recentUpdates = getRecentUpdates(5);
+  const tagCloud = getTagCloud(15);
+
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(homeJsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(homeJsonLd) }}
+      />
       <div className="pb-20">
-        <Hero tags={trendingTags} />
+        <Hero
+          tags={trendingTags}
+          stats={{
+            skillCount: allSkills.length,
+            tutorialCount: allTutorials.length,
+            newsCount: allNews.length,
+            todayCount: getTodayCount(),
+          }}
+        />
+
+        {/* 功能 3：分类浏览 */}
+        <CategoryNav categories={skillCategories} />
 
         <section className="mx-auto mt-16 grid max-w-7xl gap-6 px-4 sm:px-6 lg:grid-cols-3 lg:px-8">
           {[
@@ -64,6 +97,16 @@ export default function HomePage() {
               </Link>
             </Card>
           ))}
+        </section>
+
+        {/* 功能 4：最近更新时间线 */}
+        <section className="mx-auto mt-20 max-w-7xl space-y-8 px-4 sm:px-6 lg:px-8">
+          <SectionHeading
+            eyebrow="最近更新"
+            title="站点最新动态"
+            description="Skill、教程和资讯的最近更新，帮你快速发现新内容。"
+          />
+          <RecentUpdates updates={recentUpdates} />
         </section>
 
         <section className="mx-auto mt-20 max-w-7xl space-y-8 px-4 sm:px-6 lg:px-8">
@@ -89,6 +132,15 @@ export default function HomePage() {
             {featuredNews.slice(0, 3).map((item) => <NewsCard key={item.slug} item={item} />)}
           </div>
         </section>
+
+        {/* 功能 5：热门标签云 */}
+        <section className="mx-auto mt-20 max-w-7xl space-y-8 px-4 sm:px-6 lg:px-8">
+          <SectionHeading eyebrow="热门标签" title="发现更多内容" description="按标签浏览 Skill、教程和资讯，快速找到你需要的资源。" />
+          <TagCloud tags={tagCloud} />
+        </section>
+
+        {/* 功能 6：Newsletter 订阅 */}
+        <Newsletter />
       </div>
     </>
   );

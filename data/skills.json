@@ -1,587 +1,85 @@
 [
   {
-    "slug": "weather",
-    "title": "Weather",
-    "description": "获取全球城市当前天气和未来预报，无需 API Key。基于 wttr.in 和 Open-Meteo，开箱即用。",
-    "category": "tool",
-    "tags": [
-      "weather",
-      "api",
-      "forecast",
-      "no-api-key"
-    ],
-    "version": "1.0.0",
-    "author": "steipete",
-    "githubUrl": "https://clawhub.ai/skills/weather",
-    "downloadUrl": "https://clawhub.ai/skills/weather",
-    "platform": [
-      "openclaw"
-    ],
-    "createdAt": "2026-01-04",
-    "featured": true,
-    "content": "## 使用说明\n\n无需配置 API Key，安装后即可使用。\n\n```bash\nclawhub install weather\n```\n\n### 功能\n- 查询任意城市当前天气\n- 获取未来 7 天天气预报\n- 支持中文城市名\n- 基于 wttr.in 和 Open-Meteo 双数据源\n\n### 使用示例\n\n直接在对话中询问天气即可，Agent 会自动调用：\n\n> 北京今天天气怎么样？\n> 东京未来三天预报\n\n### 数据源\n- **wttr.in**：当前天气 + 短期预报\n- **Open-Meteo**：长期预报 + 历史数据\n\n两个源互为备份，确保数据可用性。"
-  },
-  {
-    "slug": "github",
-    "title": "GitHub CLI",
-    "description": "通过 `gh` CLI 与 GitHub 交互——Issues、PRs、CI Runs、API 查询一站式搞定。",
-    "category": "devops",
-    "tags": [
-      "github",
-      "ci-cd",
-      "issues",
-      "pull-request"
-    ],
-    "version": "1.0.0",
-    "author": "steipete",
-    "githubUrl": "https://clawhub.ai/skills/github",
-    "downloadUrl": "https://clawhub.ai/skills/github",
-    "platform": [
-      "openclaw"
-    ],
-    "createdAt": "2026-01-04",
-    "featured": true,
-    "content": "## 使用说明\n\n前置条件：需先安装 [GitHub CLI](https://cli.github.com/) 并完成 `gh auth login`。\n\n```bash\nclawhub install github\n```\n\n### 功能覆盖\n\n| 场景 | 命令/用法 |\n|------|----------|\n| 查看 Issue | `gh issue list / view` |\n| 创建 PR | `gh pr create` |\n| 查看 CI 状态 | `gh run list / view` |\n| 高级查询 | `gh api` 自定义端点 |\n\n### 常见用途\n- 检查 PR 状态和 CI 结果\n- 创建/评论 Issue\n- 列出和筛选仓库 PR\n- 查看 CI 运行日志\n\n> **提示**：`gh api` 可以访问任何 GitHub REST/GraphQL 端点，适合高级用户。"
-  },
-  {
-    "slug": "browser-automation",
-    "title": "Browser Automation",
-    "description": "用 Playwright 驱动浏览器自动化——登录、抓取、表单提交、截图，一条龙。",
+    "slug": "browser-use",
+    "title": "Browser Use",
+    "description": "Make websites accessible for AI agents. The easiest way to connect your AI agents with the browser.",
     "category": "automation",
-    "tags": [
-      "browser",
-      "playwright",
-      "automation",
-      "scraping"
-    ],
-    "version": "1.0.1",
-    "author": "peytoncasper",
-    "githubUrl": "https://clawhub.ai/skills/browser-automation",
-    "downloadUrl": "https://clawhub.ai/skills/browser-automation",
-    "platform": [
-      "openclaw"
-    ],
-    "createdAt": "2026-02-05",
+    "tags": ["browser", "automation", "ai-agent", "llm", "web", "playwright"],
+    "version": "0.1.40",
+    "author": "browser-use",
+    "githubUrl": "https://github.com/browser-use/browser-use",
+    "downloadUrl": "https://github.com/browser-use/browser-use/archive/refs/heads/main.zip",
+    "platform": ["python"],
+    "createdAt": "2024-10-31",
     "featured": true,
-    "content": "## 使用说明\n\n前置条件：安装 Playwright 浏览器。\n\n```bash\nnpx playwright install\nclawhub install browser-automation\n```\n\n### 适用场景\n- 登录后台管理系统\n- 抓取动态网页数据\n- 自动填表和提交\n- 定期截图监控页面变化\n\n### 特色功能\n- 支持自然语言描述操作步骤\n- 自动等待页面加载完成\n- 失败自动重试 + 截图留痕\n- 支持 Headless 和 Headed 两种模式\n\n> **注意**：首次使用需运行 `npx playwright install` 下载浏览器二进制文件。"
+    "content": "# Browser Use\n\nMake websites accessible for AI agents.\n\n## Quick Start\n\n```bash\npip install browser-use\nplaywright install\n```\n\n## Features\n- 🌐 Browser Control - AI agents can control real browsers\n- 📸 Visual Understanding - See and interact with pages visually\n- 🔍 Smart Element Detection - Automatically find interactive elements\n- 📝 Natural Language Actions - Control browser with natural language\n- ♾️ Multiple LLM Support - OpenAI, Anthropic, Google, local models\n\n## Installation\n```python\nfrom langchain_openai import ChatOpenAI\nfrom browser_use import Agent\nimport asyncio\n\nllm = ChatOpenAI(model='gpt-4o')\nagent = Agent(\n    task='Find the cheapest flight from NYC to LA',\n    llm=llm\n)\nasyncio.run(agent.run())\n```\n\n**Website**: https://browser-use.com\n**GitHub**: https://github.com/browser-use/browser-use (89k+ stars)"
   },
   {
-    "slug": "gog",
-    "title": "Gog — Google Workspace CLI",
-    "description": "一个 CLI 搞定 Gmail、Google Calendar、Drive、Contacts、Sheets 和 Docs。",
-    "category": "productivity",
-    "tags": [
-      "google",
-      "gmail",
-      "calendar",
-      "drive",
-      "sheets"
-    ],
-    "version": "1.0.0",
-    "author": "steipete",
-    "githubUrl": "https://clawhub.ai/skills/gog",
-    "downloadUrl": "https://clawhub.ai/skills/gog",
-    "platform": [
-      "openclaw"
-    ],
-    "createdAt": "2026-01-04",
-    "featured": true,
-    "content": "## 使用说明\n\n前置条件：需要 Google OAuth 凭据配置。\n\n```bash\nclawhub install gog\n```\n\n### 支持的 Google 服务\n\n| 服务 | 功能 |\n|------|------|\n| **Gmail** | 读取、搜索、发送邮件 |\n| **Calendar** | 查看/创建日程 |\n| **Drive** | 文件列表、上传下载 |\n| **Contacts** | 联系人查询 |\n| **Sheets** | 读写电子表格 |\n| **Docs** | 读取文档内容 |\n\n### 典型用法\n\n- 每日检查未读邮件并摘要\n- 自动创建日历事件\n- 从 Sheets 读取数据用于分析\n- 把分析结果写回 Sheets"
-  },
-  {
-    "slug": "obsidian-cli",
-    "title": "Obsidian CLI",
-    "description": "Obsidian 官方 CLI 的完整封装——笔记、每日记录、搜索、任务、标签、属性、链接、书签，全自动化。",
-    "category": "productivity",
-    "tags": [
-      "obsidian",
-      "notes",
-      "knowledge-base",
-      "markdown"
-    ],
-    "version": "2.0.0",
-    "author": "adolago",
-    "githubUrl": "https://clawhub.ai/skills/obsidian-cli",
-    "downloadUrl": "https://clawhub.ai/skills/obsidian-cli",
-    "platform": [
-      "openclaw"
-    ],
-    "createdAt": "2026-02-15",
-    "featured": true,
-    "content": "## 使用说明\n\n前置条件：安装 [Obsidian CLI v1.12+](https://obsidian.md)。\n\n```bash\nclawhub install obsidian-cli\n```\n\n### 功能覆盖\n\n- **文件操作**：创建、读取、搜索、移动笔记\n- **每日记录**：Daily Note 创建和编辑\n- **任务管理**：添加/完成/搜索任务\n- **标签和属性**：批量管理 frontmatter\n- **链接图谱**：查询双向链接和反向链接\n- **书签**：管理 Obsidian 书签\n\n### 适用人群\n- 用 Obsidian 做知识管理的开发者\n- 需要自动化笔记整理流程的用户\n- 搭建「第二大脑」的效率控\n\n> **提示**：此 Skill 适配 Obsidian CLI v1.12+ 的新 API，旧版请升级。"
-  },
-  {
-    "slug": "feishu-toolkit",
-    "title": "Feishu Toolkit",
-    "description": "飞书/Lark 全功能集成——文档读写、聊天记录、文件传输、权限管理、交互卡片，一个 Skill 搞定。",
-    "category": "productivity",
-    "tags": [
-      "feishu",
-      "lark",
-      "chinese",
-      "collaboration"
-    ],
-    "version": "1.0.0",
-    "author": "ye4wzp",
-    "githubUrl": "https://clawhub.ai/skills/feishu-toolkit",
-    "downloadUrl": "https://clawhub.ai/skills/feishu-toolkit",
-    "platform": [
-      "openclaw"
-    ],
-    "createdAt": "2026-03-11",
-    "featured": true,
-    "content": "## 使用说明\n\n前置条件：需要飞书开放平台应用凭据（App ID + App Secret）。\n\n```bash\nclawhub install feishu-toolkit\n```\n\n### 核心能力\n\n| 功能 | 说明 |\n|------|------|\n| 文档读写 | 读取/编辑飞书云文档 |\n| 聊天记录 | 获取群聊消息历史 |\n| 文件传输 | 发送文件和截图到聊天 |\n| 权限管理 | 管理文档协作权限 |\n| 交互卡片 | 创建消息卡片交互 |\n\n### 配置步骤\n\n1. 在[飞书开放平台](https://open.feishu.cn)创建应用\n2. 获取 App ID 和 App Secret\n3. 配置所需权限范围\n4. 在 OpenClaw 配置文件中填入凭据\n\n> **注意**：飞书 API 有频率限制，高频调用建议加缓存。"
-  },
-  {
-    "slug": "defuddle",
-    "title": "Defuddle — 网页内容提取",
-    "description": "从网页中提取干净的 Markdown 正文，去掉导航、广告和杂讯，专注内容。",
-    "category": "tool",
-    "tags": [
-      "web",
-      "scraping",
-      "markdown",
-      "content-extraction"
-    ],
-    "version": "1.0.0",
-    "author": "extrastu",
-    "githubUrl": "https://clawhub.ai/skills/defuddle",
-    "downloadUrl": "https://clawhub.ai/skills/defuddle",
-    "platform": [
-      "openclaw"
-    ],
-    "createdAt": "2026-03-14",
-    "featured": false,
-    "content": "## 使用说明\n\n```bash\nnpm install -g defuddle\nclawhub install defuddle\n```\n\n### 用法\n\n提取网页 Markdown 正文：\n\n```bash\ndefuddle parse https://example.com --md\n```\n\n保存到文件：\n\n```bash\ndefuddle parse https://example.com --md -o content.md\n```\n\n### 输出格式\n\n| 标志 | 格式 |\n|------|------|\n| `--md` | Markdown（推荐） |\n| `--json` | JSON（含 HTML + Markdown） |\n| 无标志 | 纯 HTML |\n\n> **对比 WebFetch**：Defuddle 自动清理页面杂讯，输出更干净、Token 消耗更低。适合阅读文章、文档类页面。"
-  },
-  {
-    "slug": "skill-creator",
-    "title": "Skill Creator",
-    "description": "Agent Skill 创作指南——从零创建、审核、优化 Skill，符合 OpenClaw AgentSkills 规范。",
-    "category": "development",
-    "tags": [
-      "skill",
-      "development",
-      "guide",
-      "openclaw"
-    ],
-    "version": "0.1.0",
-    "author": "chindden",
-    "githubUrl": "https://clawhub.ai/skills/skill-creator",
-    "downloadUrl": "https://clawhub.ai/skills/skill-creator",
-    "platform": [
-      "openclaw"
-    ],
-    "createdAt": "2026-01-27",
-    "featured": false,
-    "content": "## 使用说明\n\n```bash\nclawhub install skill-creator\n```\n\n### 适用场景\n- 从零创建新的 Agent Skill\n- 审核/改进现有 Skill 质量\n- 重构 Skill 目录结构\n- 验证 Skill 是否符合 AgentSkills 规范\n\n### 触发关键词\n- 「创建一个 Skill」\n- 「改进这个 Skill」\n- 「审核 Skill 质量」\n- 「清理 Skill 目录」\n\n### 规范要点\n- SKILL.md 必须包含 `name` 和 `description` 前置元数据\n- 引用文件放 `references/`，脚本放 `scripts/`\n- 避免在 SKILL.md 中硬编码敏感信息\n- 使用相对路径引用同目录文件"
-  },
-  {
-    "slug": "github-search",
-    "title": "GitHub 仓库深度搜索",
-    "description": "按关键词、语言、Stars、更新时间筛选 GitHub 仓库，专为技术调研设计。",
-    "category": "research",
-    "tags": [
-      "github",
-      "search",
-      "research",
-      "chinese"
-    ],
-    "version": "1.0.0",
-    "author": "linshengli",
-    "githubUrl": "https://clawhub.ai/skills/github-search",
-    "downloadUrl": "https://clawhub.ai/skills/github-search",
-    "platform": [
-      "openclaw"
-    ],
-    "createdAt": "2026-02-28",
-    "featured": false,
-    "content": "## 使用说明\n\n```bash\nclawhub install github-search\n```\n\n### 功能\n- 按关键词搜索 GitHub 仓库\n- 支持语言、Stars 数量筛选\n- 按更新时间排序\n- 返回结构化 JSON 结果\n\n### 适用场景\n- 技术选型调研\n- 寻找特定领域的开源项目\n- 追踪竞品或关注领域的最新动态\n\n> 此 Skill 返回中文友好格式的结果，适合中文用户做技术调研。"
-  },
-  {
-    "slug": "github-code-analyzer",
-    "title": "GitHub Code Analyzer",
-    "description": "克隆 GitHub 项目并用 DeepSeek AI 分析代码质量——自动审查架构、规范和潜在问题。",
-    "category": "development",
-    "tags": [
-      "github",
-      "code-review",
-      "deepseek",
-      "analysis"
-    ],
-    "version": "1.0.0",
-    "author": "woaim65",
-    "githubUrl": "https://clawhub.ai/skills/github-code-analyzer",
-    "downloadUrl": "https://clawhub.ai/skills/github-code-analyzer",
-    "platform": [
-      "openclaw"
-    ],
-    "createdAt": "2026-03-17",
-    "featured": false,
-    "content": "## 使用说明\n\n```bash\nclawhub install github-code-analyzer\n```\n\n### 工作流程\n1. 克隆目标 GitHub 仓库\n2. 扫描项目结构和关键文件\n3. 使用 DeepSeek AI 分析代码质量\n4. 生成分析报告\n\n### 分析维度\n- 项目架构合理性\n- 代码规范一致性\n- 潜在 Bug 和安全风险\n- 性能优化建议\n\n> **注意**：需要 DeepSeek API Key 才能使用 AI 分析功能。"
-  },
-  {
-    "slug": "github-trending-feed",
-    "title": "GitHub Trending Feed",
-    "description": "获取 GitHub Trending 热门仓库列表，支持按语言过滤，返回结构化 JSON。",
-    "category": "research",
-    "tags": [
-      "github",
-      "trending",
-      "open-source"
-    ],
-    "version": "1.0.0",
-    "author": "humor200",
-    "githubUrl": "https://clawhub.ai/skills/github-trending-feed",
-    "downloadUrl": "https://clawhub.ai/skills/github-trending-feed",
-    "platform": [
-      "openclaw"
-    ],
-    "createdAt": "2026-03-22",
-    "featured": false,
-    "content": "## 使用说明\n\n```bash\nclawhub install github-trending-feed\n```\n\n### 功能\n- 获取每日/每周/每月 GitHub Trending 列表\n- 支持按编程语言过滤\n- 返回结构化 JSON，Agent 自行决定输出格式\n\n### 典型用法\n\n> 今天的 GitHub 热门 Python 项目有哪些？\n> 这周有什么新的 AI 项目上了热榜？\n\n> **提示**：适合做技术日报/周报的数据源。"
-  },
-  {
-    "slug": "openclaw-github-assistant",
-    "title": "OpenClaw GitHub Assistant",
-    "description": "查询和管理 GitHub 仓库——列出仓库、查看 CI 状态、创建 Issue、搜索项目。",
-    "category": "devops",
-    "tags": [
-      "github",
-      "ci-cd",
-      "management"
-    ],
-    "version": "2.0.1",
-    "author": "conorkenn",
-    "githubUrl": "https://clawhub.ai/skills/openclaw-github-assistant",
-    "downloadUrl": "https://clawhub.ai/skills/openclaw-assistant",
-    "platform": [
-      "openclaw"
-    ],
-    "createdAt": "2026-02-11",
-    "featured": false,
-    "content": "## 使用说明\n\n```bash\nclawhub install openclaw-github-assistant\n```\n\n### 功能\n- 列出用户/组织的仓库\n- 查看 CI 运行状态\n- 创建和管理 Issue\n- 搜索 GitHub 项目\n- 查看最近活动\n\n### 适用场景\n- 项目管理自动化\n- CI/CD 状态监控\n- 仓库巡检\n\n> **更新**：v2.0.1 修复了权限检查问题，支持更细粒度的 API Token 配置。"
-  },
-  {
-    "slug": "video-frames",
-    "title": "Video Frames",
-    "description": "用 ffmpeg 从视频中提取帧画面或短视频片段——轻量、快速、无需 GUI。",
-    "category": "tool",
-    "tags": [
-      "video",
-      "ffmpeg",
-      "frames",
-      "media"
-    ],
-    "version": "1.0.0",
-    "author": "steipete",
-    "githubUrl": "https://clawhub.ai/skills/video-frames",
-    "downloadUrl": "https://clawhub.ai/skills/video-frames",
-    "platform": [
-      "openclaw"
-    ],
-    "createdAt": "2026-01-04",
-    "featured": false,
-    "content": "## 使用说明\n\n前置条件：安装 [ffmpeg](https://ffmpeg.org/)。\n\n```bash\nclawhub install video-frames\n```\n\n### 功能\n- 从视频提取指定时间点的帧画面\n- 截取短视频片段\n- 批量提取关键帧\n- 自定义输出分辨率和格式\n\n### 典型用法\n\n> 提取视频第 30 秒的画面\n> 从这个视频截取 10-20 秒的片段\n> 每隔 5 秒提取一帧\n\n> **提示**：适合视频分析、封面提取、内容审核等场景。"
-  },
-  {
-    "slug": "image-generate",
-    "title": "Image Generate",
-    "description": "通过内置脚本生成 AI 图片——准备清晰具体的 Prompt 即可出图。",
-    "category": "creative",
-    "tags": [
-      "image",
-      "ai-generation",
-      "creative"
-    ],
-    "version": "1.0.0",
-    "author": "zhangsiyuan123123",
-    "githubUrl": "https://clawhub.ai/skills/image-generate",
-    "downloadUrl": "https://clawhub.ai/skills/image-generate",
-    "platform": [
-      "openclaw"
-    ],
-    "createdAt": "2026-02-21",
-    "featured": false,
-    "content": "## 使用说明\n\n```bash\nclawhub install image-generate\n```\n\n### 功能\n- 使用内置 `image_generate.py` 脚本生成图片\n- 支持多种模型后端\n- Prompt 越具体，效果越好\n\n### Prompt 建议\n\n✅ 好的 Prompt：\n> A cyberpunk cityscape at night, neon lights reflecting on wet streets, 8k detail\n\n❌ 差的 Prompt：\n> a city\n\n> **提示**：详细描述风格、光线、构图，生成质量会显著提升。"
-  },
-  {
-    "slug": "agent-browser-clawdbot",
-    "title": "Agent Browser (ClawdBot)",
-    "description": "为 AI Agent 优化的无头浏览器——Accessibility Tree 快照 + Ref 元素选择，精准操控网页。",
-    "category": "automation",
-    "tags": [
-      "browser",
-      "headless",
-      "accessibility",
-      "agent"
-    ],
-    "version": "0.1.0",
-    "author": "matrixy",
-    "githubUrl": "https://clawhub.ai/skills/agent-browser-clawdbot",
-    "downloadUrl": "https://clawhub.ai/skills/agent-browser-clawdbot",
-    "platform": [
-      "openclaw"
-    ],
-    "createdAt": "2026-01-21",
-    "featured": false,
-    "content": "## 使用说明\n\n```bash\nclawhub install agent-browser-clawdbot\n```\n\n### 核心特色\n- **Accessibility Tree 快照**：以树状结构理解页面，比视觉截图更适合 AI 解析\n- **Ref 元素选择**：用引用 ID 精准定位和操作页面元素\n- **专为 AI Agent 设计**：输出格式对 LLM 友好\n\n### 与普通浏览器自动化的区别\n\n| 特性 | 普通 Playwright | Agent Browser |\n|------|----------------|---------------|\n| 页面理解 | DOM/截图 | Accessibility Tree |\n| 元素定位 | CSS/XPath | Ref ID |\n| AI 适配 | 需转换 | 原生适配 |\n\n> **适合**：需要 AI Agent 精准理解和操作网页的场景。"
-  },
-  {
-    "slug": "microsoft-agent-skills",
-    "title": "Microsoft Agent Skills",
-    "description": "微软官方出品，包含 132 个 Agent Skill，覆盖 Azure SDK、AI Foundry、M365 Agents 等开发场景。支持 Python、.NET、TypeScript、Java、Rust 五种语言，一键安装即可增强编码 Agent 的领域知识。",
-    "category": "integration",
-    "tags": [
-      "microsoft",
-      "azure",
-      "agent-skills",
-      "copilot",
-      "sdk"
-    ],
-    "version": "1.0.0",
-    "author": "microsoft",
-    "githubUrl": "https://github.com/microsoft/skills",
-    "downloadUrl": "https://github.com/microsoft/skills/archive/refs/heads/main.zip",
-    "platform": [
-      "openclaw",
-      "copilot",
-      "claude-code"
-    ],
-    "createdAt": "2026-04-20",
-    "featured": true,
-    "content": "# Microsoft Agent Skills\n\n微软官方 Agent Skills 仓库，为 AI 编码助手提供 Azure SDK 和 AI Foundry 的领域知识激活上下文。\n\n## 功能介绍\n\n当 AI 编码助手（如 GitHub Copilot、Claude Code）面对 Azure 服务开发时，虽然预训练数据中包含模式知识，但缺少**激活上下文**——即何时、如何正确使用 SDK 的精准指引。Microsoft Agent Skills 正是填补这一空缺。\n\n核心能力：\n- **132 个技能**覆盖 Azure 全栈服务——从 Cosmos DB 到 AI Search，从 Event Hubs 到 Key Vault\n- **5 种语言**支持：Python（41 skill）、.NET（28 skill）、TypeScript（25 skill）、Java（25 skill）、Rust（7 skill）\n- **一键安装**：`npx skills add microsoft/skills`，交互式选择你需要的技能\n- **9 个核心技能**（语言无关）：Cloud Solution Architect、Copilot SDK、MCP Builder、Frontend Design Review 等\n- **自定义 Agent 模板**：Backend、Frontend、Infrastructure、Planner 等角色\n\n## 安装步骤\n\n```bash\n# 方式一：交互式安装（推荐）\nnpx skills add microsoft/skills\n\n# 方式二：手动 clone\ngit clone https://github.com/microsoft/skills.git\ncp -r .github/skills/azure-cosmos-db-py your-project/.github/skills/\n\n# 方式三：跨项目符号链接\nln -s /path/to/skills/.github/skills/mcp-builder your-project/.github/skills/mcp-builder\n```\n\n## 使用示例\n\n安装 `mcp-builder` 技能后，AI Agent 在开发 MCP Server 时会自动获取正确模式：\n\n```\n请帮我用 FastMCP 创建一个文件系统 MCP Server\n```\n\nAgent 会参考 skill 中的 Python FastMCP 模板、项目结构约定和测试策略来生成代码。\n\n安装 `azure-cosmos-db-py` 技能后：\n\n```python\n# Agent 生成符合 Azure 最佳实践的 Cosmos DB 代码\nfrom azure.cosmos import CosmosClient\nfrom azure.identity import DefaultAzureCredential\n\ncredential = DefaultAzureCredential()\nclient = CosmosClient(url=\"https://my-account.documents.azure.com:443/\", credential=credential)\n```\n\n> ⚠️ **重要**：只安装当前项目需要的技能。加载过多技能会导致上下文稀释（context rot），降低 Agent 专注度。\n\n**GitHub**: https://github.com/microsoft/skills (2.1k stars)"
-  },
-  {
-    "slug": "fast-agent-mcp",
-    "title": "Fast-Agent MCP",
-    "description": "一站式 Agent 开发框架，原生支持 MCP 协议全特性（含 Sampling 和 Elicitations）。声明式语法定义 Agent，CLI 交互式调试，支持 Anthropic/OpenAI/Google/Ollama 等多种模型。",
+    "slug": "smolagents",
+    "title": "SmolaAgents",
+    "description": "The most affordable and reliable agent framework by Hugging Face. Build agents with minimal code.",
     "category": "agent-framework",
-    "tags": [
-      "mcp",
-      "agent",
-      "framework",
-      "python",
-      "cli",
-      "multi-model"
-    ],
-    "version": "0.3.0",
-    "author": "evalstate",
-    "githubUrl": "https://github.com/evalstate/fast-agent",
-    "downloadUrl": "https://github.com/evalstate/fast-agent/archive/refs/heads/main.zip",
-    "platform": [
-      "python",
-      "openclaw"
-    ],
-    "createdAt": "2026-04-18",
+    "tags": ["huggingface", "agents", "framework", "llm", "python", "code-execution"],
+    "version": "1.2.0",
+    "author": "huggingface",
+    "githubUrl": "https://github.com/huggingface/smolagents",
+    "downloadUrl": "https://github.com/huggingface/smolagents/archive/refs/heads/main.zip",
+    "platform": ["python"],
+    "createdAt": "2024-12-05",
     "featured": true,
-    "content": "# Fast-Agent MCP\n\n首个完整支持 MCP 协议全特性（含 Sampling 和 Elicitations）的 Agent 开发框架。\n\n## 功能介绍\n\nFast-Agent 是一个灵活的 LLM 交互框架，特别适合作为编码 Agent、开发工具包、评估或工作流平台使用。\n\n核心亮点：\n- **MCP 全特性支持**：唯一完整实现 Sampling 和 Elicitations 的框架\n- **声明式 Agent 定义**：极简 Python 装饰器即可创建 Agent\n- **Agent 链式编排**：`@fast.chain` 将多个 Agent 串联成工作流\n- **Agents as Tools**：将子 Agent 暴露为工具，实现路由、并行化、编排者-工作者模式\n- **MAKER 投票机制**：通过 K-voting Error Reduction 实现零错误的长链推理\n- **Shell 模式**：在交互会话中直接执行系统命令\n- **MCP Transport 诊断**：可视化检查 Streamable HTTP 传输层行为\n\n## 安装步骤\n\n```bash\n# 推荐：使用 uv 安装\nuv pip install fast-agent-mcp\n\n# 或直接运行（无需安装）\nuvx fast-agent-mcp@latest -x\n\n# 安装到系统\nuv tool install -U fast-agent-mcp\n```\n\n## 使用示例\n\n### 最简 Agent\n\n```python\nfrom fast_agent import FastAgent\n\nfast = FastAgent(\"Agent Example\")\n\n@fast.agent(\n    instruction=\"Given an object, respond only with an estimate of its size.\"\n)\nasync def main():\n    async with fast.run() as agent:\n        await agent.interactive()\n```\n\n### Agent 链式工作流\n\n```python\n@fast.agent(\"url_fetcher\", \"Given a URL, provide a comprehensive summary\", servers=[\"fetch\"])\n@fast.agent(\"social_media\", \"Write a 280 character social media post for any given text.\")\n@fast.chain(name=\"post_writer\", sequence=[\"url_fetcher\", \"social_media\"])\nasync def main():\n    async with fast.run() as agent:\n        await agent.post_writer(\"http://example.com\")\n```\n\n### 连接 MCP Server\n\n```bash\n# 连接 stdio MCP Server\n/connect @modelcontextprotocol/server-everything\n\n# 连接 Streamable HTTP Server\n/connect https://huggingface.co/mcp\n```\n\n**官网**: https://fast-agent.ai\n**GitHub**: https://github.com/evalstate/fast-agent (3.8k stars)"
+    "content": "# SmolaAgents\n\nA framework for building agents that write Python code to solve tasks.\n\n## Quick Start\n```bash\npip install smolagents\n```\n\n## Core Features\n- 🦙 Lightweight - Minimal dependencies\n- 🛠️ Code-First - Agents write Python code to solve tasks\n- 🤝 Multi-Modal - Support for vision, browsing, and tool use\n- 🔄 ReAct Pattern - Thought → Action → Observation loops\n- 🔒 Sandboxed Execution - Safe code execution environment\n\n## Example\n```python\nfrom smolagents import CodeAgent, DuckDuckGoSearchTool\n\nagent = CodeAgent(\n    tools=[DuckDuckGoSearchTool()],\n    model=your_model\n)\nagent.run(\"What's the current weather in Tokyo?\")\n```\n\n**Docs**: https://huggingface.co/docs/smolagents\n**GitHub**: https://github.com/huggingface/smolagents (26k stars)"
   },
   {
-    "slug": "snyk-agent-scan",
-    "title": "Snyk Agent Scan",
-    "description": "AI Agent 安全扫描工具。自动发现本地 Agent 组件（MCP Server、Skill、Harness），检测提示注入、工具投毒、工具影子攻击等 15+ 种安全风险。支持 Claude Code、Cursor、OpenClaw 等主流 Agent。",
-    "category": "devops",
-    "tags": [
-      "security",
-      "mcp",
-      "scanning",
-      "prompt-injection",
-      "agent-safety"
-    ],
-    "version": "0.4.0",
-    "author": "snyk",
-    "githubUrl": "https://github.com/snyk/agent-scan",
-    "downloadUrl": "https://github.com/snyk/agent-scan/archive/refs/heads/main.zip",
-    "platform": [
-      "python",
-      "openclaw",
-      "claude-code",
-      "cursor"
-    ],
-    "createdAt": "2026-04-15",
+    "slug": "crewai",
+    "title": "CrewAI",
+    "description": "Framework for orchestrating role-playing, autonomous AI agents. Build multi-agent systems with ease.",
+    "category": "agent-framework",
+    "tags": ["multi-agent", "orchestration", "autonomous", "crew", "python", "collaboration"],
+    "version": "0.102.0",
+    "author": "crewAIInc",
+    "githubUrl": "https://github.com/crewAIInc/crewAI",
+    "downloadUrl": "https://github.com/crewAIInc/crewAI/archive/refs/heads/main.zip",
+    "platform": ["python"],
+    "createdAt": "2023-10-27",
     "featured": true,
-    "content": "# Snyk Agent Scan\n\nAI Agent 生态安全扫描工具，自动发现和检测本地 Agent 组件的安全风险。\n\n## 功能介绍\n\n随着 MCP Server 和 Agent Skill 生态爆发式增长，安全风险也在快速累积。Snyk Agent Scan 是首个专门针对 Agent 供应链安全的扫描工具。\n\n核心检测能力（15+ 种风险）：\n- **提示注入**（Prompt Injection）：检测 SKILL.md 或 MCP 工具描述中的恶意指令\n- **工具投毒**（Tool Poisoning）：发现隐藏在工具描述中的恶意行为\n- **工具影子**（Tool Shadowing）：检测覆盖系统工具的恶意替代\n- **有毒流**（Toxic Flows）：MCP Server 间的数据泄露通道\n- **恶意软件载荷**（Malware Payloads）：隐藏在自然语言中的恶意代码\n- **硬编码密钥**（Hardcoded Secrets）：Skill 中泄露的 API Key\n\n支持自动发现的 Agent：Claude Code、Claude Desktop、Cursor、Windsurf、VS Code、Gemini CLI、OpenClaw、Amp、Codex、Amazon Q 等。\n\n## 安装步骤\n\n```bash\n# 前置条件：安装 uv\ncurl -LsSf https://astral.sh/uv/install.sh | sh\n\n# 设置 Snyk Token\nexport SNYK_TOKEN=your-api-token-here\n\n# 直接运行（无需安装）\nuvx snyk-agent-scan@latest\n\n# 同时扫描 Skill\nuvx snyk-agent-scan@latest --skills\n```\n\n## 使用示例\n\n```bash\n# 全机扫描（自动发现所有 Agent 和 MCP Server）\nuvx snyk-agent-scan@latest\n\n# 扫描特定 MCP 配置文件\nuvx snyk-agent-scan@latest ~/.vscode/mcp.json\n\n# 扫描特定 Skill 文件\nuvx snyk-agent-scan@latest --skills ~/path/to/my/SKILL.md\n\n# 扫描目录下所有 Skill\nuvx snyk-agent-scan@latest --skills ~/.claude/skills\n\n# 仅查看工具描述（不验证）\nuvx snyk-agent-scan@latest inspect\n\n# JSON 格式输出\nuvx snyk-agent-scan@latest --json\n```\n\n> ⚠️ **注意**：扫描时 Skill 描述会发送至 Snyk API 进行验证。使用 `--opt-out` 可退出匿名 ID 追踪。\n\n**GitHub**: https://github.com/snyk/agent-scan (2.2k stars)"
+    "content": "# CrewAI\n\nFramework for orchestrating role-playing, autonomous AI agents.\n\n## Quick Start\n```bash\npip install crewai\ncrewai create crew my_project\n```\n\n## Core Concepts\n- 👥 Crews - Teams of agents working together\n- 🎭 Agents - Role-playing AI workers with specific goals\n- 📋 Tasks - Units of work assigned to agents\n- 🔄 Processes - Sequential or hierarchical workflows\n- 🛠️ Tools - Capabilities agents can use\n\n## Example\n```python\nfrom crewai import Agent, Crew, Task\n\nresearcher = Agent(role='Researcher', goal='Find information')\nwriter = Agent(role='Writer', goal='Create content')\n\ncrew = Crew(agents=[researcher, writer], tasks=[task1, task2])\nresult = crew.kickoff()\n```\n\n**Website**: https://crewai.com\n**GitHub**: https://github.com/crewAIInc/crewAI (49k stars)"
   },
   {
-    "slug": "stitch-skills",
-    "title": "Stitch Agent Skills（Google Labs）",
-    "description": "Google Labs 出品的 UI 设计 Agent Skill 库，配合 Stitch MCP Server 使用。支持从提示词生成多页面网站、Stitch 屏幕转 React 组件、自动生成设计文档，以及生成产品演示视频。",
-    "category": "productivity",
-    "tags": [
-      "google",
-      "ui-design",
-      "stitch",
-      "react",
-      "video-generation"
-    ],
-    "version": "1.0.0",
-    "author": "google-labs-code",
-    "githubUrl": "https://github.com/google-labs-code/stitch-skills",
-    "downloadUrl": "https://github.com/google-labs-code/stitch-skills/archive/refs/heads/main.zip",
-    "platform": [
-      "openclaw",
-      "claude-code",
-      "cursor",
-      "gemini-cli"
-    ],
-    "createdAt": "2026-04-10",
+    "slug": "crawlee-python",
+    "title": "Crawlee (Python)",
+    "description": "Web scraping and browser automation library for Python. Build reliable crawlers fast.",
+    "category": "web-scraping",
+    "tags": ["crawling", "scraping", "automation", "headless", "python", "apify"],
+    "version": "3.12.0",
+    "author": "apify",
+    "githubUrl": "https://github.com/apify/crawlee-python",
+    "downloadUrl": "https://github.com/apify/crawlee-python/archive/refs/heads/main.zip",
+    "platform": ["python"],
+    "createdAt": "2024-06-01",
     "featured": true,
-    "content": "# Stitch Agent Skills\n\nGoogle Labs 出品的 UI 设计 Agent 技能库，专为 Stitch MCP Server 生态打造。\n\n## 功能介绍\n\nStitch Skills 让 AI 编码助手具备专业级 UI 设计能力。每个技能遵循 Agent Skills 开放标准，兼容 Claude Code、Cursor、Gemini CLI 等主流 Agent。\n\n7 个核心技能：\n- **stitch-design**：统一设计入口，处理提示词增强、设计系统合成、高保真屏幕生成\n- **stitch-loop**：从单个提示词生成完整多页面网站，自动文件组织和验证\n- **design-md**：分析 Stitch 项目并生成 DESIGN.md 设计文档\n- **enhance-prompt**：将模糊的 UI 想法优化为 Stitch 专用提示词\n- **react-components**：将 Stitch 屏幕转为 React 组件系统，自动验证和设计 Token 一致性\n- **remotion**：用 Remotion 从 Stitch 项目生成产品演示视频（平滑过渡、缩放、文字覆盖）\n- **shadcn-ui**：shadcn/ui 组件集成专家，帮助发现、安装、定制组件\n\n## 安装步骤\n\n```bash\n# 查看所有可用技能\nnpx skills add google-labs-code/stitch-skills --list\n\n# 安装特定技能\nnpx skills add google-labs-code/stitch-skills --skill react:components --global\nnpx skills add google-labs-code/stitch-skills --skill stitch-design --global\nnpx skills add google-labs-code/stitch-skills --skill remotion --global\n\n# 全局安装所有技能\nnpx skills add google-labs-code/stitch-skills --global\n```\n\n## 使用示例\n\n安装 `stitch-loop` 后，AI Agent 可以从一句话生成完整网站：\n\n```\n帮我生成一个 SaaS 落地页，包含 Hero、Features、Pricing、FAQ 四个页面\n```\n\n安装 `react-components` 后：\n\n```\n把这个 Stitch 屏幕转换成 React 组件，使用 TypeScript 和 Tailwind CSS\n```\n\n安装 `remotion` 后：\n\n```\n为这个 App 生成一个 30 秒的产品演示视频\n```\n\n**GitHub**: https://github.com/google-labs-code/stitch-skills (4.8k stars)"
+    "content": "# Crawlee for Python\n\nWeb scraping and browser automation library.\n\n## Installation\n```bash\npip install crawlee\n```\n\n## Features\n- ⚡ Fast Crawling - Parallel processing with asyncio\n- 🧠 Smart Queuing - Automatic URL deduplication and retry\n- 🔒 Anti-Bot Protection - Proxy rotation and fingerprint rotation\n- 📸 Browser Integration - Built-in Playwright support\n- 📦 Storage - Automatic dataset and key-value store\n\n## Example\n```python\nfrom crawlee.playwright import PlaywrightCrawler\nfrom crawlee.router import Router\n\ncrawler = PlaywrightCrawler()\n\n@crawler.router.default_handler\nasync def handler(context):\n    data = {\n        'title': await context.page.title(),\n        'url': context.request.url,\n    }\n    await context.push_data(data)\n\nawait crawler.run(['https://example.com'])\n```\n\n**Docs**: https://crawlee.dev\n**GitHub**: https://github.com/apify/crawlee-python (22k stars)"
   },
   {
-    "slug": "gemini-drawing-mcp",
-    "title": "Gemini 画图 MCP Skill",
-    "description": "通过 CDP 操控 Gemini 网页版，实现 AI 生图、多轮对话、图片上传和提取。标准 MCP 协议接口，可被任何 MCP 客户端调用。Daemon 模式管理浏览器生命周期，支持自动去水印。",
-    "category": "ai",
-    "tags": [
-      "gemini",
-      "image-generation",
-      "mcp",
-      "cdp",
-      "drawing"
-    ],
-    "version": "1.0.0",
-    "author": "WJZ-P",
-    "githubUrl": "https://github.com/WJZ-P/gemini-skill",
-    "downloadUrl": "https://github.com/WJZ-P/gemini-skill/archive/refs/heads/main.zip",
-    "platform": [
-      "openclaw",
-      "claude-code",
-      "dify"
-    ],
-    "createdAt": "2026-04-12",
-    "featured": false,
-    "content": "# Gemini 画图 MCP Skill\n\n通过 Chrome DevTools Protocol 操控 Gemini 网页版，实现 AI 生图和对话自动化。\n\n## 功能介绍\n\nGemini Skill 是一个 MCP Server，通过 CDP 协议与浏览器中的 Gemini 网页版交互，让任何 MCP 客户端都能调用 Gemini 的生图能力。\n\n核心功能：\n- 🎨 **AI 生图**：发送 prompt 自动生成图片，支持高清原图下载\n- 💬 **文本对话**：与 Gemini 进行多轮对话\n- 🖼️ **图片上传**：上传参考图片，基于参考图生成新图\n- 📥 **图片提取**：提取会话中的图片，支持 base64 和 CDP 完整尺寸下载\n- 🔄 **会话管理**：新建会话、临时会话、切换模型、导航到历史会话\n- 🧹 **自动去水印**：下载的图片自动移除 Gemini 水印\n\n架构设计采用 Daemon 模式——浏览器进程由独立 Daemon 管理，MCP 调用结束后浏览器不关闭，30 分钟无活动才自动释放。使用 `puppeteer-extra-plugin-stealth` 绕过网站检测。\n\n## 安装步骤\n\n```bash\n# 前置条件：Node.js >= 18，Chrome/Edge/Chromium，已登录 Google 账号\ngit clone https://github.com/WJZ-P/gemini-skill.git\ncd gemini-skill\nnpm install\n\n# 配置 .env 文件\ncp .env.example .env\n# 编辑 .env 设置浏览器路径、端口等\n```\n\n## 使用示例\n\n### 作为 MCP Server（推荐）\n\n在 MCP 客户端配置文件中添加：\n\n```json\n{\n  \"mcpServers\": {\n    \"gemini\": {\n      \"command\": \"node\",\n      \"args\": [\"/absolute/path/to/gemini-skill/src/mcp-server.js\"]\n    }\n  }\n}\n```\n\n### 作为库调用\n\n```javascript\nimport { createGeminiSession, disconnect } from './src/index.js';\n\nconst { ops } = await createGeminiSession();\n\n// 生图\nconst result = await ops.generateImage('画一只可爱的猫咪', { fullSize: true });\nconsole.log('图片保存至:', result.filePath);\n\ndisconnect();\n```\n\n### 复用 OpenClaw 浏览器\n\n```bash\n# 在 .env 中设置\nBROWSER_DEBUG_PORT=18800\n```\n\n> ⚠️ 注意：OpenClaw 浏览器未集成 Stealth 反爬插件，推荐使用默认端口 40821。\n\n**GitHub**: https://github.com/WJZ-P/gemini-skill"
-  },
-  {
-    "slug": "antigravity-awesome-skills",
-    "title": "Antigravity Awesome Skills",
-    "description": "1,431+ 可安装的 Agent Skill 库，覆盖开发、测试、安全、基础设施、产品和营销领域。支持 Claude Code、Cursor、Codex CLI、Gemini CLI、Antigravity 等所有主流 AI 编码助手。一键 NPX 安装。",
-    "category": "productivity",
-    "tags": [
-      "skill-library",
-      "claude-code",
-      "cursor",
-      "codex",
-      "gemini-cli",
-      "bundle"
-    ],
-    "version": "10.5.0",
-    "author": "sickn33",
-    "githubUrl": "https://github.com/sickn33/antigravity-awesome-skills",
-    "downloadUrl": "https://github.com/sickn33/antigravity-awesome-skills/archive/refs/heads/main.zip",
-    "platform": [
-      "openclaw",
-      "claude-code",
-      "cursor",
-      "codex",
-      "gemini-cli"
-    ],
-    "createdAt": "2026-04-05",
+    "slug": "markitdown",
+    "title": "MarkItDown (Microsoft)",
+    "description": "Convert various file formats (PDF, Word, Excel, PowerPoint, etc.) to Markdown. By Microsoft.",
+    "category": "document-processing",
+    "tags": ["document", "conversion", "markdown", "pdf", "microsoft", "python", "ocr"],
+    "version": "0.0.1a3",
+    "author": "microsoft",
+    "githubUrl": "https://github.com/microsoft/markitdown",
+    "downloadUrl": "https://github.com/microsoft/markitdown/archive/refs/heads/main.zip",
+    "platform": ["python"],
+    "createdAt": "2024-12-05",
     "featured": true,
-    "content": "# Antigravity Awesome Skills\n\n1,431+ 可安装的 Agent Skill 库——目前 GitHub 上最大的 Agent Skill 集合。\n\n## 功能介绍\n\n这不只是一个灵感列表，而是一个**可安装的**技能库。使用 `npx antigravity-awesome-skills` 一键将 Skill 安装到你的 AI 编码助手目录中。\n\n核心价值：\n- **1,431+ 技能**覆盖六大领域：开发、测试、安全、基础设施、产品、营销\n- **Bundle 系统**：按角色分组推荐——Web Wizard、Security Engineer、OSS Maintainer 等\n- **Workflow 驱动**：SaaS MVP、安全审计、AI Agent 系统、QA 自动化等完整工作流\n- **多工具适配**：一条命令适配 Claude Code / Cursor / Codex / Gemini CLI / Antigravity\n- **持续更新**：V10.5.0，社区活跃维护\n\n通用入门推荐技能：`@brainstorming`（规划）、`@test-driven-development`（TDD）、`@debugging-strategies`（调试）、`@security-auditor`（安全审计）、`@frontend-design`（前端设计）\n\n## 安装步骤\n\n```bash\n# 默认安装到 ~/.gemini/antigravity/skills\nnpx antigravity-awesome-skills\n\n# 安装到指定 Agent 目录\nnpx antigravity-awesome-skills --claude    # Claude Code\nnpx antigravity-awesome-skills --cursor   # Cursor\nnpx antigravity-awesome-skills --codex    # Codex CLI\nnpx antigravity-awesome-skills --gemini   # Gemini CLI\nnpx antigravity-awesome-skills --antigravity\n\n# 自定义路径\nnpx antigravity-awesome-skills --path ./my-skills\n\n# 按分类和风险级别筛选\nnpx antigravity-awesome-skills --path .agents/skills --category development,backend --risk safe,none\n```\n\n## 使用示例\n\n安装后在 Agent 对话中直接使用：\n\n```\nUse @brainstorming to turn this product idea into a concrete MVP plan.\nUse @security-auditor to review this API endpoint for auth and validation risks.\nUse @test-driven-development to implement this feature with TDD approach.\n```\n\n### Bundle 推荐组合\n\n- **SaaS MVP**：Essentials + Full-Stack Developer + QA & Testing\n- **生产加固**：Security Developer + DevOps & Cloud + Observability & Monitoring\n- **开源项目**：Essentials + OSS Maintainer\n\n**GitHub**: https://github.com/sickn33/antigravity-awesome-skills (34.7k stars)"
+    "content": "# MarkItDown\n\nConvert various file formats to Markdown.\n\n## Quick Start\n```bash\npip install markitdown\n```\n\n## Supported Formats\n- 📄 PDF documents (.pdf)\n- 📊 Word documents (.docx, .doc)\n- 📈 Excel spreadsheets (.xlsx, .xls)\n- 📽️ PowerPoint presentations (.pptx, .ppt)\n- 🖼️ Images (.png, .jpg, .jpeg) with OCR\n- 🎵 Audio files (.mp3, .wav) with transcription\n- 📁 ZIP archives\n- 🔗 Web pages (via URL)\n\n## Example\n```python\nfrom markitdown import MarkItDown\n\nmd = MarkItDown()\nresult = md.convert('document.pdf')\nprint(result.text_content)\n```\n\n**GitHub**: https://github.com/microsoft/markitdown (36k stars)"
   },
   {
-    "slug": "awesome-agent-skills-index",
-    "title": "Awesome Agent Skills Index",
-    "description": "社区策展的 Agent Skill 索引目录，收录 Anthropic、OpenAI、Google 等官方 Skill 及社区贡献的实战技能。提供在线浏览站 agent-skill.co 和 SkillsMP Marketplace，支持 10+ 主流 AI Agent 平台。",
-    "category": "productivity",
-    "tags": [
-      "skill-directory",
-      "anthropic",
-      "openai",
-      "community",
-      "index"
-    ],
-    "version": "1.0.0",
-    "author": "heilcheng",
-    "githubUrl": "https://github.com/heilcheng/awesome-agent-skills",
-    "downloadUrl": "https://github.com/heilcheng/awesome-agent-skills/archive/refs/heads/main.zip",
-    "platform": [
-      "openclaw",
-      "claude-code",
-      "codex",
-      "copilot",
-      "cursor",
-      "gemini-cli"
-    ],
-    "createdAt": "2026-04-08",
-    "featured": false,
-    "content": "# Awesome Agent Skills Index\n\n社区策展的 Agent Skill 索引目录——发现和评估 Agent Skill 的起点。\n\n## 功能介绍\n\n与批量生成的 Skill 仓库不同，这个索引专注于**实际工程团队创建和使用**的 Agent Skill。它不是又一个 Skill 包，而是一个帮你找到合适 Skill 的目录。\n\n收录范围：\n- **官方 Skill**：Anthropic（docx、pptx、xlsx、pdf、mcp-builder 等 16 个）、Google Labs、OpenAI\n- **云服务集成**：Vercel、Supabase、Cloudflare、AWS、Azure、GCP\n- **开发工具**：Playwright、Docker、Kubernetes、Terraform\n- **安全与情报**：Security Scanner、Web Intelligence\n- **商业与营销**：SEO、Content Strategy、Analytics\n- **向量数据库**：Pinecone、Weaviate、Chroma、Qdrant\n\n三种发现方式：\n1. **在线浏览**：[agent-skill.co](https://agent-skill.co/) — 分类浏览所有收录 Skill\n2. **SkillsMP Marketplace**：自动索引 GitHub 上的 Skill 项目，按分类、更新时间、Star 数排序\n3. **skills.sh 排行榜**：Vercel 维护的 Skill 使用统计排行\n\n## 安装步骤\n\n```bash\n# 使用 npx skills CLI 搜索和安装\nnpx skills find [query]         # 搜索相关技能\nnpx skills add <owner/repo>     # 安装技能（支持 GitHub 简写、完整 URL、本地路径）\nnpx skills list                 # 列出已安装技能\nnpx skills check                # 检查可用更新\nnpx skills update               # 升级所有技能\nnpx skills remove [skill-name]  # 卸载技能\n```\n\n## 使用示例\n\n```bash\n# 搜索 MCP 相关技能\nnpx skills find \"mcp builder\"\n\n# 安装 Anthropic 官方的 mcp-builder\nnpx skills add anthropics/skills --skill mcp-builder\n\n# 安装 Vercel 的技能\nnpx skills add vercel-labs/skills\n```\n\n支持的 AI Agent 平台：Claude Code、Claude.ai、Codex、GitHub Copilot、VS Code、Antigravity、Kiro、Gemini CLI、Junie、Windsurf 等。\n\n**在线浏览**: https://agent-skill.co/\n**GitHub**: https://github.com/heilcheng/awesome-agent-skills (4.2k stars)"
-  },
-  {
-    "slug": "dify-web-search-plugin",
-    "title": "Dify 网页搜索插件",
-    "description": "Dify 平台官方网页搜索插件，支持 Google、Bing、DuckDuckGo、SearXNG 等多种搜索引擎。可为 Dify 工作流和 Agent 提供实时网络信息检索能力，配置灵活，支持搜索结果摘要和全文提取。",
-    "category": "integration",
-    "tags": [
-      "dify",
-      "web-search",
-      "google",
-      "bing",
-      "duckduckgo",
-      "plugin"
-    ],
-    "version": "0.0.3",
-    "author": "difyhub",
-    "githubUrl": "https://github.com/difyhub/plugins",
-    "downloadUrl": "https://github.com/difyhub/plugins/archive/refs/heads/main.zip",
-    "platform": [
-      "dify"
-    ],
-    "createdAt": "2026-03-28",
-    "featured": false,
-    "content": "# Dify 网页搜索插件\n\nDify 平台官方网页搜索插件，为 Agent 和工作流注入实时网络检索能力。\n\n## 功能介绍\n\nDify 是一个流行的开源 LLM 应用开发平台，其插件生态正在快速成长。网页搜索插件是最基础也最实用的插件之一——没有实时搜索能力的 Agent，知识永远停留在训练数据截止日。\n\n核心能力：\n- **多搜索引擎支持**：Google Custom Search、Bing Web Search、DuckDuckGo、SearXNG（自托管）\n- **搜索结果摘要**：返回标题、摘要、URL 结构化数据\n- **全文提取**：对搜索结果页面进行正文提取，返回 Markdown 格式\n- **搜索参数控制**：结果数量、语言偏好、安全搜索级别\n- **工作流集成**：作为 Dify 工作流节点使用，支持上下游数据传递\n- **Agent 工具集成**：作为 Agent 工具被自然语言调用\n\n## 安装步骤\n\n### 方式一：Dify 插件市场安装\n\n1. 进入 Dify 控制台 → 插件市场\n2. 搜索「网页搜索」\n3. 点击安装\n\n### 方式二：本地开发安装\n\n```bash\ngit clone https://github.com/difyhub/plugins.git\ncd plugins/web-search\n\n# 安装依赖\npip install -r requirements.txt\n\n# 在 Dify 插件目录创建符号链接\nln -s $(pwd) ~/.dify/plugins/web-search\n```\n\n### 配置\n\n在 Dify 控制台 → 插件设置中配置：\n\n```yaml\n# Google 搜索（需要 API Key）\nengine: google\ngoogle_api_key: YOUR_API_KEY\ngoogle_cx: YOUR_CUSTOM_SEARCH_CX\n\n# DuckDuckGo（无需 API Key）\nengine: duckduckgo\n\n# SearXNG（自托管，无需 API Key）\nengine: searxng\nsearxng_url: http://localhost:8080\n```\n\n## 使用示例\n\n在 Dify Agent 中使用：\n\n```\n用户：帮我查一下 2026 年最新的 React 19 特性\n\nAgent 自动调用 web_search 工具 → 返回搜索结果摘要 → 整合为回答\n```\n\n在 Dify 工作流中使用：\n\n```\n输入节点 → 网页搜索节点 → 结果处理节点 → 输出节点\n```\n\n**GitHub**: https://github.com/difyhub/plugins"
-  },
-  {
-    "slug": "langchain-community-tools",
-    "title": "LangChain 社区工具集",
-    "description": "LangChain 社区贡献的 200+ 工具集成，覆盖搜索引擎、数据库、云存储、邮件、社交媒体等。可直接作为 Agent Tool 使用，也可封装为 MCP Server 供其他平台调用。",
-    "category": "integration",
-    "tags": [
-      "langchain",
-      "tools",
-      "integration",
-      "python",
-      "community"
-    ],
-    "version": "0.1.0",
-    "author": "langchain-ai",
-    "githubUrl": "https://github.com/langchain-ai/langchain/tree/master/libs/community/langchain_community/tools",
-    "downloadUrl": "https://github.com/langchain-ai/langchain/archive/refs/heads/master.zip",
-    "platform": [
-      "python",
-      "langchain"
-    ],
-    "createdAt": "2026-03-15",
-    "featured": false,
-    "content": "# LangChain 社区工具集\n\nLangChain 社区贡献的 200+ 工具集成——Agent 工具化的最大工具库。\n\n## 功能介绍\n\nLangChain 社区工具是 `langchain-community` 包的一部分，提供了 Agent 与外部世界交互的标准化接口。每个工具都遵循 `BaseTool` 接口，可以在任何 LangChain Agent 中即插即用。\n\n工具分类：\n- **搜索引擎**：Google Search、Bing Search、DuckDuckGo、SerpAPI、Tavily、Brave Search\n- **数据库**：SQL Database、CSV Agent、MongoDB、Redis\n- **云存储**：AWS S3、Google Drive、Azure Blob、Dropbox\n- **通讯**：Gmail、Slack、Discord、Twilio、SendGrid\n- **社交媒体**：Twitter/X、Reddit、YouTube、Wikipedia\n- **开发者工具**：GitHub、GitLab、Jira、Confluence、StackOverflow\n- **AI 服务**：OpenAI DALL-E、Stability AI、ElevenLabs TTS、Wolfram Alpha\n- **文件处理**：PDF、DOCX、JSON、CSV 读写\n- **天气与地理**：OpenWeatherMap、Google Maps、Geopy\n\n## 安装步骤\n\n```bash\n# 安装 LangChain 社区包\npip install langchain-community\n\n# 按需安装特定工具的依赖\npip install langchain-community[google-search]   # Google Search\npip install langchain-community[sqlite]           # SQL Database\npip install langchain-community[github]           # GitHub Tool\n```\n\n## 使用示例\n\n### 直接使用工具\n\n```python\nfrom langchain_community.tools import DuckDuckGoSearchRun\n\nsearch = DuckDuckGoSearchRun()\nresult = search.invoke(\"2026年 AI Agent 最新趋势\")\nprint(result)\n```\n\n### 封装为 MCP Server\n\n```python\nfrom mcp.server import Server\nfrom langchain_community.tools import WikipediaQueryRun\nfrom langchain_community.utilities import WikipediaAPIWrapper\n\nserver = Server(\"langchain-wiki-mcp\")\n\nwikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())\n\n@server.tool()\nasync def wiki_search(query: str) -> str:\n    \"\"\"Search Wikipedia for information.\"\"\"\n    return wikipedia.invoke(query)\n```\n\n### 在 Agent 中组合使用\n\n```python\nfrom langchain_community.tools import DuckDuckGoSearchRun, WikipediaQueryRun\nfrom langchain.agents import initialize_agent\n\ntools = [DuckDuckGoSearchRun(), WikipediaQueryRun()]\nagent = initialize_agent(tools, llm, agent=\"zero-shot-react-description\")\nagent.run(\"What is the population of Tokyo in 2026?\")\n```\n\n**GitHub**: https://github.com/langchain-ai/langchain"
-  },
-  {
-    "slug": "mcp-server-filesystem",
-    "title": "MCP Filesystem Server",
-    "description": "Model Context Protocol 官方文件系统服务器。为 AI Agent 提供安全的本地文件读写能力，支持目录浏览、文件搜索、读写操作。可配置允许访问的目录白名单，防止越权访问。",
-    "category": "integration",
-    "tags": [
-      "mcp",
-      "filesystem",
-      "file-management",
-      "security",
-      "official"
-    ],
-    "version": "0.6.0",
-    "author": "modelcontextprotocol",
-    "githubUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem",
-    "downloadUrl": "https://github.com/modelcontextprotocol/servers/archive/refs/heads/main.zip",
-    "platform": [
-      "openclaw",
-      "claude-code",
-      "cursor",
-      "copilot"
-    ],
-    "createdAt": "2026-02-20",
-    "featured": false,
-    "content": "# MCP Filesystem Server\n\nModel Context Protocol 官方文件系统服务器——Agent 安全访问本地文件的标准方案。\n\n## 功能介绍\n\nMCP Filesystem Server 是 Anthropic 维护的 MCP 官方服务器之一，为 AI Agent 提供受控的本地文件系统访问能力。它的核心设计理念是**安全第一**——只允许访问白名单目录，防止 Agent 越权读取敏感文件。\n\n提供的 MCP 工具：\n- **read_file**：读取指定文件内容\n- **read_multiple_files**：批量读取多个文件\n- **write_file**：写入文件内容（创建或覆盖）\n- **edit_file**：精确编辑文件（基于行号或文本匹配替换）\n- **create_directory**：创建目录（含中间目录）\n- **list_directory**：列出目录内容（区分文件和目录）\n- **directory_tree**：返回目录树结构（JSON 格式）\n- **move_file**：移动或重命名文件\n- **search_files**：递归搜索文件名匹配模式\n- **get_file_info**：获取文件元数据（大小、修改时间、权限）\n\n## 安装步骤\n\n### 在 MCP 客户端中配置\n\n```json\n{\n  \"mcpServers\": {\n    \"filesystem\": {\n      \"command\": \"npx\",\n      \"args\": [\n        \"-y\",\n        \"@modelcontextprotocol/server-filesystem\",\n        \"/path/to/allowed/dir1\",\n        \"/path/to/allowed/dir2\"\n      ]\n    }\n  }\n}\n```\n\n### 全局安装\n\n```bash\nnpm install -g @modelcontextprotocol/server-filesystem\n```\n\n## 使用示例\n\n配置完成后，AI Agent 可通过自然语言操作文件：\n\n```\n读取 /project/src/main.py 的内容\n列出 /project/src 目录下的所有文件\n在 /project/docs 目录下创建 README.md\n搜索 /project 中所有 .test.ts 文件\n把 /project/config.json 中的 \"port\": 3000 改为 \"port\": 8080\n```\n\n> ⚠️ **安全提示**：只允许 Agent 访问工作目录，不要将 `~`、`/` 等根目录加入白名单。不要将包含密钥、证书的目录开放给 Agent。\n\n**GitHub**: https://github.com/modelcontextprotocol/servers"
-  }
-]
+    "slug": "llamaindex",
+    "title": "LlamaIndex",
+    "description": "Connect LLMs with enterprise data. The leading document agent and RAG platform.",
+    "category": "agent-framework",
+    "tags": ["rag", "llm", "data-connectors", "python", "agents", "indexing"],
+    "version": "0.12.0",
+    "author": "run-llama",
+    "githubUrl": "https://github.com/run-llama/llama_index",
