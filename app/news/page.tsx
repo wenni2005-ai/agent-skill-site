@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import { NewsClient } from "@/components/news-client";
 import { SectionHeading } from "@/components/section-heading";
 import { allNews } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "动态资讯",
   description: "跟踪 Agent Skill 生态、Next.js 与开发者工具的动态资讯。",
-  alternates: { canonical: "/news" },
-};
+  path: "/news",
+  keywords: ["Agent News", "OpenClaw", "Next.js", "AI 开发资讯"],
+});
 
 export default function NewsPage() {
   return (

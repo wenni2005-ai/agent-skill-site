@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import { SectionHeading } from "@/components/section-heading";
 import { TutorialsClient } from "@/components/tutorials-client";
 import { allTutorials } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "部署教程",
-  description: "查看 Agent Skill 站点的搭建、内容组织与部署教程。",
-  alternates: { canonical: "/tutorials" },
-};
+  description: "查看 Agent Skill 站点的搭建、内容组织与 Vercel 部署教程。",
+  path: "/tutorials",
+  keywords: ["Agent Skill 教程", "Next.js 部署", "Vercel", "How-to"],
+});
 
 export default function TutorialsPage() {
   return (

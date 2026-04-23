@@ -9,13 +9,13 @@ export function NewsCard({ item }: { item: News }) {
     <Card className="h-full space-y-4">
       <div className="flex items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
         <span>{item.source}</span>
-        <span>{formatDate(item.createdAt)}</span>
+        <span>{formatDate(item.publishedAt)}</span>
       </div>
       <div>
         <Link href={`/news/${item.slug}`} className="text-xl font-semibold text-slate-950 transition hover:text-cyan-500 dark:text-white">
           {item.title}
         </Link>
-        <p className="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-400">{item.description}</p>
+        <p className="mt-2 text-sm leading-7 text-slate-600 dark:text-slate-400">{item.summary}</p>
       </div>
       <div className="flex flex-wrap gap-2">
         {item.tags.map((tag) => (

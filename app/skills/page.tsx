@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import { SkillsClient } from "@/components/skills-client";
 import { SectionHeading } from "@/components/section-heading";
 import { allSkills, skillCategories } from "@/lib/content";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Skill 下载",
-  description: "浏览可下载的 Agent Skill，支持搜索、分类和标签筛选。",
-  alternates: { canonical: "/skills" },
-};
+  description: "浏览可下载的 Agent Skills，支持搜索、分类和标签筛选。",
+  path: "/skills",
+  keywords: ["Agent Skill", "Skill 下载", "OpenClaw", "AI Tools"],
+});
 
 export default function SkillsPage() {
   return (

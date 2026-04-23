@@ -13,7 +13,7 @@ export function NewsClient({ news }: { news: News[] }) {
 
   const filtered = useMemo(() => news.filter((item) => {
     const matchesTag = tag === "all" || item.tags.includes(tag);
-    const matchesQuery = `${item.title} ${item.description} ${item.source} ${item.tags.join(" ")}`.toLowerCase().includes(query.toLowerCase());
+    const matchesQuery = `${item.title} ${item.summary} ${item.source} ${item.tags.join(" ")}`.toLowerCase().includes(query.toLowerCase());
     return matchesTag && matchesQuery;
   }), [news, query, tag]);
 

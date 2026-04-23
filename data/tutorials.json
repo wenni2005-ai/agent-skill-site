@@ -1,59 +1,52 @@
 [
   {
     "slug": "deploy-on-vercel",
-    "title": "5 分钟把 Skill 站点部署到 Vercel",
-    "description": "从本地项目到在线可访问站点的最短路径。",
-    "tags": ["vercel", "deploy", "nextjs"],
-    "level": "beginner",
-    "cover": "渐变背景 + Vercel 图标",
-    "createdAt": "2026-04-21",
-    "readingTime": "6 min",
-    "featured": true,
-    "content": "# 5 分钟把 Skill 站点部署到 Vercel\n\nVercel 对 Next.js 的支持非常顺手，MVP 阶段几乎零配置。\n\n## 步骤 1：推送代码\n\n先把项目推到 GitHub。\n\n```bash\ngit init\ngit add .\ngit commit -m \"init skill site\"\ngit remote add origin <your-repo>\ngit push -u origin main\n```\n\n## 步骤 2：导入仓库\n\n在 Vercel 后台选择 **Add New Project**，授权 GitHub 后选中仓库。\n\n## 步骤 3：配置环境变量\n\n如果你需要 canonical 指向正式域名，可配置：\n\n```bash\nNEXT_PUBLIC_SITE_URL=https://your-domain.com\n```\n\n## 步骤 4：上线\n\n点击 Deploy，默认会自动识别 Next.js 并完成构建。"
-  },
-  {
-    "slug": "local-json-to-content-pipeline",
-    "title": "用本地 JSON 快速搭一个可维护的内容系统",
-    "description": "适合 MVP 阶段，不接数据库也能把内容组织清楚。",
-    "tags": ["json", "content", "mvp"],
-    "level": "beginner",
-    "cover": "数据卡片 + 文件夹插画",
+    "title": "5 分钟把 Agent Skill 站点部署到 Vercel",
+    "description": "从本地开发到线上访问的完整流程——绑定域名、配置 SSL、设置环境变量，一步步带你上线。",
+    "tags": ["vercel", "deployment", "nextjs", "beginner"],
+    "author": "AgentSkill Hub",
     "createdAt": "2026-04-20",
-    "readingTime": "8 min",
-    "content": "# 用本地 JSON 快速搭一个可维护的内容系统\n\n把结构化内容放在 `data/*.json`，页面层只负责读取和展示。\n\n## 什么时候适合\n\n- 还没确定字段\n- 还没到数据库阶段\n- 内容量不大\n\n## 一个简单范式\n\n```ts\nimport skills from \"@/data/skills.json\";\n\nexport function getFeaturedSkills() {\n  return skills.filter((item) => item.featured);\n}\n```"
-  },
-  {
-    "slug": "mdx-for-agent-guides",
-    "title": "什么时候该从 JSON 升级到 MDX 教程内容",
-    "description": "让教程页支持更灵活的排版、组件和示例嵌入。",
-    "tags": ["mdx", "tutorial", "content"],
-    "level": "intermediate",
-    "cover": "代码块 + 文档面板",
-    "createdAt": "2026-04-18",
-    "readingTime": "7 min",
-    "content": "# 什么时候该从 JSON 升级到 MDX 教程内容\n\n当你开始需要更复杂的排版，比如提示框、视频嵌入、交互组件时，MDX 会更舒服。\n\n## 升级信号\n\n1. 教程里代码块越来越多\n2. 需要插入自定义 React 组件\n3. 编辑体验开始受限"
-  },
-  {
-    "slug": "seo-basics-for-skill-sites",
-    "title": "Agent Skill 资源站的 SEO 基础清单",
-    "description": "title、description、canonical、sitemap 到底要怎么配。",
-    "tags": ["seo", "sitemap", "metadata"],
-    "level": "intermediate",
-    "cover": "搜索结果页示意图",
-    "createdAt": "2026-04-17",
-    "readingTime": "9 min",
     "featured": true,
-    "content": "# Agent Skill 资源站的 SEO 基础清单\n\n对内容站来说，最先要补齐的是页面级 metadata。\n\n## 必做项\n\n- 每个详情页都有独立 title/description\n- 生成 sitemap\n- 加 canonical\n- OG 图先用统一模板也可以\n\n```ts\nexport async function generateMetadata() {\n  return {\n    title: \"Skill Detail\",\n    alternates: { canonical: \"/skills/your-skill\" }\n  };\n}\n```"
+    "content": "## 前置条件\n\n- 已安装 Node.js 18+\n- 已有 [Vercel 账号](https://vercel.com)\n- 项目已推送到 GitHub\n\n## 步骤 1：安装 Vercel CLI\n\n```bash\nnpm i -g vercel\n```\n\n## 步骤 2：登录 Vercel\n\n```bash\nvercel login\n```\n\n按提示在浏览器中完成授权。\n\n## 步骤 3：关联项目\n\n在项目根目录运行：\n\n```bash\nvercel link\n```\n\n选择你的 Vercel 团队和项目名称。首次部署会自动创建项目。\n\n## 步骤 4：首次部署\n\n```bash\nvercel deploy --prod\n```\n\nVercel 会自动检测 Next.js 项目，执行 `next build`，并将产物部署到全球 CDN。\n\n## 步骤 5：绑定自定义域名\n\n在 Vercel 控制台 → Settings → Domains 中添加你的域名。\n\n然后在 DNS 服务商处添加 CNAME 记录：\n\n| 类型 | 名称 | 目标 |\n|------|------|------|\n| CNAME | agentskil | cname.vercel-dns.com |\n\n> ⚠️ **重要**：先不要开启 CDN 代理（如 Cloudflare 的橙色云），使用纯 DNS 模式让 Vercel 完成域名验证后再开。\n\n## 步骤 6：验证\n\n- 访问 `https://agentskil.qzz.io` 确认站点可访问\n- 检查 SSL 证书是否自动配置（Vercel 自动处理）\n- 用 [PageSpeed Insights](https://pagespeed.web.dev/) 检查性能\n\n## 常见问题\n\n### 构建失败\n- 检查 `next build` 是否在本地通过\n- 查看构建日志中的错误信息\n- 确认 Node.js 版本匹配（在 `package.json` 中指定 `engines`）\n\n### 域名验证失败\n- 确认 CNAME 记录已生效（用 `dig agentskil.qzz.io` 检查）\n- 关闭 CDN 代理后重试\n\n### 404 错误\n- 确认 `vercel.json` 中没有冲突的重写规则\n- 检查 Next.js App Router 的路由结构是否正确"
   },
   {
-    "slug": "design-a-tech-style-ui",
-    "title": "用 Tailwind 做出有科技感的资源站界面",
-    "description": "从配色、边框、光效到卡片层次，做一个不土的技术站。",
-    "tags": ["design", "tailwind", "ui"],
-    "level": "advanced",
-    "cover": "科技感网格背景",
+    "slug": "openclaw-skill-quickstart",
+    "title": "OpenClaw Skill 快速上手：从安装到调用",
+    "description": "零基础入门 OpenClaw Skill 系统——安装 ClawHub CLI、搜索和安装 Skill、配置和使用，全流程实操。",
+    "tags": ["openclaw", "skill", "beginner", "quickstart"],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-19",
+    "featured": true,
+    "content": "## 什么是 OpenClaw Skill？\n\nSkill 是 OpenClaw Agent 的能力扩展模块。每个 Skill 就像一个插件，让 Agent 学会新技能——查天气、操作 GitHub、自动化浏览器等。\n\n## 步骤 1：安装 ClawHub CLI\n\nClawHub 是 OpenClaw 的 Skill 市场和包管理器。\n\n```bash\nnpm install -g clawhub\n```\n\n验证安装：\n\n```bash\nclawhub --version\n```\n\n## 步骤 2：搜索 Skill\n\n```bash\n# 按关键词搜索\nclawhub search \"weather\"\n\n# 浏览热门 Skill\nclawhub search \"automation\"\n```\n\n## 步骤 3：安装 Skill\n\n```bash\nclawhub install weather\nclawhub install github\nclawhub install browser-automation\n```\n\nSkill 会安装到 Agent 的 `skills/` 目录下。\n\n## 步骤 4：配置 Skill\n\n部分 Skill 需要额外配置（如 API Key），查看安装后的说明：\n\n```bash\nclawhub inspect weather\n```\n\n在 OpenClaw 配置文件 `openclaw.json` 中关联 Skill：\n\n```json\n{\n  \"agents\": {\n    \"my-agent\": {\n      \"skills\": [\"weather\", \"github\"]\n    }\n  }\n}\n```\n\n## 步骤 5：使用 Skill\n\n安装完成后，直接在对话中使用即可：\n\n> 北京今天天气怎么样？\n> 帮我查一下这个仓库的 CI 状态\n\nAgent 会自动选择合适的 Skill 执行。\n\n## 常见问题\n\n### 安装失败\n- 检查网络连接\n- 确认 Node.js 版本 >= 18\n- 尝试 `clawhub login` 后重试\n\n### Skill 不生效\n- 确认 `openclaw.json` 中已关联该 Skill\n- 重启 Gateway：`openclaw gateway restart`\n- 查看日志：`openclaw gateway logs`\n\n### Skill 更新\n```bash\n# 更新单个 Skill\nclawhub update weather\n\n# 更新所有已安装 Skill\nclawhub update\n```"
+  },
+  {
+    "slug": "build-your-own-skill",
+    "title": "从零创建你的第一个 Agent Skill",
+    "description": "手把手教你写 SKILL.md、组织目录结构、发布到 ClawHub——把你的经验变成可复用的 Agent 能力。",
+    "tags": ["skill-creation", "development", "clawhub", "guide"],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-18",
+    "featured": true,
+    "content": "## Skill 是什么？\n\n一个 Skill 就是一个文件夹，核心是 `SKILL.md`——用 Markdown 告诉 Agent 这个技能是做什么的、怎么用。\n\n## 步骤 1：创建目录结构\n\n```\nmy-first-skill/\n├── SKILL.md          # 必需：技能描述和使用说明\n├── scripts/          # 可选：脚本文件\n│   └── run.sh\n└── references/       # 可选：参考文档\n    └── api-docs.md\n```\n\n## 步骤 2：编写 SKILL.md\n\n```markdown\n---\nname: my-first-skill\ndescription: 这是一个示例 Skill，教你如何创建自己的 Agent 技能。\n---\n\n# My First Skill\n\n## 功能\n\n这个 Skill 可以做以下事情：\n- 功能 1\n- 功能 2\n\n## 使用方法\n\n直接告诉 Agent 你的需求即可。\n\n## 配置\n\n如果需要 API Key，在这里说明配置方式。\n```\n\n### SKILL.md 要点\n- **前置元数据**：`name` 和 `description` 必填\n- **使用说明**：Agent 会读这段内容来决定如何使用你的 Skill\n- **相对路径**：引用同目录下的文件用相对路径\n\n## 步骤 3：本地测试\n\n将 Skill 安装到你的 Agent 目录下，重启 Gateway 测试。\n\n## 步骤 4：发布到 ClawHub\n\n```bash\nclawhub publish ./my-first-skill\n```\n\n首次发布需要先登录：\n\n```bash\nclawhub login\n```\n\n## 步骤 5：更新版本\n\n修改 Skill 内容后，重新发布即可更新：\n\n```bash\nclawhub publish ./my-first-skill\n```\n\n## 最佳实践\n\n1. **描述要具体**：Agent 根据描述判断是否使用你的 Skill\n2. **示例要丰富**：提供典型使用场景和示例命令\n3. **脚本要健壮**：加错误处理和参数校验\n4. **文档要完整**：包括前置条件、配置方法、常见问题\n5. **避免敏感信息**：不要在 SKILL.md 中硬编码 API Key"
+  },
+  {
+    "slug": "seo-for-agent-site",
+    "title": "Agent Skill 资源站的 SEO 基础清单",
+    "description": "内容型站点的 SEO 最佳实践——Meta 标签、Schema.org 结构化数据、Sitemap、长尾词布局，一篇搞定。",
+    "tags": ["seo", "metadata", "schema-org", "content-site"],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-17",
+    "featured": false,
+    "content": "## 为什么内容站需要 SEO？\n\nAgent Skill 资源站的流量主要来自搜索引擎。做好 SEO 基础配置，是免费获取长期流量的关键。\n\n## 清单：必须做的 SEO 配置\n\n### 1. 每个页面独立的 Meta 标签\n\n每个页面必须有独特的 `title` 和 `description`：\n\n```tsx\nexport const metadata = {\n  title: 'Weather Skill - Agent Skill Hub',\n  description: '无需 API Key 的天气查询 Skill，支持全球城市当前天气和 7 天预报。',\n};\n```\n\n### 2. Open Graph 标签\n\n社交分享时显示的预览信息：\n\n```tsx\nopenGraph: {\n  title: '...',\n  description: '...',\n  url: 'https://agentskil.qzz.io/skills/weather',\n  siteName: 'Agent Skill Hub',\n  type: 'article',\n}\n```\n\n### 3. Schema.org 结构化数据\n\n帮助搜索引擎理解页面内容：\n\n- **首页**：`WebSite` + `Organization`\n- **Skill 页面**：`SoftwareApplication`\n- **教程页面**：`Article` + `HowTo`\n- **资讯页面**：`NewsArticle`\n\n### 4. Sitemap\n\n确保搜索引擎能发现所有页面：\n\n- 使用 `next-sitemap` 或自定义 `sitemap.ts` 自动生成\n- 提交到 Google Search Console\n- 设置合理的 `priority` 和 `changeFrequency`\n\n### 5. robots.txt\n\n```txt\nUser-agent: *\nAllow: /\n\nSitemap: https://agentskil.qzz.io/sitemap.xml\n```\n\n## 长尾词布局建议\n\n| 关键词 | 目标页面 |\n|--------|----------|\n| OpenClaw Skill 部署 | 教程页 |\n| AI Agent 教程 | 教程页 |\n| 智能体配置指南 | 教程页 |\n| Agent Skill 下载 | Skill 列表页 |\n| AI 开发工具 | 首页 |\n\n> **提示**：SEO 是长期积累，3-6 个月才能看到明显效果。关键是持续更新内容。"
+  },
+  {
+    "slug": "json-to-mdx-migration",
+    "title": "什么时候该从 JSON 升级到 MDX",
+    "description": "JSON 数据驱动开发快，但内容多了就捉襟见肘。这篇文章帮你判断何时迁移到 MDX，以及迁移步骤。",
+    "tags": ["architecture", "mdx", "content-management", "nextjs"],
+    "author": "AgentSkill Hub",
     "createdAt": "2026-04-16",
-    "readingTime": "10 min",
-    "content": "# 用 Tailwind 做出有科技感的资源站界面\n\n科技感不等于堆蓝光，关键是层次、留白、对比和节奏。\n\n## 推荐做法\n\n- 使用柔和渐变而不是纯色大面积铺满\n- 卡片边缘轻描边，提升结构感\n- 控制动画时长，避免花哨"
+    "featured": false,
+    "content": "## JSON vs MDX：各自的优劣\n\n### JSON 数据驱动\n\n**适合**：\n- MVP 阶段，快速上线\n- 结构化数据（Skill 列表、新闻列表）\n- 内容字段简单，不需要复杂排版\n\n**局限**：\n- 正文是纯字符串，无法嵌入组件\n- 不支持 JSX 交互组件\n- 编辑体验差，大段 Markdown 塞在 JSON 里很难维护\n\n### MDX 内容管理\n\n**适合**：\n- 长篇教程，需要嵌入代码演示、交互组件\n- 内容需要自定义布局\n- 多人协作编辑\n\n**代价**：\n- 需要搭建 MDX 编译管线\n- 构建速度变慢\n- 迁移成本\n\n## 什么时候迁移？\n\n满足以下任意两条，就该考虑了：\n\n1. 教程正文超过 500 行 Markdown\n2. 需要在正文中嵌入交互组件（如代码演示）\n3. 多人需要同时编辑不同教程\n4. 内容版本管理变得重要\n\n## 迁移步骤\n\n### 1. 创建 content 目录\n\n```\ncontent/\n├── tutorials/\n│   ├── deploy-on-vercel.mdx\n│   └── openclaw-skill-quickstart.mdx\n└── news/\n    └── 2026-04-20-openclaw-v16.mdx\n```\n\n### 2. 安装 MDX 支持\n\n```bash\nnpm install @next/mdx @mdx-js/loader @mdx-js/react\n```\n\n### 3. 迁移内容\n\n将 JSON 中的 `content` 字段提取为独立的 `.mdx` 文件，frontmatter 保留元数据。\n\n### 4. 更新构建逻辑\n\n使用 `gray-matter` 解析 frontmatter，`next-mdx-remote` 渲染内容。\n\n> **建议**：Skill 数据保持 JSON（结构化强），教程和资讯迁移到 MDX（内容灵活）。混合模式是最佳折中。"
   }
 ]

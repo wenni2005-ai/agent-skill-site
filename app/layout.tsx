@@ -4,32 +4,41 @@ import "./globals.css";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { ThemeProvider } from "@/components/theme-provider";
-import { absoluteUrl } from "@/lib/utils";
+import { siteConfig } from "@/lib/seo";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(absoluteUrl()),
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: "Agent Skill Hub | 面向 AI 开发者的技能资源站",
     template: "%s | Agent Skill Hub",
   },
-  description: "收录 Agent Skill 下载、部署教程和动态资讯的 Next.js 内容站模板。",
+  description: siteConfig.description,
   alternates: { canonical: "/" },
   keywords: ["Agent Skill", "Next.js", "OpenClaw", "AI Developer", "教程", "资源站"],
   openGraph: {
-    title: "Agent Skill Hub",
-    description: "收录 Agent Skill 下载、部署教程和动态资讯。",
-    url: absoluteUrl(),
-    siteName: "Agent Skill Hub",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
     locale: "zh_CN",
     type: "website",
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: siteConfig.name,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Agent Skill Hub",
-    description: "面向 AI 开发者的技能资源站",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
   },
 };
 

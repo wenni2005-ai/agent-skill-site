@@ -14,6 +14,6 @@ export function formatDate(date: string) {
 }
 
 export function absoluteUrl(path = "") {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://gentskil.qzz.io";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://agentskil.qzz.io";
   return new URL(path, base).toString();
 }

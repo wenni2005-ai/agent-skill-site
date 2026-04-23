@@ -19,10 +19,8 @@ export type Tutorial = {
   title: string;
   description: string;
   tags: string[];
-  level: "beginner" | "intermediate" | "advanced";
-  cover: string;
+  author: string;
   createdAt: string;
-  readingTime: string;
   featured?: boolean;
   content: string;
 };
@@ -30,11 +28,10 @@ export type Tutorial = {
 export type News = {
   slug: string;
   title: string;
-  description: string;
-  tags: string[];
+  summary: string;
   source: string;
   sourceUrl: string;
-  createdAt: string;
-  featured?: boolean;
+  publishedAt: string;
+  tags: string[];
   content: string;
 };

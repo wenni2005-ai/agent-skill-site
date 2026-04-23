@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Clock3 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { formatDate } from "@/lib/utils";
@@ -9,8 +8,7 @@ export function TutorialCard({ tutorial }: { tutorial: Tutorial }) {
   return (
     <Card className="h-full space-y-4">
       <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
-        <Badge className="capitalize">{tutorial.level}</Badge>
-        <span className="inline-flex items-center gap-1"><Clock3 className="h-3.5 w-3.5" /> {tutorial.readingTime}</span>
+        <Badge>{tutorial.author}</Badge>
       </div>
       <div>
         <Link href={`/tutorials/${tutorial.slug}`} className="text-xl font-semibold text-slate-950 transition hover:text-cyan-500 dark:text-white">
