@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { SmartAffiliateBanner } from "@/components/affiliate-banner";
+import { AdSlot } from "@/components/ad-slot";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { allTutorials, getTutorialBySlug } from "@/lib/content";
@@ -74,7 +76,9 @@ export default async function TutorialDetailPage({ params }: { params: Promise<{
         <Card>
           <MarkdownRenderer content={tutorial.content} />
         </Card>
-        <Link href="/tutorials" className="inline-flex text-sm text-cyan-500 hover:text-cyan-400">← 返回教程列表</Link>
+        <SmartAffiliateBanner context="tutorial" className="mt-6" />
+      <AdSlot position="footer" className="mt-4" />
+      <Link href="/tutorials" className="inline-flex text-sm text-cyan-500 hover:text-cyan-400">← 返回教程列表</Link>
       </section>
     </>
   );

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { SmartAffiliateBanner } from "@/components/affiliate-banner";
+import { AdSlot } from "@/components/ad-slot";
 import { Card } from "@/components/ui/card";
 import { allNews, getNewsBySlug } from "@/lib/content";
 import { buildMetadata, jsonLdScript, siteConfig } from "@/lib/seo";
@@ -75,6 +77,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
         <div className="flex flex-wrap gap-4 text-sm">
           <a href={item.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex rounded-full bg-cyan-400 px-4 py-2 font-medium text-slate-950 hover:bg-cyan-300">查看原文</a>
           <Link href="/news" className="inline-flex rounded-full border border-slate-300 px-4 py-2 hover:bg-slate-100 dark:border-white/10 dark:hover:bg-white/10">返回资讯列表</Link>
+      <SmartAffiliateBanner context="news" className="mt-6" />
         </div>
       </section>
     </>

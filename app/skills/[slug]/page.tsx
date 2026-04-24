@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { SmartAffiliateBanner } from "@/components/affiliate-banner";
+import { AdSlot } from "@/components/ad-slot";
 import { allSkills, getSkillBySlug } from "@/lib/content";
 import { buildMetadata, jsonLdScript, siteConfig } from "@/lib/seo";
 import { absoluteUrl, formatDate } from "@/lib/utils";
@@ -85,7 +87,9 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
             <div className="flex flex-col gap-3 pt-2">
               <a href={skill.downloadUrl} target="_blank" rel="noreferrer" className="rounded-full bg-cyan-400 px-4 py-3 text-center text-sm font-medium text-slate-950 transition hover:bg-cyan-300">下载 Skill</a>
               <a href={skill.githubUrl} target="_blank" rel="noreferrer" className="rounded-full border border-slate-300 px-4 py-3 text-center text-sm font-medium transition hover:bg-slate-100 dark:border-white/10 dark:hover:bg-white/10">GitHub 仓库</a>
-              <Link href="/skills" className="text-center text-sm text-slate-500 hover:text-cyan-500 dark:text-slate-400">← 返回 Skill 列表</Link>
+              <SmartAffiliateBanner context="skill" className="mt-2" />
+          <AdSlot position="sidebar" className="mt-2" />
+          <Link href="/skills" className="text-center text-sm text-slate-500 hover:text-cyan-500 dark:text-slate-400">← 返回 Skill 列表</Link>
             </div>
           </Card>
         </div>
