@@ -583,5 +583,310 @@
     "createdAt": "2026-02-20",
     "featured": false,
     "content": "# MCP Filesystem Server\n\nModel Context Protocol 官方文件系统服务器——Agent 安全访问本地文件的标准方案。\n\n## 功能介绍\n\nMCP Filesystem Server 是 Anthropic 维护的 MCP 官方服务器之一，为 AI Agent 提供受控的本地文件系统访问能力。它的核心设计理念是**安全第一**——只允许访问白名单目录，防止 Agent 越权读取敏感文件。\n\n提供的 MCP 工具：\n- **read_file**：读取指定文件内容\n- **read_multiple_files**：批量读取多个文件\n- **write_file**：写入文件内容（创建或覆盖）\n- **edit_file**：精确编辑文件（基于行号或文本匹配替换）\n- **create_directory**：创建目录（含中间目录）\n- **list_directory**：列出目录内容（区分文件和目录）\n- **directory_tree**：返回目录树结构（JSON 格式）\n- **move_file**：移动或重命名文件\n- **search_files**：递归搜索文件名匹配模式\n- **get_file_info**：获取文件元数据（大小、修改时间、权限）\n\n## 安装步骤\n\n### 在 MCP 客户端中配置\n\n```json\n{\n  \"mcpServers\": {\n    \"filesystem\": {\n      \"command\": \"npx\",\n      \"args\": [\n        \"-y\",\n        \"@modelcontextprotocol/server-filesystem\",\n        \"/path/to/allowed/dir1\",\n        \"/path/to/allowed/dir2\"\n      ]\n    }\n  }\n}\n```\n\n### 全局安装\n\n```bash\nnpm install -g @modelcontextprotocol/server-filesystem\n```\n\n## 使用示例\n\n配置完成后，AI Agent 可通过自然语言操作文件：\n\n```\n读取 /project/src/main.py 的内容\n列出 /project/src 目录下的所有文件\n在 /project/docs 目录下创建 README.md\n搜索 /project 中所有 .test.ts 文件\n把 /project/config.json 中的 \"port\": 3000 改为 \"port\": 8080\n```\n\n> ⚠️ **安全提示**：只允许 Agent 访问工作目录，不要将 `~`、`/` 等根目录加入白名单。不要将包含密钥、证书的目录开放给 Agent。\n\n**GitHub**: https://github.com/modelcontextprotocol/servers"
+  },
+  {
+    "slug": "mcp-server-fetch",
+    "title": "MCP Fetch Server",
+    "description": "MCP 官方 HTTP 请求服务器，为 Agent 提供安全的网页抓取和 API 调用能力。支持 GET/POST、自定义 Header、超时控制，内置 HTML→Markdown 转换。",
+    "category": "tool",
+    "tags": [
+      "mcp",
+      "http",
+      "fetch",
+      "web-scraping",
+      "official"
+    ],
+    "version": "0.5.0",
+    "author": "modelcontextprotocol",
+    "githubUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch",
+    "downloadUrl": "https://github.com/modelcontextprotocol/servers/archive/refs/heads/main.zip",
+    "platform": [
+      "openclaw",
+      "claude-code",
+      "cursor",
+      "copilot"
+    ],
+    "createdAt": "2026-02-20",
+    "featured": false,
+    "content": "# MCP Fetch Server\n\nModel Context Protocol 官方 HTTP 请求服务器——Agent 安全访问网页和 API 的标准方案。\n\n## 功能介绍\n\nMCP Fetch Server 让 AI Agent 能够发起 HTTP 请求，获取网页内容或调用 API。它是 MCP 官方服务器套件的一部分，与 Filesystem Server、GitHub Server 等并列。\n\n核心工具：\n- **fetch**：发起 HTTP GET/POST 请求，支持自定义 Header 和 Body\n- **html_to_markdown**：自动将 HTML 响应转为干净的 Markdown\n- **超时控制**：请求超时可配置，防止 Agent 卡死\n- **安全限制**：可限制请求的域名白名单\n\n## 安装步骤\n\n在 MCP 客户端配置中添加：\n\n```json\n{\n  \"mcpServers\": {\n    \"fetch\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-fetch\"]\n    }\n  }\n}\n```\n\n## 使用示例\n\n```\n获取 https://example.com 的内容\n调用 https://api.example.com/data 返回 JSON\n```\n\n> ⚠️ **安全提示**：建议配置允许的域名白名单，防止 Agent 访问内网地址。\n\n**GitHub**: https://github.com/modelcontextprotocol/servers"
+  },
+  {
+    "slug": "mcp-server-github",
+    "title": "MCP GitHub Server",
+    "description": "MCP 官方 GitHub 集成服务器，为 Agent 提供仓库、Issue、PR、分支管理能力。支持文件读写、Issue/PR 创建和搜索，以及 GitHub API 高级操作。",
+    "category": "devops",
+    "tags": [
+      "mcp",
+      "github",
+      "issues",
+      "pull-request",
+      "official"
+    ],
+    "version": "0.4.0",
+    "author": "modelcontextprotocol",
+    "githubUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/github",
+    "downloadUrl": "https://github.com/modelcontextprotocol/servers/archive/refs/heads/main.zip",
+    "platform": [
+      "openclaw",
+      "claude-code",
+      "cursor",
+      "copilot"
+    ],
+    "createdAt": "2026-02-20",
+    "featured": false,
+    "content": "# MCP GitHub Server\n\nMCP 官方 GitHub 集成服务器——Agent 管理代码仓库的标准接口。\n\n## 功能介绍\n\nMCP GitHub Server 是 Anthropic 维护的 MCP 官方服务器之一，提供完整的 GitHub 操作能力。\n\n核心工具：\n- **create_or_update_file**：创建或更新仓库文件\n- **push_files**：批量推送多个文件\n- **search_repositories**：搜索 GitHub 仓库\n- **create_issue**：创建 Issue\n- **create_pull_request**：创建 PR\n- **fork_repository**：Fork 仓库\n- **create_branch**：创建分支\n- **list_commits**：查看提交历史\n\n## 安装步骤\n\n```json\n{\n  \"mcpServers\": {\n    \"github\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-github\"],\n      \"env\": {\n        \"GITHUB_PERSONAL_ACCESS_TOKEN\": \"YOUR_TOKEN\"\n      }\n    }\n  }\n}\n```\n\n## 使用示例\n\n```\n在 my-org/my-repo 创建一个 Issue\n搜索 GitHub 上 Stars 最多的 Python Agent 项目\n帮我 Fork microsoft/skills 到我的账号\n```\n\n> 需要设置 `GITHUB_PERSONAL_ACCESS_TOKEN`，建议使用 Fine-grained Token 限制权限范围。\n\n**GitHub**: https://github.com/modelcontextprotocol/servers"
+  },
+  {
+    "slug": "mcp-server-memory",
+    "title": "MCP Memory Server",
+    "description": "MCP 官方知识图谱内存服务器，为 Agent 提供持久化记忆能力。基于知识图谱存储实体和关系，支持跨会话记忆保留和语义检索。",
+    "category": "ai",
+    "tags": [
+      "mcp",
+      "memory",
+      "knowledge-graph",
+      "persistence",
+      "official"
+    ],
+    "version": "0.3.0",
+    "author": "modelcontextprotocol",
+    "githubUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/memory",
+    "downloadUrl": "https://github.com/modelcontextprotocol/servers/archive/refs/heads/main.zip",
+    "platform": [
+      "openclaw",
+      "claude-code",
+      "cursor",
+      "copilot"
+    ],
+    "createdAt": "2026-02-20",
+    "featured": true,
+    "content": "# MCP Memory Server\n\nMCP 官方知识图谱内存服务器——让 Agent 拥有跨会话持久记忆。\n\n## 功能介绍\n\nAI Agent 最大的短板之一就是没有持久记忆——每次对话从零开始。MCP Memory Server 用知识图谱解决这一问题。\n\n核心能力：\n- **create_entities**：创建实体（人物、项目、概念等）\n- **create_relations**：建立实体间关系\n- **add_observations**：为实体添加观察记录\n- **search_nodes**：语义搜索知识图谱\n- **open_nodes**：按名称读取实体详情\n- **delete_entities/relations**：删除过时信息\n\n存储格式为 JSON-LD 知识图谱，持久化到本地文件。\n\n## 安装步骤\n\n```json\n{\n  \"mcpServers\": {\n    \"memory\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-memory\"]\n    }\n  }\n}\n```\n\n## 使用示例\n\n```\n记住：张三是我的同事，负责后端开发\n张三和项目 Alpha 是什么关系？\n搜索所有与 AI 相关的实体\n```\n\n> **对比 OpenClaw 内置 Memory**：OpenClaw 用 Markdown 文件（MEMORY.md）存储记忆，更直观易编辑；MCP Memory Server 用知识图谱，更适合复杂关系推理。\n\n**GitHub**: https://github.com/modelcontextprotocol/servers"
+  },
+  {
+    "slug": "mcp-server-sqlite",
+    "title": "MCP SQLite Server",
+    "description": "MCP 官方 SQLite 数据库服务器，为 Agent 提供安全的本地数据库读写能力。支持表创建、数据查询、Schema 检查，适合结构化数据存储和分析。",
+    "category": "tool",
+    "tags": [
+      "mcp",
+      "sqlite",
+      "database",
+      "sql",
+      "official"
+    ],
+    "version": "0.3.0",
+    "author": "modelcontextprotocol",
+    "githubUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/sqlite",
+    "downloadUrl": "https://github.com/modelcontextprotocol/servers/archive/refs/heads/main.zip",
+    "platform": [
+      "openclaw",
+      "claude-code",
+      "cursor",
+      "copilot"
+    ],
+    "createdAt": "2026-02-20",
+    "featured": false,
+    "content": "# MCP SQLite Server\n\nMCP 官方 SQLite 数据库服务器——Agent 的本地结构化数据引擎。\n\n## 功能介绍\n\nMCP SQLite Server 让 AI Agent 能够直接操作 SQLite 数据库，进行数据存储、查询和分析。\n\n核心工具：\n- **read_query**：执行 SELECT 查询\n- **write_query**：执行 INSERT/UPDATE/DELETE\n- **create_table**：创建新表\n- **list_tables**：列出所有表\n- **describe_table**：查看表结构\n- **append_insight**：记录数据分析洞察\n\n## 安装步骤\n\n```json\n{\n  \"mcpServers\": {\n    \"sqlite\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-sqlite\", \"/path/to/database.db\"]\n    }\n  }\n}\n```\n\n## 使用示例\n\n```\n创建一个用户表，包含 id, name, email 字段\n插入一条用户记录\n查询所有注册时间在 2026 年的用户\n```\n\n> **适合场景**：日志分析、数据整理、小型应用后端、测试数据管理。\n\n**GitHub**: https://github.com/modelcontextprotocol/servers"
+  },
+  {
+    "slug": "mcp-server-puppeteer",
+    "title": "MCP Puppeteer Server",
+    "description": "MCP 官方浏览器自动化服务器，基于 Puppeteer 驱动 Chrome。为 Agent 提供网页导航、截图、表单交互和 JavaScript 执行能力。",
+    "category": "automation",
+    "tags": [
+      "mcp",
+      "puppeteer",
+      "browser",
+      "automation",
+      "official"
+    ],
+    "version": "0.4.0",
+    "author": "modelcontextprotocol",
+    "githubUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer",
+    "downloadUrl": "https://github.com/modelcontextprotocol/servers/archive/refs/heads/main.zip",
+    "platform": [
+      "openclaw",
+      "claude-code",
+      "cursor",
+      "copilot"
+    ],
+    "createdAt": "2026-02-20",
+    "featured": false,
+    "content": "# MCP Puppeteer Server\n\nMCP 官方浏览器自动化服务器——Agent 操控浏览器的标准方案。\n\n## 功能介绍\n\nMCP Puppeteer Server 是 Anthropic 维护的 MCP 官方浏览器自动化服务器，基于 Google 的 Puppeteer 库。\n\n核心工具：\n- **puppeteer_navigate**：导航到指定 URL\n- **puppeteer_screenshot**：截取页面截图\n- **puppeteer_click**：点击页面元素\n- **puppeteer_fill**：填写表单字段\n- **puppeteer_evaluate**：在页面中执行 JavaScript\n- **puppeteer_select**：选择下拉菜单选项\n- **puppeteer_hover**：悬停在元素上\n\n## 安装步骤\n\n```json\n{\n  \"mcpServers\": {\n    \"puppeteer\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-puppeteer\"]\n    }\n  }\n}\n```\n\n## 使用示例\n\n```\n打开 https://example.com 并截图\n在搜索框输入 'AI Agent' 并点击搜索按钮\n获取页面标题和所有 h2 标题\n```\n\n> **与 Playwright Skill 的区别**：Puppeteer Server 通过 MCP 协议调用，Playwright Skill 通过 CLI 直接执行。MCP 方式更适合 Agent 框架集成。\n\n**GitHub**: https://github.com/modelcontextprotocol/servers"
+  },
+  {
+    "slug": "anthropic-official-skills",
+    "title": "Anthropic 官方 Agent Skills",
+    "description": "Anthropic 官方出品的 Agent Skill 合集，包含 docx/pptx/xlsx/pdf 文档处理、MCP Builder、设计审查等 16 个专业技能。支持 Claude Code、Cursor 等主流编码助手。",
+    "category": "productivity",
+    "tags": [
+      "anthropic",
+      "claude",
+      "document",
+      "official",
+      "skill-pack"
+    ],
+    "version": "1.0.0",
+    "author": "anthropics",
+    "githubUrl": "https://github.com/anthropics/skills",
+    "downloadUrl": "https://github.com/anthropics/skills/archive/refs/heads/main.zip",
+    "platform": [
+      "openclaw",
+      "claude-code",
+      "cursor",
+      "copilot"
+    ],
+    "createdAt": "2026-04-02",
+    "featured": true,
+    "content": "# Anthropic 官方 Agent Skills\n\nAnthropic 官方出品的 16 个专业 Agent Skill——让编码助手具备文档处理和专业能力。\n\n## 功能介绍\n\nAnthropic 于 2026 年 4 月发布官方 Agent Skill 合集，为 Claude Code 等 AI 编码助手提供专业领域激活上下文。\n\n16 个核心技能：\n- **文档处理**（4 个）：docx、pptx、xlsx、pdf 读写\n- **开发工具**（5 个）：MCP Builder、Design Reviewer、API Designer、Database Architect、Code Reviewer\n- **基础设施**（4 个）：Terraform、Docker、Kubernetes、AWS CDK\n- **协作**（3 个）：Git Workflow、PR Review、Documentation Writer\n\n## 安装步骤\n\n```bash\n# 交互式安装\nnpx skills add anthropics/skills\n\n# 安装特定技能\nnpx skills add anthropics/skills --skill docx --global\nnpx skills add anthropics/skills --skill mcp-builder --global\n\n# 全局安装所有技能\nnpx skills add anthropics/skills --global\n```\n\n## 使用示例\n\n安装 `docx` 技能后：\n\n```\n帮我生成一份项目报告的 Word 文档，包含目录、正文和页眉页脚\n```\n\n安装 `mcp-builder` 技能后：\n\n```\n用 FastMCP 创建一个文件系统 MCP Server\n```\n\n**GitHub**: https://github.com/anthropics/skills (5.6k stars)"
+  },
+  {
+    "slug": "vercel-ai-sdk-skills",
+    "title": "Vercel AI SDK Skills",
+    "description": "Vercel 官方 Agent Skill 库，专注于 Next.js + AI 应用开发。提供 RAG、Streaming、Edge Agent、Tool Calling 等核心场景的激活上下文和最佳实践模板。",
+    "category": "development",
+    "tags": [
+      "vercel",
+      "nextjs",
+      "ai-sdk",
+      "rag",
+      "streaming"
+    ],
+    "version": "1.0.0",
+    "author": "vercel",
+    "githubUrl": "https://github.com/vercel-labs/skills",
+    "downloadUrl": "https://github.com/vercel-labs/skills/archive/refs/heads/main.zip",
+    "platform": [
+      "openclaw",
+      "claude-code",
+      "cursor"
+    ],
+    "createdAt": "2026-04-08",
+    "featured": false,
+    "content": "# Vercel AI SDK Skills\n\nVercel 官方 Agent Skill 库——Next.js AI 应用开发的专业上下文。\n\n## 功能介绍\n\nVercel 为 AI 编码助手提供了一套专门针对 Next.js + AI SDK 开发场景的 Agent Skill，确保 Agent 生成代码符合 Vercel 生态最佳实践。\n\n核心技能：\n- **ai-sdk-rag**：RAG 检索增强生成，包含向量存储、嵌入、检索流程\n- **ai-sdk-streaming**：流式响应实现，包含 SSE、Partial UI\n- **ai-sdk-tools**：Tool Calling 定义和调用模式\n- **ai-sdk-edge**：Edge Runtime Agent 部署\n- **ai-sdk-guardrails**：AI 安全护栏和内容过滤\n- **nextjs-app-router**：App Router 最佳实践\n\n## 安装步骤\n\n```bash\n# 交互式安装\nnpx skills add vercel-labs/skills\n\n# 安装特定技能\nnpx skills add vercel-labs/skills --skill ai-sdk-rag --global\n```\n\n## 使用示例\n\n安装 `ai-sdk-rag` 后：\n\n```\n用 AI SDK 实现一个 RAG 聊天应用，使用 Postgres 存储向量，支持流式输出\n```\n\n安装 `ai-sdk-streaming` 后：\n\n```\n实现一个流式 AI 对话组件，支持实时显示 AI 回复\n```\n\n**GitHub**: https://github.com/vercel-labs/skills"
+  },
+  {
+    "slug": "supabase-mcp-server",
+    "title": "Supabase MCP Server",
+    "description": "Supabase 官方 MCP 服务器，为 Agent 提供数据库查询、Auth 管理、Storage 操作和 Edge Functions 部署能力。一站式 Supabase 后端操控。",
+    "category": "integration",
+    "tags": [
+      "supabase",
+      "mcp",
+      "database",
+      "auth",
+      "storage"
+    ],
+    "version": "0.2.0",
+    "author": "supabase-community",
+    "githubUrl": "https://github.com/supabase-community/supabase-mcp",
+    "downloadUrl": "https://github.com/supabase-community/supabase-mcp/archive/refs/heads/main.zip",
+    "platform": [
+      "openclaw",
+      "claude-code",
+      "cursor"
+    ],
+    "createdAt": "2026-03-30",
+    "featured": false,
+    "content": "# Supabase MCP Server\n\nSupabase 官方 MCP 服务器——Agent 管理后端基础设施的标准方案。\n\n## 功能介绍\n\nSupabase MCP Server 让 AI Agent 能够直接操控 Supabase 项目，从数据库到认证再到存储，一站式管理。\n\n核心工具：\n- **list_tables**：列出项目中的所有表\n- **execute_sql**：执行 SQL 查询\n- **list_auth_users**：查看认证用户列表\n- **create_bucket**：创建存储桶\n- **upload_file**：上传文件到存储桶\n- **deploy_edge_function**：部署 Edge Function\n- **generate_types**：生成 TypeScript 类型定义\n\n## 安装步骤\n\n```json\n{\n  \"mcpServers\": {\n    \"supabase\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"supabase-mcp-server\"],\n      \"env\": {\n        \"SUPABASE_URL\": \"https://your-project.supabase.co\",\n        \"SUPABASE_SERVICE_ROLE_KEY\": \"YOUR_KEY\"\n      }\n    }\n  }\n}\n```\n\n## 使用示例\n\n```\n查看我 Supabase 项目中的所有表\n执行 SELECT * FROM users WHERE created_at > '2026-04-01'\n为 avatars 存储桶上传一张图片\n生成数据库的 TypeScript 类型定义\n```\n\n> ⚠️ **安全提示**：建议使用 Service Role Key 时限制 Agent 的操作范围，避免误删生产数据。\n\n**GitHub**: https://github.com/supabase-community/supabase-mcp"
+  },
+  {
+    "slug": "cloudflare-mcp-server",
+    "title": "Cloudflare MCP Server",
+    "description": "Cloudflare 官方 MCP 服务器集合，覆盖 Workers、KV、D1、R2、Durable Objects 等核心服务。让 Agent 直接管理 Cloudflare 基础设施。",
+    "category": "integration",
+    "tags": [
+      "cloudflare",
+      "mcp",
+      "workers",
+      "kv",
+      "d1",
+      "infrastructure"
+    ],
+    "version": "0.1.0",
+    "author": "cloudflare",
+    "githubUrl": "https://github.com/cloudflare/mcp-servers",
+    "downloadUrl": "https://github.com/cloudflare/mcp-servers/archive/refs/heads/main.zip",
+    "platform": [
+      "openclaw",
+      "claude-code",
+      "cursor"
+    ],
+    "createdAt": "2026-04-05",
+    "featured": false,
+    "content": "# Cloudflare MCP Server\n\nCloudflare 官方 MCP 服务器集合——Agent 管理边缘基础设施的入口。\n\n## 功能介绍\n\nCloudflare 提供了一组 MCP 服务器，分别对应其核心服务，让 AI Agent 能够通过 MCP 协议管理 Cloudflare 基础设施。\n\nMCP 服务器列表：\n- **Workers MCP**：部署和管理 Workers 脚本\n- **KV MCP**：读写 KV 命名空间\n- **D1 MCP**：操作 D1 SQLite 数据库\n- **R2 MCP**：管理 R2 对象存储\n- **Durable Objects MCP**：管理 DO 实例\n\n## 安装步骤\n\n```bash\n# 安装 Cloudflare MCP CLI\nnpm install -g @cloudflare/mcp-cli\n\n# 认证\ncf-mcp auth login\n\n# 启动特定服务的 MCP 服务器\ncf-mcp start workers\ncf-mcp start d1\n```\n\n## 使用示例\n\n```\n部署一个 Hello World Worker 到 Cloudflare\n在 D1 数据库中创建一个用户表\n把文件上传到 R2 存储桶\n```\n\n**GitHub**: https://github.com/cloudflare/mcp-servers"
+  },
+  {
+    "slug": "crewai-agent-framework",
+    "title": "CrewAI Agent 框架",
+    "description": "Python 原生多 Agent 协作框架，通过角色定义+任务分解+流程编排实现 Agent 团队协作。支持顺序和层级流程，内置记忆和工具系统。",
+    "category": "agent-framework",
+    "tags": [
+      "crewai",
+      "multi-agent",
+      "python",
+      "collaboration",
+      "framework"
+    ],
+    "version": "0.86.0",
+    "author": "crewAIInc",
+    "githubUrl": "https://github.com/crewAIInc/crewAI",
+    "downloadUrl": "https://github.com/crewAIInc/crewAI/archive/refs/heads/main.zip",
+    "platform": [
+      "python",
+      "openclaw"
+    ],
+    "createdAt": "2026-04-10",
+    "featured": false,
+    "content": "# CrewAI Agent 框架\n\nPython 原生多 Agent 协作框架——让多个 AI Agent 像团队一样工作。\n\n## 功能介绍\n\nCrewAI 是目前最流行的多 Agent 协作框架之一，核心理念是「角色化 Agent + 结构化流程」。\n\n核心概念：\n- **Agent**：定义角色、目标、背景故事和可用工具\n- **Task**：定义具体任务、预期输出和负责 Agent\n- **Crew**：编排多个 Agent 和 Task 的执行流程\n- **Process**：顺序执行（Sequential）或层级管理（Hierarchical）\n- **Memory**：短期记忆、长期记忆和实体记忆\n- **Tools**：集成 LangChain Tools、自定义函数\n\n## 安装步骤\n\n```bash\npip install crewai\npip install 'crewai[tools]'  # 含额外工具集成\n```\n\n## 使用示例\n\n```python\nfrom crewai import Agent, Task, Crew, Process\n\nresearcher = Agent(\n    role='Researcher',\n    goal='Find and analyze information',\n    backstory='Expert at gathering and synthesizing data',\n    tools=[search_tool, web_scraper]\n)\n\nwriter = Agent(\n    role='Writer',\n    goal='Create compelling content',\n    backstory='Skilled at turning research into narratives'\n)\n\nresearch_task = Task(description='Research AI trends in 2026', agent=researcher)\nwrite_task = Task(description='Write a blog post based on research', agent=writer)\n\ncrew = Crew(\n    agents=[researcher, writer],\n    tasks=[research_task, write_task],\n    process=Process.sequential\n)\n\nresult = crew.kickoff()\n```\n\n**GitHub**: https://github.com/crewAIInc/crewAI (28k+ stars)"
+  },
+  {
+    "slug": "stagehand-browser-cli",
+    "title": "Stagehand 浏览器 CLI",
+    "description": "Stripe 旗下 Sidecoin 出品的 AI 浏览器自动化工具。自然语言直接操控网页——点击、填写、提取，无需写代码。基于 Playwright，AI 原生设计。",
+    "category": "automation",
+    "tags": [
+      "browser",
+      "ai-native",
+      "playwright",
+      "stagehand",
+      "natural-language"
+    ],
+    "version": "1.4.0",
+    "author": "sideco-dev",
+    "githubUrl": "https://github.com/nicholaschuayunzhi/stagehand",
+    "downloadUrl": "https://github.com/nicholaschuayunzhi/stagehand/archive/refs/heads/main.zip",
+    "platform": [
+      "openclaw",
+      "python",
+      "node"
+    ],
+    "createdAt": "2026-03-25",
+    "featured": false,
+    "content": "# Stagehand 浏览器 CLI\n\nAI 原生浏览器自动化——用自然语言操控网页。\n\n## 功能介绍\n\nStagehand 是一种全新的浏览器自动化范式：不写 CSS 选择器，不写 XPath，直接告诉 Agent 你要做什么。\n\n三大核心原语：\n- **act(action)**：执行操作（点击、填写、悬停）\n- **extract(instruction)**：提取数据（价格、标题、列表）\n- **observe(instruction)**：观察页面（有哪些按钮、表单状态）\n\n底层基于 Playwright，但把选择器的概念完全隐藏——AI 自动理解页面结构并定位元素。\n\n## 安装步骤\n\n```bash\nnpm install stagehand\n\n# 需要 LLM API Key\nexport OPENAI_API_KEY=your-key\n```\n\n## 使用示例\n\n```typescript\nimport { Stagehand } from 'stagehand';\n\nconst stagehand = new Stagehand({ env: 'LOCAL' });\nawait stagehand.init();\n\nawait stagehand.page.goto('https://example.com');\n\n// 自然语言操作\nawait stagehand.page.act('click the search button');\nawait stagehand.page.act('type \"AI Agent\" in the search box');\n\n// 自然语言提取\nconst prices = await stagehand.page.extract({\n  instruction: 'extract all product prices',\n  schema: { prices: { type: 'array', items: { type: 'string' } } }\n});\n```\n\n**GitHub**: https://github.com/nicholaschuayunzhi/stagehand"
+  },
+  {
+    "slug": "openai-codex-cli",
+    "title": "OpenAI Codex CLI",
+    "description": "OpenAI 官方编码 Agent 命令行工具。基于 codex-1 模型，支持自主编码、测试运行、Git 操作。沙箱隔离执行，安全可控。",
+    "category": "development",
+    "tags": [
+      "openai",
+      "codex",
+      "coding-agent",
+      "cli",
+      "sandbox"
+    ],
+    "version": "1.0.0",
+    "author": "openai",
+    "githubUrl": "https://github.com/openai/codex",
+    "downloadUrl": "https://github.com/openai/codex/archive/refs/heads/main.zip",
+    "platform": [
+      "openclaw",
+      "terminal"
+    ],
+    "createdAt": "2026-04-16",
+    "featured": true,
+    "content": "# OpenAI Codex CLI\n\nOpenAI 官方编码 Agent——自主写代码、跑测试、改 Bug。\n\n## 功能介绍\n\nCodex CLI 是 OpenAI 推出的命令行编码 Agent，基于 codex-1 模型（GPT-4 级别推理能力），能够在沙箱中自主完成编码任务。\n\n核心能力：\n- **自主编码**：理解需求后自主编写、修改代码\n- **测试驱动**：自动运行测试，根据结果迭代修改\n- **Git 操作**：创建分支、提交代码、发起 PR\n- **沙箱执行**：所有代码在隔离沙箱中运行，防止意外破坏\n- **多模型支持**：codex-1-mini（快速）和 codex-1（精准）\n\n## 安装步骤\n\n```bash\nnpm install -g @openai/codex\n\n# 设置 API Key\nexport OPENAI_API_KEY=your-key\n\n# 运行\ncodex \"创建一个 Express 服务器，包含用户 CRUD API\"\n```\n\n## 使用示例\n\n```bash\n# 创建项目\ncodex \"初始化一个 TypeScript + Express 项目，包含 ESLint 和 Prettier 配置\"\n\n# 修复 Bug\ncodex \"修复 src/auth.ts 中的 JWT 过期检查逻辑\"\n\n# 添加功能\ncodex \"为 User 模型添加邮箱验证功能\"\n```\n\n> **对比 Claude Code**：Codex CLI 偏重自主执行（agentic），Claude Code 偏重协作式编码。各有优势。\n\n**GitHub**: https://github.com/openai/codex (18k+ stars)"
   }
 ]

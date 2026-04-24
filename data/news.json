@@ -6,7 +6,11 @@
     "source": "OpenClaw 官方",
     "sourceUrl": "https://github.com/openclaw/openclaw/releases",
     "publishedAt": "2026-04-20",
-    "tags": ["openclaw", "release", "framework"],
+    "tags": [
+      "openclaw",
+      "release",
+      "framework"
+    ],
     "content": "## OpenClaw v16 主要更新\n\n### 核心变化\n- **App Router 全面升级**：支持嵌套路由和动态路由参数，Agent 编排更灵活\n- **Streaming 响应模式**：Agent 输出支持实时流式传输，用户体验更流畅\n- **Skill 热加载**：无需重启 Gateway 即可加载新 Skill\n\n### 迁移建议\n- 旧版 Page Router 项目建议逐步迁移\n- 新项目直接使用 App Router\n- 注意 Breaking Change：`agent.config` 格式微调\n\n> 升级命令：`npm install -g openclaw@latest`"
   },
   {
@@ -16,7 +20,11 @@
     "source": "ClawHub",
     "sourceUrl": "https://clawhub.ai",
     "publishedAt": "2026-04-19",
-    "tags": ["clawhub", "skill-marketplace", "search"],
+    "tags": [
+      "clawhub",
+      "skill-marketplace",
+      "search"
+    ],
     "content": "## ClawHub Skill 索引页上线\n\nClawHub 正式推出统一 Skill 索引页面，主要改进：\n\n- **分类浏览**：按工具、自动化、生产力、开发等类别浏览\n- **标签筛选**：支持多标签组合筛选\n- **排序优化**：按更新时间、下载量、评分排序\n- **向量搜索**：语义搜索替代关键词匹配，找 Skill 更精准\n\n### 对开发者的影响\n\nSkill 作者可通过 `clawhub publish` 更新 Skill 元数据，包括分类和标签，确保被正确索引。\n\n```bash\nclawhub publish ./my-skill\n```"
   },
   {
@@ -26,7 +34,11 @@
     "source": "AI Industry Report",
     "sourceUrl": "https://aillama.ai/reports/agent-market-2026-q1",
     "publishedAt": "2026-04-18",
-    "tags": ["industry", "trend", "market"],
+    "tags": [
+      "industry",
+      "trend",
+      "market"
+    ],
     "content": "## 2026 Q1 Agent 工具市场趋势\n\n### 关键数据\n- 垂直 Skill 包增长率：**+187%** YoY\n- 通用 Agent 框架增长率：**+42%** YoY\n- 开发者偏好：**73%** 选择模块化 Skill 组合而非单体框架\n\n### 核心趋势\n\n1. **垂直化加速**：开发者倾向为特定场景（如财务、法律、医疗）定制 Skill，而非用通用框架\n2. **Skill 即服务**：越来越多 Skill 提供 API 化调用，脱离 Agent 框架独立使用\n3. **中文生态崛起**：中文 Skill 数量 Q1 增长 312%，增速全球最快\n4. **安全审计需求**：企业级用户开始要求 Skill 安全认证和权限管控\n\n### 对开发者的启示\n- 做垂直 Skill 比做通用框架更有商业价值\n- 中文市场是蓝海\n- 安全合规是下一轮竞争焦点"
   },
   {
@@ -36,7 +48,11 @@
     "source": "LangChain Blog",
     "sourceUrl": "https://blog.langchain.dev/tool-calling-v2",
     "publishedAt": "2026-04-17",
-    "tags": ["langchain", "tool-calling", "observability"],
+    "tags": [
+      "langchain",
+      "tool-calling",
+      "observability"
+    ],
     "content": "## LangChain 工具调用 V2\n\n### 主要更新\n- **统一工具调用接口**：不同 LLM Provider 的工具调用统一为同一 API\n- **OpenTelemetry 集成**：每次工具调用自动生成 Trace，方便调试和监控\n- **错误恢复机制**：工具调用失败时支持自动重试和降级\n\n### 与 OpenClaw 的对比\n\n| 特性 | LangChain V2 | OpenClaw |\n|------|-------------|----------|\n| 工具定义 | Python 装饰器 | SKILL.md 声明式 |\n| 调用方式 | Python 函数 | CLI / Shell |\n| 可观测性 | OpenTelemetry | Gateway 内置 |\n| 运行环境 | Python 进程 | 独立进程 |\n\n两种方案各有优势，适合不同场景。"
   },
   {
@@ -46,7 +62,11 @@
     "source": "Dify GitHub",
     "sourceUrl": "https://github.com/langgenius/dify",
     "publishedAt": "2026-04-16",
-    "tags": ["dify", "plugin", "community"],
+    "tags": [
+      "dify",
+      "plugin",
+      "community"
+    ],
     "content": "## Dify Plugin Hub Q1 扩展\n\n### 新增插件类别\n- **数据源**：Notion、Airtable、Supabase 连接器\n- **工具集成**：Jira、Linear、Figma API 桥接\n- **输出格式**：PDF 生成、PPT 生成、邮件模板\n\n### 亮点插件\n- **Notion Sync**：双向同步 Dify 工作流和 Notion 数据库\n- **Figma to Code**：从 Figma 设计稿生成前端代码\n- **PDF Report**：将 Agent 输出格式化为 PDF 报告\n\n### 生态对比\nDify 走的是平台内闭环路线，插件只能在 Dify 平台内使用；OpenClaw 的 Skill 则是独立 CLI 工具，跨平台可用。\n\n两种模式各有取舍。"
   },
   {
@@ -56,7 +76,11 @@
     "source": "扣子官方",
     "sourceUrl": "https://www.coze.cn/docs/plugin-marketplace",
     "publishedAt": "2026-04-15",
-    "tags": ["coze", "enterprise", "chinese"],
+    "tags": [
+      "coze",
+      "enterprise",
+      "chinese"
+    ],
     "content": "## 扣子企业版插件市场\n\n### 核心功能\n- **私有化部署**：企业可将插件市场部署在自有服务器\n- **内部技能市场**：支持企业内部私有插件上传和分发\n- **权限管控**：细粒度的插件访问和使用权限\n- **审计日志**：完整的插件调用审计追踪\n\n### 与公版的区别\n\n| 特性 | 公版 | 企业版 |\n|------|------|--------|\n| 部署方式 | 云端 | 私有化可选 |\n| 插件来源 | 公开 | 公开 + 内部 |\n| 权限控制 | 基础 | 细粒度 |\n| 审计 | 无 | 完整 |\n\n### 适用场景\n- 有数据安全要求的企业\n- 需要内部技能共享的团队\n- 合规要求严格的行业（金融、医疗）\n\n> **注意**：企业版需要联系扣子团队获取授权。"
   },
   {
@@ -66,7 +90,11 @@
     "source": "GitHub Discussion",
     "sourceUrl": "https://github.com/openclaw/openclaw/discussions",
     "publishedAt": "2026-04-14",
-    "tags": ["standard", "skill-format", "open-source"],
+    "tags": [
+      "standard",
+      "skill-format",
+      "open-source"
+    ],
     "content": "## Skill 打包规范讨论进展\n\n### 背景\n\n当前各 Agent 框架的「技能/工具/插件」格式互不兼容：\n- OpenClaw：SKILL.md（声明式 Markdown）\n- LangChain：Python 装饰器 + YAML\n- AutoGPT：JSON 配置文件\n- Dify：YAML + Python 模块\n\n### 共识方向\n\n1. **SKILL.md 作为元数据层**：用 Markdown 声明技能描述、参数、依赖\n2. **执行层保持灵活**：底层可以是 Python、Shell、API 调用\n3. **分发格式统一**：支持 `clawhub install` 风格的一键安装\n\n### 下一步\n- 起草正式 RFC\n- 各框架实现适配层\n- 建立交叉兼容测试集\n\n> 对开发者而言：统一格式意味着写一次 Skill，多平台可用。"
   },
   {
@@ -76,7 +104,11 @@
     "source": "Vercel Blog",
     "sourceUrl": "https://vercel.com/blog/ai-sdk-4",
     "publishedAt": "2026-04-13",
-    "tags": ["vercel", "ai-sdk", "multi-agent"],
+    "tags": [
+      "vercel",
+      "ai-sdk",
+      "multi-agent"
+    ],
     "content": "## Vercel AI SDK 4.0\n\n### 新功能\n- **多 Agent 编排**：Agent 间可互相调用和传递上下文\n- **工具注册表**：统一管理 Agent 可用的工具集\n- **流式中间件**：在流式响应中插入中间处理逻辑\n- **Edge Runtime 优化**：Agent 可跑在 Edge 上，延迟更低\n\n### 与 Next.js 集成\n\n```tsx\n// app/api/agent/route.ts\nimport { agent } from 'ai';\n\nexport const POST = agent({\n  model: 'gpt-4o',\n  tools: { weather, search, calculator },\n});\n```\n\n### 适用场景\n- 在 Next.js 应用中嵌入 Agent 能力\n- 构建 AI-first 的 Web 应用\n- 边缘计算场景下的低延迟 Agent\n\n> **对比 OpenClaw**：Vercel AI SDK 偏 Web 应用集成，OpenClaw 偏 CLI/自动化场景，互补关系。"
   },
   {
@@ -86,7 +118,11 @@
     "source": "AutoGPT GitHub",
     "sourceUrl": "https://github.com/Significant-Gravitas/AutoGPT",
     "publishedAt": "2026-04-12",
-    "tags": ["autogpt", "architecture", "modular"],
+    "tags": [
+      "autogpt",
+      "architecture",
+      "modular"
+    ],
     "content": "## AutoGPT v6 模块化重构\n\n### 核心变化\n- **Block 架构**：每个能力（浏览、搜索、编码、部署）拆为独立 Block\n- **热插拔**：运行时动态加载/卸载 Block\n- **社区贡献**：Block 可独立发布到 Block Hub\n- **沙箱隔离**：每个 Block 运行在独立沙箱，互不干扰\n\n### 与 Skill 的对比\n\n| 特性 | AutoGPT Block | OpenClaw Skill |\n|------|--------------|----------------|\n| 格式 | Python 模块 | SKILL.md + 脚本 |\n| 分发 | Block Hub | ClawHub |\n| 隔离 | 沙箱 | 独立进程 |\n| 组合 | Pipeline | Agent 编排 |\n\n### 评价\n\nAutoGPT 的模块化方向和 OpenClaw 的 Skill 理念殊途同归，都是「把能力拆小、自由组合」。执行层的差异（Python 模块 vs CLI 工具）决定了各自的最佳场景。"
   },
   {
@@ -96,7 +132,86 @@
     "source": "AgentSkill Hub",
     "sourceUrl": "https://agentskil.qzz.io",
     "publishedAt": "2026-04-11",
-    "tags": ["browser", "comparison", "review"],
+    "tags": [
+      "browser",
+      "comparison",
+      "review"
+    ],
     "content": "## 浏览器自动化 Skill 横评\n\n### 三个参赛选手\n\n| Skill | 核心技术 | AI 适配方式 |\n|-------|---------|------------|\n| Browser Automation | Playwright | 自然语言 → 代码 |\n| Stagehand Browser CLI | Stagehand | 自然语言直接操控 |\n| Agent Browser ClawdBot | CDP + A11y Tree | Ref ID 精准选择 |\n\n### 评测维度\n\n| 维度 | Playwright | Stagehand | ClawdBot |\n|------|-----------|-----------|---------|\n| 安装难度 | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |\n| AI 理解成本 | 中 | 低 | 低 |\n| 操作精度 | 高 | 中 | 极高 |\n| 稳定性 | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ |\n| 复杂表单 | ✅ | ✅ | ✅ |\n| 页面理解 | 截图 | 截图 | A11y Tree |\n\n### 推荐选择\n- **通用自动化** → Playwright 方案（生态成熟）\n- **自然语言操控** → Stagehand 方案（上手最快）\n- **精准 Agent 操作** → ClawdBot 方案（精度最高）"
+  },
+  {
+    "slug": "openai-codex-cli-launch",
+    "title": "OpenAI 发布 Codex CLI 编码 Agent，直接在终端自主写代码",
+    "summary": "OpenAI 正式开源 Codex CLI 命令行编码工具，基于 codex-1 模型，支持沙箱隔离执行、自主测试和 Git 操作，定位为「终端里的编程搭档」。",
+    "source": "OpenAI Blog",
+    "sourceUrl": "https://github.com/openai/codex",
+    "publishedAt": "2026-04-22",
+    "tags": [
+      "openai",
+      "codex",
+      "coding-agent",
+      "cli"
+    ],
+    "content": "## OpenAI Codex CLI 正式发布\n\n### 核心特性\n- **codex-1 模型**：基于 GPT-4 级推理能力，专为编码任务优化\n- **沙箱隔离**：所有代码在沙箱中执行，保护宿主系统安全\n- **自主模式**：理解需求后自主规划、编码、测试、修复\n- **双模型**：codex-1-mini（快速迭代）和 codex-1（精准执行）\n\n### 与竞品对比\n\n| 特性 | Codex CLI | Claude Code | Cursor |\n|------|-----------|-------------|--------|\n| 运行方式 | CLI 沙箱 | CLI 直连 | IDE 内嵌 |\n| 执行隔离 | ✅ 沙箱 | ❌ 直连 | ❌ 直连 |\n| Git 集成 | 自动 | 手动 | 手动 |\n| 开源 | ✅ | ❌ | ❌ |\n\n### 生态影响\nCodex CLI 的开源发布意味着编码 Agent 不再是闭源产品的特权。开发者可以自由集成和定制，社区已经在推进 MCP Server 适配。\n\n> 安装：`npm install -g @openai/codex`"
+  },
+  {
+    "slug": "anthropic-skills-repo-launch",
+    "title": "Anthropic 发布官方 Agent Skills 仓库，16 个技能覆盖文档+开发+基础设施",
+    "summary": "Anthropic 在 GitHub 发布官方 Agent Skills 合集，包含 docx/pptx/xlsx/pdf 文档处理、MCP Builder、设计审查等 16 个技能，兼容 Claude Code 和 Cursor。",
+    "source": "Anthropic GitHub",
+    "sourceUrl": "https://github.com/anthropics/skills",
+    "publishedAt": "2026-04-21",
+    "tags": [
+      "anthropic",
+      "skills",
+      "claude-code",
+      "official"
+    ],
+    "content": "## Anthropic 官方 Skills 仓库\n\n### 发布背景\n\n随着 Agent Skills 开放标准被越来越多框架采纳，Anthropic 作为标准的主要推动者，终于发布了官方 Skill 合集。\n\n### 16 个技能分类\n\n**文档处理（4 个）**：\n- docx：Word 文档读写\n- pptx：PowerPoint 生成\n- xlsx：Excel 数据处理\n- pdf：PDF 解析和生成\n\n**开发工具（5 个）**：\n- mcp-builder：MCP Server 开发最佳实践\n- design-reviewer：架构和设计审查\n- api-designer：API 设计规范\n- database-architect：数据库设计\n- code-reviewer：代码审查清单\n\n**基础设施（4 个）**：\n- terraform：IaC 最佳实践\n- docker：容器化部署\n- kubernetes：K8s 编排\n- aws-cdk：AWS CDK 开发\n\n**协作（3 个）**：\n- git-workflow：Git 工作流\n- pr-review：PR 审查指南\n- documentation-writer：文档撰写\n\n### 安装方式\n```bash\nnpx skills add anthropics/skills --global\n```\n\n> 这个仓库的发布标志着 Agent Skills 从社区实验走向官方认可。"
+  },
+  {
+    "slug": "snyk-agent-scan-0-4-release",
+    "title": "Snyk Agent Scan v0.4 发布，新增 Skill 安全扫描和 Toxic Flow 检测",
+    "summary": "Snyk Agent 安全扫描工具更新至 v0.4，新增 Skill 描述扫描、MCP Server 间 Toxic Flow 检测，支持 15+ 主流 Agent 平台自动发现。",
+    "source": "Snyk Blog",
+    "sourceUrl": "https://github.com/snyk/agent-scan",
+    "publishedAt": "2026-04-21",
+    "tags": [
+      "snyk",
+      "security",
+      "agent-scan",
+      "mcp"
+    ],
+    "content": "## Snyk Agent Scan v0.4 更新\n\n### 新增检测能力\n\nv0.4 版本新增了两个关键安全检测维度：\n\n- **Skill 描述扫描**：分析 SKILL.md 中的恶意指令，检测隐藏的提示注入攻击\n- **Toxic Flow 检测**：发现 MCP Server 间可能的数据泄露通道\n\n### 支持的 Agent 平台\n\n自动发现支持：Claude Code、Claude Desktop、Cursor、Windsurf、VS Code、Gemini CLI、OpenClaw、Amp、Codex、Amazon Q 等 15+ 平台。\n\n### 使用方式\n\n```bash\n# 全机扫描\nuvx snyk-agent-scan@latest\n\n# 同时扫描 Skill\nuvx snyk-agent-scan@latest --skills\n\n# JSON 输出\nuvx snyk-agent-scan@latest --json\n```\n\n### 安全建议\n\n随着 Agent 生态爆发，供应链安全成为关键议题。建议所有使用 MCP Server 和第三方 Skill 的开发者定期运行安全扫描。\n\n> \"Agent 的安全边界不再是进程，而是 Skill 描述中的自然语言\" —— Snyk 安全团队"
+  },
+  {
+    "slug": "skills-mp-marketplace-launch",
+    "title": "SkillsMP 市场上线：自动索引 GitHub 上的 Agent Skill 项目",
+    "summary": "SkillsMP Marketplace 正式上线，自动爬取和索引 GitHub 上的 Agent Skill 项目，按分类、更新时间、Star 数排序，一站式发现可用 Skill。",
+    "source": "SkillsMP",
+    "sourceUrl": "https://agent-skill.co",
+    "publishedAt": "2026-04-22",
+    "tags": [
+      "skill-marketplace",
+      "github",
+      "index",
+      "discovery"
+    ],
+    "content": "## SkillsMP Marketplace 上线\n\n### 核心功能\n\nSkillsMP 是一个自动化的 Agent Skill 发现平台：\n\n- **自动索引**：持续爬取 GitHub 上的 Skill 项目，保持数据最新\n- **分类浏览**：按开发、安全、基础设施、文档等分类\n- **智能排序**：按 Star 数、更新时间、下载量排序\n- **一键安装**：每个 Skill 提供 `npx skills add` 安装命令\n- **兼容性标注**：标注支持的 Agent 平台（Claude Code、Cursor、Codex 等）\n\n### 数据规模\n\n上线首日已索引 500+ 个 Skill 项目，覆盖：\n- Anthropic 官方 Skills（16 个）\n- Microsoft Agent Skills（132 个）\n- Antigravity Awesome Skills（1,431+ 个）\n- 社区贡献（300+ 个）\n\n### 访问方式\n\n- 网站：https://agent-skill.co/\n- CLI：`npx skills find [query]`\n\n> 对标 npm/crates.io 的 Agent Skill 包管理器正在成型。"
+  },
+  {
+    "slug": "mcp-protocol-may-2026-update",
+    "title": "MCP 协议 2026 年 5 月更新草案：Sampling 和 Elicitations 提案推进",
+    "summary": "Model Context Protocol 发布 2026-05 更新草案，Sampling（服务器请求 LLM 推理）和 Elicitations（服务器请求用户输入）两个关键特性提案进入实施阶段。",
+    "source": "MCP Spec",
+    "sourceUrl": "https://modelcontextprotocol.io/specification/2025-05",
+    "publishedAt": "2026-04-23",
+    "tags": [
+      "mcp",
+      "protocol",
+      "sampling",
+      "elicitation"
+    ],
+    "content": "## MCP 协议 2026-05 草案更新\n\n### 两个关键特性\n\n**Sampling（采样）**：\n- 允许 MCP Server 请求客户端的 LLM 进行推理\n- 场景：Agent A 调用 MCP Server B，Server B 需要再调用 LLM 完成子任务\n- 安全：客户端可选择批准或拒绝采样请求\n\n**Elicitations（征询）**：\n- 允许 MCP Server 请求用户输入\n- 场景：MCP Server 执行操作前需要用户确认（如删除文件、发送邮件）\n- 形式：结构化表单，类似 HTTP 401 认证流程\n\n### 对开发者的影响\n\n- Sampling 让 MCP Server 从「被动工具」升级为「主动协作者」\n- Elicitations 让 Agent 操作更安全，避免误操作\n- Fast-Agent MCP 已率先实现这两个特性\n\n### 实施时间线\n\n- 2026-04：草案发布，社区评审\n- 2026-05：正式规范发布\n- 2026-06：主流客户端支持\n\n> 这两个特性将 MCP 从「工具协议」升级为「协作协议」，意义深远。"
   }
 ]
