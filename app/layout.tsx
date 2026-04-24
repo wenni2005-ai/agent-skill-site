@@ -40,6 +40,9 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: [siteConfig.ogImage],
   },
+  verification: {
+    google: "snCK-ctJhuc9WsNBI1i0Hyomq1Zi3Ir4szd1pRMXnL8",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
