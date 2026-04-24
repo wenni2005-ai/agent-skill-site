@@ -42,7 +42,7 @@ const AFFILIATE_PRODUCTS: Record<string, AffiliateConfig> = {
     id: "vercel",
     name: "Vercel",
     description: "Agent 站点首选部署平台，零配置部署 Next.js，全球 CDN",
-    url: "https://vercel.com?ref=REPLACE_ME",
+    url: "https://vercel.com",
     badge: "🚀 部署首选",
     color: "from-slate-800 to-slate-900",
   },
@@ -50,7 +50,7 @@ const AFFILIATE_PRODUCTS: Record<string, AffiliateConfig> = {
     id: "supabase",
     name: "Supabase",
     description: "开源 Firebase 替代，Postgres + Auth + Storage + Edge Functions",
-    url: "https://supabase.com?ref=REPLACE_ME",
+    url: "https://supabase.com",
     badge: "⚡ 后端即服务",
     color: "from-emerald-500 to-teal-500",
   },
@@ -58,7 +58,7 @@ const AFFILIATE_PRODUCTS: Record<string, AffiliateConfig> = {
     id: "digitalocean",
     name: "DigitalOcean",
     description: "简单易用的云服务器，$200 新用户额度，适合自托管 Agent",
-    url: "https://digitalocean.com?refcode=REPLACE_ME",
+    url: "https://digitalocean.com",
     badge: "☁️ 自托管推荐",
     color: "from-blue-600 to-indigo-600",
   },
@@ -83,8 +83,8 @@ export function AffiliateBanner({
   const config = AFFILIATE_PRODUCTS[product];
   if (!config) return null;
 
-  // 检查是否已配置真实联盟 ID（替换占位符）
-  const isPlaceholder = config.url.includes("REPLACE_ME");
+  // 检查是否已配置真实联盟 ID
+  const hasReferral = new URL(config.url).searchParams.has('ref') || new URL(config.url).searchParams.has('refcode') || config.url.includes('/r/') || config.url.includes('/i/');
 
   if (variant === "banner") {
     return (
@@ -112,7 +112,7 @@ export function AffiliateBanner({
             立即体验
           </a>
         </div>
-        {isPlaceholder && (
+        {hasReferral && (
           <span className="absolute right-2 top-2 text-[10px] text-white/40">
             AD
           </span>
@@ -148,7 +148,7 @@ export function AffiliateBanner({
         >
           立即体验 →
         </a>
-        {isPlaceholder && (
+        {hasReferral && (
           <p className="text-center text-[10px] text-slate-400">推广链接</p>
         )}
       </div>
