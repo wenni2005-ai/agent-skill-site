@@ -213,5 +213,228 @@
       "elicitation"
     ],
     "content": "## MCP 协议 2026-05 草案更新\n\n### 两个关键特性\n\n**Sampling（采样）**：\n- 允许 MCP Server 请求客户端的 LLM 进行推理\n- 场景：Agent A 调用 MCP Server B，Server B 需要再调用 LLM 完成子任务\n- 安全：客户端可选择批准或拒绝采样请求\n\n**Elicitations（征询）**：\n- 允许 MCP Server 请求用户输入\n- 场景：MCP Server 执行操作前需要用户确认（如删除文件、发送邮件）\n- 形式：结构化表单，类似 HTTP 401 认证流程\n\n### 对开发者的影响\n\n- Sampling 让 MCP Server 从「被动工具」升级为「主动协作者」\n- Elicitations 让 Agent 操作更安全，避免误操作\n- Fast-Agent MCP 已率先实现这两个特性\n\n### 实施时间线\n\n- 2026-04：草案发布，社区评审\n- 2026-05：正式规范发布\n- 2026-06：主流客户端支持\n\n> 这两个特性将 MCP 从「工具协议」升级为「协作协议」，意义深远。"
+  },
+  {
+    "slug": "google-vertex-ai-agent-builder",
+    "title": "Google Vertex AI Agent Builder 正式 GA，企业级 Agent 开发门槛再降",
+    "summary": "Google Cloud 宣布 Vertex AI Agent Builder 全面可用，提供可视化编排、内置 RAG 和企业安全管控。",
+    "source": "Google Cloud Blog",
+    "sourceUrl": "https://cloud.google.com/blog/products/ai-machine-learning",
+    "publishedAt": "2026-04-22",
+    "tags": [
+      "google",
+      "vertex-ai",
+      "enterprise",
+      "agent-builder"
+    ],
+    "content": "## 要点\n\n- Vertex AI Agent Builder 从 Preview 进入 GA\n- 提供拖拽式 Agent 编排界面，无需代码\n- 内置 RAG 引擎，支持连接企业知识库\n- 集成 IAM 安全管控和审计日志\n- 与 BigQuery、Cloud Storage 深度打通\n\n## 对开发者的影响\n\n- 企业用户可以更快构建内部 Agent\n- 但自定义 Skill 仍需用 API 编写\n- 与 OpenClaw 等开源方案形成互补\n\n> 适合不想折腾基础设施的团队，但灵活度不如自建。"
+  },
+  {
+    "slug": "mcp-registry-launch",
+    "title": "MCP Registry 正式上线：MCP Server 有了中央发现平台",
+    "summary": "Anthropic 推出 MCP Registry，MCP Server 开发者可以注册发布，用户可以一键搜索安装。",
+    "source": "Anthropic 官方",
+    "sourceUrl": "https://modelcontextprotocol.io/registry",
+    "publishedAt": "2026-04-21",
+    "tags": [
+      "mcp",
+      "registry",
+      "anthropic",
+      "ecosystem"
+    ],
+    "content": "## 要点\n\n- MCP Registry 提供中央化的 MCP Server 发现和安装\n- 支持 CLI 一键安装：`mcp install @org/server-name`\n- 自动版本管理和兼容性检查\n- 已有 200+ 社区 Server 注册\n\n## 意义\n\nMCP 生态从此有了 npm/PyPI 级别的包管理体验。开发者不再需要手动配置 Server 路径。\n\n> 对 Skill 生态也是利好——Skill 可以声明依赖的 MCP Server，安装时自动拉取。"
+  },
+  {
+    "slug": "microsoft-semantic-kernel-1-20",
+    "title": "微软 Semantic Kernel 1.20 发布，原生支持 MCP 工具调用",
+    "summary": "Semantic Kernel 新版本集成 MCP Protocol，.NET 和 Java Agent 可直接调用 MCP Server。",
+    "source": "Microsoft DevBlogs",
+    "sourceUrl": "https://devblogs.microsoft.com/semantic-kernel/",
+    "publishedAt": "2026-04-20",
+    "tags": [
+      "microsoft",
+      "semantic-kernel",
+      "mcp",
+      "dotnet"
+    ],
+    "content": "## 要点\n\n- Semantic Kernel 1.20 原生集成 MCP Protocol\n- .NET 和 Java 项目可直接发现和调用 MCP Server\n- 新增 Function Filter 中间件，支持调用前后的拦截处理\n- 改进 Planner 的多步推理稳定性\n\n## 亮点\n\n这是微软生态正式拥抱 MCP 的重要信号。企业 .NET 开发者现在可以用 SK + MCP 构建跨平台 Agent。\n\n> MCP 正在成为 Agent 工具调用的 HTTP 级别标准。"
+  },
+  {
+    "slug": "agent-eval-benchmark-v2",
+    "title": "Agent Eval Benchmark V2 发布：覆盖 12 个场景 300+ 测试用例",
+    "summary": "社区驱动的新版 Agent 评估基准，覆盖代码生成、数据分析、工具调用等 12 大场景。",
+    "source": "Hugging Face",
+    "sourceUrl": "https://huggingface.co/datasets/agent-eval-v2",
+    "publishedAt": "2026-04-19",
+    "tags": [
+      "benchmark",
+      "evaluation",
+      "community"
+    ],
+    "content": "## 要点\n\n- Agent Eval V2 覆盖 12 个场景，300+ 测试用例\n- 新增工具调用正确率、多步推理一致性指标\n- 提供自动化评测脚本，一行命令跑完\n- 排行榜已上线 Hugging Face Spaces\n\n## 场景覆盖\n\n代码生成、数据分析、文档问答、网页交互、API 调用、多轮对话、RAG 检索、安全审计、内容创作、任务规划、错误恢复、多语言\n\n> 对 Skill 开发者的意义：可以用这套基准验证你的 Skill 在真实场景中的表现。"
+  },
+  {
+    "slug": "openai-realtime-agent-api",
+    "title": "OpenAI 推出 Realtime Agent API，语音 Agent 延迟降至 300ms",
+    "summary": "新 API 支持全双工语音交互，Agent 可以边听边说，对话体验接近真人。",
+    "source": "OpenAI 官方",
+    "sourceUrl": "https://platform.openai.com/docs/realtime-agent",
+    "publishedAt": "2026-04-18",
+    "tags": [
+      "openai",
+      "realtime",
+      "voice",
+      "api"
+    ],
+    "content": "## 要点\n\n- Realtime Agent API 支持全双工语音交互\n- 端到端延迟 300ms，对话体验接近真人\n- 支持 Function Calling，语音对话中可调用工具\n- 提供 Python 和 Node.js SDK\n\n## 技术细节\n\n- 基于 WebSocket 双向流\n- 音频编码：G.711 / Opus\n- 并发支持：单连接最多 5 个工具调用\n- 定价：$0.06/分钟\n\n> 适合客服、语音助手、实时翻译等场景。对 Skill 生态的影响：语音驱动的 Skill 将成为新方向。"
+  },
+  {
+    "slug": "crewai-enterprise-launch",
+    "title": "CrewAI Enterprise 上线：多 Agent 编排加上企业级管控",
+    "summary": "CrewAI 推出企业版，支持 RBAC 权限、审计日志、SSO 和私有化部署。",
+    "source": "CrewAI 官方",
+    "sourceUrl": "https://crewai.com/enterprise",
+    "publishedAt": "2026-04-17",
+    "tags": [
+      "crewai",
+      "enterprise",
+      "multi-agent"
+    ],
+    "content": "## 要点\n\n- CrewAI Enterprise 支持 RBAC 权限管理\n- 审计日志记录每个 Agent 的操作\n- 集成 SSO（SAML/OIDC）\n- 支持私有化部署到 AWS/Azure/GCP\n- 新增 Flow 编排引擎，可视化定义 Agent 协作流程\n\n## 与开源版的区别\n\n开源版适合个人和小团队。企业版加了安全管控和部署灵活性，但核心编排能力一致。\n\n> 对比 OpenClaw 的多 Agent 方案：CrewAI 更偏编排可视化，OpenClaw 更偏 Skill 化和可扩展。"
+  },
+  {
+    "slug": "nvidia-nim-agent-runtime",
+    "title": "NVIDIA NIM 推出 Agent Runtime，本地 GPU 上跑生产级 Agent",
+    "summary": "NVIDIA NIM 新增 Agent Runtime 模式，在本地 GPU 集群上运行 Agent 推理和工具调用。",
+    "source": "NVIDIA 技术博客",
+    "sourceUrl": "https://developer.nvidia.com/blog/nim-agent-runtime",
+    "publishedAt": "2026-04-16",
+    "tags": [
+      "nvidia",
+      "nim",
+      "gpu",
+      "local-inference"
+    ],
+    "content": "## 要点\n\n- NIM Agent Runtime 支持 Agent 的完整执行循环\n- 工具调用在本地 GPU 上完成，无需出站到云端\n- 支持多模型编排：不同步骤用不同模型\n- 兼容 MCP Protocol\n\n## 适用场景\n\n- 数据隐私要求高的企业\n- 需要低延迟的实时 Agent\n- 云端 API 成本过高的批量任务\n\n> 本地 Agent 是重要趋势。云端 API 好用但贵且有数据泄露风险，NIM 给了一条折中路径。"
+  },
+  {
+    "slug": "aws-bedrock-agents-advanced",
+    "title": "AWS Bedrock Agents 支持多步推理和自定义 Skill 包",
+    "summary": "Bedrock Agents 更新支持 Chain-of-Thought 推理和用户自定义 Skill 包导入。",
+    "source": "AWS News Blog",
+    "sourceUrl": "https://aws.amazon.com/blogs/machine-learning/",
+    "publishedAt": "2026-04-15",
+    "tags": [
+      "aws",
+      "bedrock",
+      "agents",
+      "cloud"
+    ],
+    "content": "## 要点\n\n- Bedrock Agents 支持 Chain-of-Thought 多步推理\n- 可导入自定义 Skill 包（兼容 OpenClaw SKILL.md 格式）\n- 新增 Agent 评估仪表板\n- 支持跨区域 Agent 编排\n\n## 与 OpenClaw 的关系\n\nBedrock Agents 的 Skill 包格式与 OpenClaw 的 SKILL.md 兼容，意味着同一套 Skill 可以在两个平台上运行。\n\n> 这是标准化带来的好处——Skill 一次编写，多平台部署。"
+  },
+  {
+    "slug": "agent-security-top-10-2026",
+    "title": "Agent 安全 Top 10（2026 版）发布，提示注入仍是头号威胁",
+    "summary": "OWASP 发布 2026 年 Agent 安全风险 Top 10，提示注入、工具权限滥用、数据泄露位列前三。",
+    "source": "OWASP",
+    "sourceUrl": "https://owasp.org/www-project-top-10-for-llm-agents/",
+    "publishedAt": "2026-04-14",
+    "tags": [
+      "security",
+      "owasp",
+      "top-10",
+      "risk"
+    ],
+    "content": "## 2026 Top 10\n\n1. 提示注入（Prompt Injection）\n2. 工具权限滥用（Tool Privilege Escalation）\n3. 敏感数据泄露（Data Exfiltration）\n4. 供应链攻击（Skill/Plugin Supply Chain）\n5. 输出操控（Output Manipulation）\n6. 身份冒充（Agent Impersonation）\n7. 拒绝服务（Resource Exhaustion）\n8. 不安全默认配置（Insecure Defaults）\n9. 日志与审计缺失（Insufficient Logging）\n10. 模型越狱（Model Jailbreak）\n\n## 对 Skill 开发者的建议\n\n- 所有 Skill 输入必须做校验\n- 工具调用限制最小权限\n- 不要信任 LLM 生成的命令直接执行\n- 记录所有关键操作日志\n\n> 安全不是可选项，是 Skill 上线的必要条件。"
+  },
+  {
+    "slug": "langgraph-cloud-ga",
+    "title": "LangGraph Cloud 正式 GA，LangChain Agent 编排有了托管方案",
+    "summary": "LangGraph Cloud 提供完全托管的 Agent 编排服务，支持持久化状态、定时触发和 Webhook 集成。",
+    "source": "LangChain 官方",
+    "sourceUrl": "https://blog.langchain.dev/langgraph-cloud-ga/",
+    "publishedAt": "2026-04-13",
+    "tags": [
+      "langchain",
+      "langgraph",
+      "cloud",
+      "orchestration"
+    ],
+    "content": "## 要点\n\n- LangGraph Cloud 提供托管式 Agent 编排\n- 支持持久化状态（Redis/PostgreSQL 后端）\n- 定时触发和 Webhook 集成开箱即用\n- 内置 LangSmith 可观测性\n- 定价：按状态转换次数计费\n\n## 与自建方案对比\n\n优势：零运维、自动扩缩容、内置监控\n劣势：灵活性受限、供应商锁定、成本可能更高\n\n> 适合快速验证阶段。生产环境建议评估自建 + LangGraph OSS 的方案。"
+  },
+  {
+    "slug": "hugging-face-smol-agents",
+    "title": "Hugging Face 推出 smolagents：轻量级 Agent 框架主打简洁",
+    "summary": "smolagents 用不到 1000 行核心代码实现完整 Agent 循环，强调代码可读和快速上手。",
+    "source": "Hugging Face Blog",
+    "sourceUrl": "https://huggingface.co/blog/smolagents",
+    "publishedAt": "2026-04-12",
+    "tags": [
+      "huggingface",
+      "smolagents",
+      "lightweight",
+      "python"
+    ],
+    "content": "## 要点\n\n- smolagents 核心代码不到 1000 行\n- 支持 Code Agent（生成 Python 代码执行）和 Tool Calling Agent\n- 兼容 HF Hub 上的所有模型\n- 内置 10+ 常用工具\n\n## 设计哲学\n\n> 最好的框架是你能完全看懂的框架。\n\nsmolagents 不追求功能全面，追求每行代码都有意义。适合学习 Agent 原理和快速原型验证。\n\n## 与 OpenClaw Skill 的关系\n\nsmolagents 的工具定义格式与 Skill 的工具声明有相似之处，两者可以互补。"
+  },
+  {
+    "slug": "cloudflare-agent-workflow",
+    "title": "Cloudflare 发布 Agent Workflow：边缘计算上跑 Agent",
+    "summary": "Cloudflare Workers 上新增 Agent Workflow 运行时，支持长时间运行的 Agent 在边缘节点执行。",
+    "source": "Cloudflare Blog",
+    "sourceUrl": "https://blog.cloudflare.com/agent-workflow/",
+    "publishedAt": "2026-04-11",
+    "tags": [
+      "cloudflare",
+      "edge",
+      "workers",
+      "agent"
+    ],
+    "content": "## 要点\n\n- Agent Workflow 在 Cloudflare Workers 上运行\n- 支持 Durable Objects 持久化 Agent 状态\n- 长时间运行任务不再受 Workers 30 秒超时限制\n- 自动就近部署到全球边缘节点\n\n## 优势\n\n- 全球低延迟部署\n- 按请求计费，空闲不花钱\n- 自动扩缩容\n\n## 局限\n\n- 不支持 GPU 推理（需调外部 API）\n- 状态持久化受 Durable Objects 存储限制\n- 复杂编排场景不如专用框架\n\n> 适合轻量 Agent + API 调用的场景，比如 Webhook 处理、定时检查。"
+  },
+  {
+    "slug": "a2a-protocol-google-update",
+    "title": "Google 更新 Agent-to-Agent（A2A）协议规范，支持跨框架 Agent 通信",
+    "summary": "A2A 协议 V0.3 发布，新增服务发现、能力协商和流式通信，为 Agent 互操作铺路。",
+    "source": "Google 开源博客",
+    "sourceUrl": "https://opensource.googleblog.com/",
+    "publishedAt": "2026-04-10",
+    "tags": [
+      "google",
+      "a2a",
+      "protocol",
+      "interoperability"
+    ],
+    "content": "## 要点\n\n- A2A 协议 V0.3 新增服务发现机制\n- 能力协商：Agent 可以声明和查询彼此的能力\n- 流式通信：支持长任务的进度反馈\n- 兼容 MCP Protocol 的工具发现\n\n## 意义\n\nA2A 解决的是不同框架的 Agent 之间如何对话的问题。就像 HTTP 让不同 Web 服务互通，A2A 让不同 Agent 框架互通。\n\n> MCP 管工具调用，A2A 管 Agent 间通信。两者互补。"
+  },
+  {
+    "slug": "anthropic-computer-use-beta2",
+    "title": "Anthropic Computer Use 进入 Beta 2，屏幕理解能力大幅提升",
+    "summary": "Computer Use 更新后可识别复杂 UI 布局，错误率降低 40%，新增回退和撤销机制。",
+    "source": "Anthropic 官方",
+    "sourceUrl": "https://docs.anthropic.com/en/docs/computer-use",
+    "publishedAt": "2026-04-09",
+    "tags": [
+      "anthropic",
+      "computer-use",
+      "ui",
+      "automation"
+    ],
+    "content": "## 要点\n\n- Computer Use Beta 2 屏幕理解错误率降低 40%\n- 新增操作回退和撤销机制\n- 支持多显示器环境\n- 改进文本输入的 IME 兼容性\n\n## 适合场景\n\n- 自动化测试 Web 应用\n- RPA 替代方案\n- 无 API 的遗留系统操作\n\n## 注意\n\n- 仍需人工监督关键操作\n- 屏幕截图质量影响准确率\n- 不适合高安全性场景的自动化\n\n> Computer Use + Agent Skill = 让 AI 真正操作电脑。这是浏览器自动化的升级版。"
+  },
+  {
+    "slug": "vercel-ai-gateway-agent-routing",
+    "title": "Vercel AI Gateway 新增 Agent 路由功能，按任务自动选模型",
+    "summary": "AI Gateway 支持根据请求类型自动路由到最合适的模型，兼顾成本和质量。",
+    "source": "Vercel Blog",
+    "sourceUrl": "https://vercel.com/blog/ai-gateway-agent-routing",
+    "publishedAt": "2026-04-08",
+    "tags": [
+      "vercel",
+      "ai-gateway",
+      "routing",
+      "cost"
+    ],
+    "content": "## 要点\n\n- AI Gateway 新增智能路由功能\n- 规则引擎：简单请求走小模型，复杂请求走大模型\n- 支持回退链：首选模型不可用时自动切到备选\n- 每请求成本追踪和预算控制\n\n## 路由策略示例\n\n```\nif task.type == 'formatting' -> route to gemma-4\nif task.type == 'reasoning' -> route to gpt-4\nif task.type == 'code' -> route to codex\nfallback -> route to claude-sonnet\n```\n\n## 对 Agent 架构的影响\n\n这正是 OpenClaw 多 Agent 模型配置的理念——不同 Agent 用不同模型。Vercel 把这个能力做进了网关层。\n\n> 网关层路由 + Agent 层配置，两个维度控制成本和质量。"
   }
 ]

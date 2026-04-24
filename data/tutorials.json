@@ -233,5 +233,230 @@
     "createdAt": "2026-04-23",
     "featured": false,
     "content": "## 基础部署之后\n\n基础部署（`vercel deploy`）只是起点。生产级站点需要：自动化部署、预览环境、多域名管理、性能优化。\n\n## 步骤 1：配置 GitHub Actions 自动部署\n\n```yaml\n# .github/workflows/deploy.yml\nname: Deploy to Vercel\n\non:\n  push:\n    branches: [main]\n  pull_request:\n    branches: [main]\n\njobs:\n  deploy:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      \n      - name: Setup Node.js\n        uses: actions/setup-node@v4\n        with:\n          node-version: 20\n          cache: 'npm'\n      \n      - name: Install dependencies\n        run: npm ci\n      \n      - name: Run tests\n        run: npm test\n      \n      - name: Deploy to Vercel (Production)\n        if: github.event_name == 'push'\n        uses: amondnet/vercel-action@v25\n        with:\n          vercel-token: ${{ secrets.VERCEL_TOKEN }}\n          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}\n          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}\n          vercel-args: '--prod'\n      \n      - name: Deploy to Vercel (Preview)\n        if: github.event_name == 'pull_request'\n        uses: amondnet/vercel-action@v25\n        with:\n          vercel-token: ${{ secrets.VERCEL_TOKEN }}\n          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}\n          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}\n```\n\n## 步骤 2：PR 预览环境\n\nVercel 自动为每个 PR 创建预览部署。在 PR 评论中添加部署链接：\n\n```yaml\n- name: Comment preview URL\n  if: github.event_name == 'pull_request'\n  uses: actions/github-script@v7\n  with:\n    script: |\n      github.rest.issues.createComment({\n        issue_number: context.issue.number,\n        owner: context.repo.owner,\n        repo: context.repo.repo,\n        body: '🚀 Preview: ${{ steps.deploy.outputs.url }}'\n      })\n```\n\n## 步骤 3：多域名管理\n\n```bash\n# 添加主域名\nvercel domains add agentskil.qzz.io\n\n# 添加备用域名\nvercel domains add agentskill.com\n\n# 在 vercel.json 中配置重定向\n```\n\n```json\n{\n  \"redirects\": [\n    {\n      \"source\": \"/:path*\",\n      \"has\": [{\"type\": \"host\", \"value\": \"agentskill.com\"}],\n      \"destination\": \"https://agentskil.qzz.io/:path*\",\n      \"permanent\": true\n    }\n  ]\n}\n```\n\n## 步骤 4：Edge Functions 优化\n\n```typescript\n// middleware.ts - 添加缓存头\nimport { NextResponse } from 'next/server'\nimport type { NextRequest } from 'next/server'\n\nexport function middleware(request: NextRequest) {\n  const response = NextResponse.next()\n  \n  // 静态资源长期缓存\n  if (request.nextUrl.pathname.startsWith('/_next/static/')) {\n    response.headers.set('Cache-Control', 'public, max-age=31536000, immutable')\n  }\n  \n  // API 路由短期缓存\n  if (request.nextUrl.pathname.startsWith('/api/')) {\n    response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300')\n  }\n  \n  return response\n}\n```\n\n## 步骤 5：监控与告警\n\n```bash\n# Vercel Analytics（内置）\nnpm install @vercel/analytics\n\n# 在 layout.tsx 中引入\nimport { Analytics } from '@vercel/analytics/react'\n```\n\n## 注意事项\n\n- `VERCEL_TOKEN` 等密钥必须在 GitHub Secrets 中配置，不要写在代码里\n- PR 预览环境默认是公开的，敏感项目需在 Vercel 设置中开启密码保护\n- Edge Functions 有 50MB 限制和 30 秒超时\n- 多域名时注意 SEO——设置规范域名（canonical URL）避免重复内容"
+  },
+  {
+    "slug": "mcp-host-integration-guide",
+    "title": "MCP Host 集成实战：让 Claude Desktop 用你的工具",
+    "description": "从编写 MCP Server 到在 Claude Desktop 中注册调用，完整打通 AI 宿主与自定义工具的链路。",
+    "tags": [
+      "mcp",
+      "claude",
+      "integration",
+      "intermediate"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-24",
+    "featured": false,
+    "content": "## 什么是 MCP Host\n\nMCP（Model Context Protocol）Host 是能调用 MCP Server 的 AI 客户端。Claude Desktop、Cursor、Continue 都已支持。\n\n本教程带你写一个 MCP Server，然后把它接入 Claude Desktop。\n\n## 步骤 1：创建 MCP Server\n\n```bash\nmkdir my-mcp-server && cd my-mcp-server\nnpm init -y\nnpm install @modelcontextprotocol/sdk\n```\n\n创建 index.js：\n\n```javascript\nimport { Server } from '@modelcontextprotocol/sdk/server/index.js';\nimport { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';\n\nconst server = new Server(\n  { name: 'my-tools', version: '1.0.0' },\n  { capabilities: { tools: {} } }\n);\n\nserver.setRequestHandler('tools/list', async () => ({\n  tools: [{\n    name: 'get_weather',\n    description: '获取指定城市的当前天气',\n    inputSchema: {\n      type: 'object',\n      properties: { city: { type: 'string', description: '城市名' } },\n      required: ['city']\n    }\n  }]\n}));\n\nserver.setRequestHandler('tools/call', async (request) => {\n  if (request.params.name === 'get_weather') {\n    const { city } = request.params.arguments;\n    return { content: [{ type: 'text', text: city + '：晴，22°C' }] };\n  }\n});\n\nconst transport = new StdioServerTransport();\nawait server.connect(transport);\n```\n\n## 步骤 2：配置 Claude Desktop\n\n编辑 ~/Library/Application Support/Claude/claude_desktop_config.json（macOS）：\n\n```json\n{\n  \"mcpServers\": {\n    \"my-tools\": {\n      \"command\": \"node\",\n      \"args\": [\"/absolute/path/to/my-mcp-server/index.js\"]\n    }\n  }\n}\n```\n\n## 步骤 3：重启并测试\n\n1. 完全退出 Claude Desktop\n2. 重新打开\n3. 在对话中点击工具图标，确认 get_weather 出现\n4. 试试问：\"北京今天天气怎么样？\"\n\n## 调试技巧\n\n- Claude Desktop 开发者菜单中查看 MCP 日志\n- Server 端用 console.error 输出调试信息\n- 确认 Node.js 路径用绝对路径\n\n## 常见问题\n\n### Server 不出现\n- 检查 JSON 配置语法\n- 确认 Node.js 可执行文件路径正确\n\n### 工具调用超时\n- 确认 Server 没有阻塞\n- 工具函数应在 30 秒内返回"
+  },
+  {
+    "slug": "openclaw-cron-automation",
+    "title": "OpenClaw Cron 自动化：让 Agent 定时干活",
+    "description": "用 OpenClaw 内置的 Cron 系统设置定时任务、定期检查和自动提醒，解放你的重复工作。",
+    "tags": [
+      "openclaw",
+      "cron",
+      "automation",
+      "intermediate"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-24",
+    "featured": false,
+    "content": "## 为什么用 Cron\n\nAgent 不该只等人类提问。定时任务让 AI 主动工作——检查邮件、监控服务、生成日报。\n\nOpenClaw 内置 Cron 系统，不需要外部调度器。\n\n## 三种调度模式\n\n### 1. 一次性提醒\n\n```json\n{\n  \"schedule\": { \"kind\": \"at\", \"at\": \"2026-04-24T18:00:00Z\" },\n  \"payload\": { \"kind\": \"systemEvent\", \"text\": \"提醒：6点有会议\" }\n}\n```\n\n### 2. 固定间隔\n\n```json\n{\n  \"schedule\": { \"kind\": \"every\", \"everyMs\": 3600000 },\n  \"payload\": { \"kind\": \"agentTurn\", \"message\": \"检查收件箱有无新邮件\" }\n}\n```\n\n### 3. Cron 表达式\n\n```json\n{\n  \"schedule\": { \"kind\": \"cron\", \"expr\": \"0 9 * * 1-5\", \"tz\": \"Asia/Shanghai\" },\n  \"payload\": { \"kind\": \"agentTurn\", \"message\": \"生成昨日工作日报\" }\n}\n```\n\n## Session Target 选择\n\n- main：注入主会话，适合需要对话上下文的任务\n- isolated：独立会话，适合不依赖上下文的周期任务\n- current：绑定当前会话，适合一次性任务\n\n## 实战：每日站会摘要\n\n1. 创建 Cron Job\n2. 每工作日 9:00 触发\n3. Agent 检查日历、邮件、项目状态\n4. 汇总成一段摘要发送\n\n## 注意事项\n\n- 避免创建过多高频任务\n- isolated 模式的任务结果会通过 delivery 通道返回\n- 删除不用的 Job\n- 用 cron list 查看所有任务"
+  },
+  {
+    "slug": "agent-memory-design-patterns",
+    "title": "Agent 记忆系统设计模式：从临时到持久",
+    "description": "对比 Session Memory、File Memory、Vector Memory 三种方案，给出不同场景下的最佳实践。",
+    "tags": [
+      "agent",
+      "memory",
+      "architecture",
+      "advanced"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-24",
+    "featured": false,
+    "content": "## 为什么 Agent 需要记忆\n\n没有记忆的 Agent 每次对话都从零开始。记忆让 AI：\n\n- 记住用户偏好\n- 跨会话保持上下文\n- 积累经验避免重复错误\n\n## 三种记忆模式\n\n### 1. Session Memory（会话内）\n\n最轻量。对话历史本身就是记忆。会话结束即消失。\n\n适合：单次任务、临时问答\n\n### 2. File Memory（文件持久化）\n\n写入 Markdown/JSON 文件。Agent 重启后可读取。\n\n适合：结构化偏好、项目元数据、决策记录\n\nOpenClaw 实现：MEMORY.md + memory/*.md\n\n### 3. Vector Memory（向量检索）\n\n将信息 embedding 后存入向量数据库，按语义相似度检索。\n\n适合：大量非结构化信息、知识库问答\n\n## 选择决策树\n\n需要跨会话？\n  不需要 -> Session Memory\n  需要 -> 数据量小于100条 -> File Memory\n  需要 -> 数据量大于100条或需要语义检索 -> Vector Memory\n\n## 混合模式\n\n生产级系统通常组合使用：\n\n- File Memory 存核心偏好和决策\n- Vector Memory 存海量知识\n- Session Memory 处理当次对话\n\n## OpenClaw 中的实践\n\n- MEMORY.md：长期记忆，手动策划\n- memory/YYYY-MM-DD.md：每日原始记录\n- memory_search：语义检索记忆文件\n- Heartbeat 时定期整理：日报到长期记忆"
+  },
+  {
+    "slug": "skill-testing-framework",
+    "title": "Agent Skill 测试框架：写出可信赖的自动化测试",
+    "description": "为你的 Skill 建立单元测试、集成测试和端到端测试，确保每次更新不引入回归。",
+    "tags": [
+      "testing",
+      "skill",
+      "quality",
+      "advanced"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-24",
+    "featured": false,
+    "content": "## 为什么 Skill 需要测试\n\nSkill 是 AI 的能力单元。一个有 bug 的 Skill = AI 在关键时刻掉链子。\n\n测试金字塔：\n\n- 顶层 E2E：少量，覆盖关键路径\n- 中层 Integration：适量，覆盖工具调用链\n- 底层 Unit：大量，覆盖核心逻辑\n\n## 单元测试\n\n测试 Skill 的核心函数，不依赖外部服务：\n\n```javascript\nimport { parseWeatherResponse } from '../scripts/parser.js';\n\ntest('解析正常天气响应', () => {\n  const result = parseWeatherResponse({ temp: 22, status: 'sunny' });\n  expect(result.summary).toContain('22°C');\n  expect(result.isGoodForOutdoor).toBe(true);\n});\n\ntest('处理空数据', () => {\n  expect(() => parseWeatherResponse(null)).toThrow('无效天气数据');\n});\n```\n\n## 集成测试\n\n测试 Skill 与外部 API 的交互，使用 mock：\n\n```javascript\ntest('调用天气 API 并格式化结果', async () => {\n  const mockFetch = jest.fn().mockResolvedValue({\n    json: () => Promise.resolve({ temp: 18, status: 'cloudy' })\n  });\n  global.fetch = mockFetch;\n  \n  const result = await getWeather('Shanghai');\n  expect(mockFetch).toHaveBeenCalled();\n  expect(result).toContain('18°C');\n});\n```\n\n## CI 集成\n\n```yaml\non: [push, pull_request]\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - run: npm test\n```\n\n## 最佳实践\n\n- 测试文件放在 Skill 目录的 __tests__/ 下\n- Mock 所有外部 API 调用\n- 每次发布 Skill 前跑完测试\n- 把测试覆盖率作为 Skill 质量指标"
+  },
+  {
+    "slug": "prompt-engineering-for-agents",
+    "title": "面向 Agent 的 Prompt 工程：不只是写提示词",
+    "description": "从 System Prompt 设计、Few-shot 策略到工具调用提示优化，系统讲解让 Agent 稳定输出的方法论。",
+    "tags": [
+      "prompt",
+      "agent",
+      "engineering",
+      "intermediate"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-24",
+    "featured": false,
+    "content": "## Agent Prompt 不等于 Chat Prompt\n\n聊天场景的 Prompt 追求对话自然。Agent 场景的 Prompt 追求输出可控。\n\n关键区别：\n\n- Agent 需要结构化输出（JSON、函数调用）\n- Agent 有工具可用，Prompt 要引导正确选择\n- Agent 可能多轮执行，Prompt 要控制决策边界\n\n## System Prompt 结构模板\n\n1. 身份：你是 XX 领域的专业 Agent\n2. 能力：能做 A（使用 tool-a）、能做 B（使用 tool-b）、不能做 C\n3. 规则：输出格式、查证要求、禁止行为\n4. 示例：具体输入到输出的映射\n\n## Few-shot 策略\n\n对于工具调用场景，示例比描述更有效：\n\n示例 1 - 查天气：\n用户问北京天气 -> 调用 weather(city=北京)\n\n示例 2 - 多步推理：\n用户对比上海和深圳房价 -> 两次调用 house_price\n\n## 工具调用优化\n\n- 在工具描述中写清楚什么时候用和什么时候不用\n- 互斥工具要明确标注优先级\n- 参数描述要包含类型和范围\n\n## 防幻觉策略\n\n1. 知识边界声明：你的知识截止到 YYYY 年\n2. 溯源要求：每个事实必须附带来源\n3. 不确定性表达：不确定时回答我需要查证\n\n## 常见反模式\n\n- Prompt 太长 -> Agent 抓不住重点\n- 没有示例 -> Agent 猜测输出格式\n- 过度约束 -> Agent 不敢做该做的事\n- 忽略错误处理 -> Agent 在异常情况下失控"
+  },
+  {
+    "slug": "rag-with-agent-skills",
+    "title": "RAG + Agent Skill：让 AI 精准检索你的知识库",
+    "description": "结合 RAG 架构与 Agent Skill，实现从文档嵌入、向量检索到结果生成的完整知识问答链路。",
+    "tags": [
+      "rag",
+      "vector",
+      "knowledge",
+      "advanced"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-24",
+    "featured": false,
+    "content": "## RAG 基础\n\nRAG（Retrieval-Augmented Generation）= 检索 + 生成。先从知识库找相关内容，再让 LLM 基于检索结果回答。\n\n核心链路：用户问题 -> Embedding -> 向量搜索 -> Top-K 文档 -> LLM -> 回答\n\n## 选择向量数据库\n\n- Supabase pgvector：SQL 生态，易上手，适合小规模\n- Pinecone：全托管，高性能，适合中大规模生产\n- Chroma：本地优先，开源，适合开发测试\n- Qdrant：高性能，支持过滤，适合复杂查询\n\n## 嵌入文档的 Skill\n\n创建一个 document-embedder Skill：\n\n1. 读取文档目录\n2. 分块（chunk）——每块 500-1000 token，重叠 50 token\n3. 调用 Embedding API\n4. 写入向量数据库\n\n```javascript\nfunction chunkDocument(text, chunkSize = 500, overlap = 50) {\n  const chunks = [];\n  let start = 0;\n  while (start < text.length) {\n    chunks.push(text.slice(start, start + chunkSize));\n    start += chunkSize - overlap;\n  }\n  return chunks;\n}\n```\n\n## 检索 Skill\n\n```javascript\nasync function retrieve(query, topK = 5) {\n  const queryEmbedding = await embed(query);\n  const results = await vectorDB.search(queryEmbedding, topK);\n  return results.map(r => r.text);\n}\n```\n\n## 生成 Skill\n\n将检索结果作为上下文注入 Prompt，并标注来源。如果资料中没有相关信息，明确说明。\n\n## 优化技巧\n\n- 混合检索：向量 + 关键词搜索结合\n- 重排序：用 Rerank 对 Top-K 结果二次排序\n- 元数据过滤：搜索时限定文档来源、时间范围\n- 缓存热门查询：减少重复 Embedding 调用"
+  },
+  {
+    "slug": "agent-error-handling-resilience",
+    "title": "Agent 容错设计：让 AI 在出错时不崩",
+    "description": "从重试策略、降级方案到熔断机制，构建生产级 Agent 的错误处理体系。",
+    "tags": [
+      "agent",
+      "error-handling",
+      "resilience",
+      "advanced"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-24",
+    "featured": false,
+    "content": "## Agent 为什么容易崩\n\nAgent 依赖外部 API、文件系统、网络——每一环都可能出错。不像传统软件有明确的异常类型，Agent 的错误更隐蔽：\n\n- API 返回了数据但格式变了\n- LLM 输出了不合法的 JSON\n- 工具调用超时但 Agent 在傻等\n\n## 分层错误处理\n\n### 第一层：工具级重试\n\n```javascript\nasync function callWithRetry(fn, maxRetries = 3) {\n  for (let i = 0; i < maxRetries; i++) {\n    try {\n      return await fn();\n    } catch (err) {\n      if (err.status === 429) {\n        const waitMs = Math.pow(2, i) * 1000;\n        await sleep(waitMs);\n        continue;\n      }\n      throw err;\n    }\n  }\n  throw new Error('重试耗尽');\n}\n```\n\n### 第二层：Agent 级降级\n\n在 System Prompt 中加入降级指令：\n\n1. 主工具调用失败时优先尝试备用工具\n2. 如果没有备用，用已有知识回答并标注\"以下信息可能不完全准确\"\n3. 如果完全无法回答，诚实说\"我暂时无法获取该信息\"\n\n### 第三层：系统级熔断\n\n```javascript\nconst circuitBreaker = {\n  failures: 0,\n  lastFail: 0,\n  threshold: 5,\n  cooldown: 60000,\n  canTry() {\n    if (this.failures < this.threshold) return true;\n    return Date.now() - this.lastFail > this.cooldown;\n  },\n  recordFailure() {\n    this.failures++;\n    this.lastFail = Date.now();\n  },\n  recordSuccess() {\n    this.failures = 0;\n  }\n};\n```\n\n## 输出验证\n\nLLM 输出不可信，必须验证：\n\n```javascript\nfunction validateToolCall(output) {\n  try {\n    const parsed = JSON.parse(output);\n    if (!parsed.tool || !parsed.args) throw new Error('缺少必要字段');\n    return parsed;\n  } catch {\n    return { tool: 'fallback', args: { rawOutput: output } };\n  }\n}\n```\n\n## 监控告警\n\n- 记录每次工具调用的成功/失败\n- 失败率超过 20% 时触发告警\n- 定期审查失败日志，发现系统性问题"
+  },
+  {
+    "slug": "openclaw-multi-agent-coordination",
+    "title": "OpenClaw 多 Agent 协作：Subagent 编排实战",
+    "description": "用 OpenClaw 的 subagent 机制实现任务拆分、并行执行、结果汇总的完整多 Agent 工作流。",
+    "tags": [
+      "openclaw",
+      "multi-agent",
+      "subagent",
+      "advanced"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-24",
+    "featured": false,
+    "content": "## 什么时候需要多 Agent\n\n单 Agent 处理简单任务没问题，但遇到以下场景就该拆：\n\n- 任务涉及多个专业领域（写代码 + 写文案 + 做调研）\n- 子任务可以并行执行\n- 需要不同模型处理不同部分\n\n## OpenClaw Subagent 模型\n\n主 Agent（coordinator）负责拆任务、派任务、收结果。\n子 Agent 只负责执行。\n\n## 实战：内容生产流水线\n\n### 步骤 1：主 Agent 拆解任务\n\n将大任务拆为：调研、编码、写作三个子任务。\n\n### 步骤 2：并行派发\n\n调研和编码可以并行 spawn，互不依赖。\n\n### 步骤 3：串行收尾\n\n写作依赖调研结果，等调研完成后串行 spawn。\n\n## 结果整合原则\n\n1. 去重：多个子 Agent 可能搜索到相同信息\n2. 纠偏：交叉验证关键事实\n3. 统一格式：不同 Agent 输出风格可能不同\n4. 定稿：主 Agent 做最终审校\n\n## 常见陷阱\n\n- 子 Agent 任务描述太模糊 -> 产出不可用\n- 所有任务都串行 -> 丢失并行优势\n- 主 Agent 不做整合 -> 直接堆砌子结果\n- 忽略子 Agent 失败 -> 整体结果缺块"
+  },
+  {
+    "slug": "agent-observability-logging",
+    "title": "Agent 可观测性：日志、链路追踪与指标监控",
+    "description": "为 Agent 系统建立完整的可观测性体系，从请求日志到链路追踪，让 AI 行为透明可审计。",
+    "tags": [
+      "observability",
+      "logging",
+      "monitoring",
+      "advanced"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-24",
+    "featured": false,
+    "content": "## 为什么 Agent 需要可观测性\n\nAgent 是自主决策系统。如果不记录它在做什么，出了问题你根本不知道哪里坏了。\n\n三大支柱：\n\n1. 日志（Logging）：每次工具调用的输入输出\n2. 链路追踪（Tracing）：一个请求跨多步的完整路径\n3. 指标（Metrics）：成功率、延迟、Token 消耗\n\n## 日志设计\n\n### 结构化日志\n\n```javascript\nfunction logToolCall(agent, tool, args, result, duration) {\n  console.log(JSON.stringify({\n    timestamp: new Date().toISOString(),\n    agent: agent,\n    tool: tool,\n    args: JSON.stringify(args),\n    result_preview: JSON.stringify(result).slice(0, 200),\n    duration_ms: duration,\n    status: result.error ? 'error' : 'success'\n  }));\n}\n```\n\n### 关键日志点\n\n- 每次工具调用的输入和输出\n- Agent 的决策过程（选择了哪个工具、为什么）\n- 错误和重试\n- Token 使用量\n\n## 链路追踪\n\n用 Trace ID 串联一次完整请求：\n\n```\nTrace: abc-123\n  ├─ Step 1: user_query -> agent_decision (5ms)\n  ├─ Step 2: tool_call: search(query=\"...\") (320ms)\n  ├─ Step 3: tool_call: weather(city=\"Shanghai\") (180ms)\n  └─ Step 4: generate_response (850ms)\n  Total: 1355ms\n```\n\n## 指标监控\n\n关键指标：\n\n- 工具调用成功率（目标 > 95%）\n- 平均响应延迟\n- 每请求 Token 消耗\n- 每日活跃用户数\n\n## 实现方案\n\n- 轻量：写文件 + 简单脚本分析\n- 中量：OpenTelemetry + Jaeger\n- 重量：Datadog / Grafana 全栈监控"
+  },
+  {
+    "slug": "dify-workflow-to-agent-skill",
+    "title": "Dify Workflow 转 Agent Skill：复用你的自动化流程",
+    "description": "把 Dify 中调试好的 Workflow 导出为独立 Agent Skill，实现跨平台复用和本地化部署。",
+    "tags": [
+      "dify",
+      "workflow",
+      "migration",
+      "intermediate"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-24",
+    "featured": false,
+    "content": "## 为什么要迁移\n\nDify 的可视化 Workflow 编辑器很好用，但：\n\n- 绑定 Dify 平台，不好本地调试\n- 无法在 OpenClaw 等 Agent 框架中复用\n- 版本管理困难\n\n把 Workflow 转成 Agent Skill，获得：\n\n- Git 版本管理\n- 本地开发调试\n- 跨平台部署\n\n## 迁移步骤\n\n### 步骤 1：分析 Workflow 结构\n\n在 Dify 中导出 Workflow 的 DSL（JSON 格式），分析节点：\n\n- LLM 节点 -> 对应 Skill 中的 Prompt 模板\n- HTTP 请求节点 -> 对应 Skill 中的 API 调用\n- 条件分支 -> 对应 Skill 中的逻辑判断\n- 变量赋值 -> 对应 Skill 中的状态管理\n\n### 步骤 2：创建 Skill 骨架\n\n```\nmy-dify-skill/\n  SKILL.md\n  scripts/\n    main.py\n  references/\n    prompt-templates.md\n```\n\n### 步骤 3：逐步迁移节点\n\n每个 Dify 节点翻译成 Skill 代码：\n\n```python\n# Dify HTTP 请求节点 -> Python requests\nimport requests\n\ndef call_api(params):\n    response = requests.post(\n        \"https://api.example.com/endpoint\",\n        json=params\n    )\n    return response.json()\n```\n\n### 步骤 4：迁移 Prompt\n\n把 Dify 中的 Prompt 模板提取到 references/ 目录，保持变量占位符格式。\n\n### 步骤 5：测试验证\n\n用 Dify 中相同的测试用例验证 Skill 输出一致性。\n\n## 注意事项\n\n- Dify 的某些内置能力（知识库、RAG）需要额外实现\n- 并行节点需要用 async 处理\n- 迁移后建议保留 Dify 版本做对照"
+  },
+  {
+    "slug": "agent-cost-optimization",
+    "title": "Agent 成本优化：少花钱多办事的 7 个策略",
+    "description": "从模型选择、Token 节省到缓存策略，系统降低 Agent 运行成本而不牺牲质量。",
+    "tags": [
+      "cost",
+      "optimization",
+      "tokens",
+      "intermediate"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-24",
+    "featured": false,
+    "content": "## Agent 的钱花在哪\n\n运行 Agent 的主要成本：\n\n1. LLM API 调用费（占 70-80%）\n2. 向量数据库存储费\n3. 托管/服务器费\n4. 外部 API 调用费\n\n核心矛盾：越强的模型越贵，越多的工具调用越费 Token。\n\n## 7 个优化策略\n\n### 1. 分层模型\n\n不是每个任务都需要 GPT-4 级别：\n\n- 简单判断/格式化 -> 小模型（Gemma、Llama 3）\n- 复杂推理/创作 -> 大模型（GPT-4、Claude）\n- OpenClaw 支持按 agent 配置不同模型\n\n### 2. 缩减上下文\n\n- 只传必要的工具结果，不要把整个 API 响应塞进 Prompt\n- 用摘要代替原文\n- 定期清理会话历史中的冗余消息\n\n### 3. 结果缓存\n\n```javascript\nconst cache = new Map();\n\nasync function cachedCall(key, fn, ttlMs = 300000) {\n  const cached = cache.get(key);\n  if (cached && Date.now() - cached.time < ttlMs) {\n    return cached.data;\n  }\n  const data = await fn();\n  cache.set(key, { data, time: Date.now() });\n  return data;\n}\n```\n\n### 4. 批量处理\n\n- 多个独立任务合并成一次 LLM 调用\n- 工具调用并行化\n\n### 5. 提前终止\n\n- 在 System Prompt 中设定决策边界\n- 简单问题直接回答，不触发工具\n\n### 6. Prompt 精简\n\n- System Prompt 按需加载，不一股脑全塞\n- 去掉重复说明\n\n### 7. 监控用量\n\n- 记录每次调用的 Token 数\n- 设置预算告警\n- 每周审查成本报告"
+  },
+  {
+    "slug": "browser-automation-agent",
+    "title": "浏览器自动化 Agent：用 Playwright 实现网页交互",
+    "description": "结合 Playwright 和 Agent Skill，让 AI 自主完成网页表单填写、数据抓取、截图等浏览器操作。",
+    "tags": [
+      "playwright",
+      "browser",
+      "automation",
+      "intermediate"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-24",
+    "featured": false,
+    "content": "## 为什么 Agent 需要控制浏览器\n\n很多任务必须通过网页完成：\n\n- 填写后台管理系统\n- 抓取无 API 的网站数据\n- 截图生成报告\n- 自动化测试 Web 应用\n\n## Playwright + Skill 架构\n\n```\nAgent -> Skill:browser-control -> Playwright -> 浏览器实例\n```\n\n## 基础 Skill 结构\n\n```javascript\n// scripts/browser.js\nconst { chromium } = require('playwright');\n\nasync function screenshot(url, selector) {\n  const browser = await chromium.launch({ headless: true });\n  const page = await browser.newPage();\n  await page.goto(url, { waitUntil: 'networkidle' });\n  \n  const element = selector \n    ? await page.$(selector)\n    : await page.$('body');\n  \n  const buffer = await element.screenshot();\n  await browser.close();\n  return buffer;\n}\n```\n\n## 常用操作封装\n\n### 表单填写\n\n```javascript\nasync function fillForm(url, fields) {\n  const browser = await chromium.launch();\n  const page = await browser.newPage();\n  await page.goto(url);\n  \n  for (const [selector, value] of Object.entries(fields)) {\n    await page.fill(selector, value);\n  }\n  \n  await page.click('button[type=\"submit\"]');\n  await browser.close();\n}\n```\n\n### 数据抓取\n\n```javascript\nasync function scrape(url, selectors) {\n  const browser = await chromium.launch();\n  const page = await browser.newPage();\n  await page.goto(url);\n  \n  const data = {};\n  for (const [key, sel] of Object.entries(selectors)) {\n    data[key] = await page.textContent(sel);\n  }\n  \n  await browser.close();\n  return data;\n}\n```\n\n## 安全注意事项\n\n- 只访问可信 URL\n- 不存储敏感凭据在 Skill 代码中\n- 设置超时防止卡死\n- headless 模式优先"
+  },
+  {
+    "slug": "skill-versioning-changelog",
+    "title": "Skill 版本管理与变更日志：让升级不踩坑",
+    "description": "为 Agent Skill 建立语义化版本号、变更日志和升级路径，确保团队协作和用户升级顺利。",
+    "tags": [
+      "versioning",
+      "changelog",
+      "release",
+      "beginner"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-24",
+    "featured": false,
+    "content": "## 为什么要版本管理\n\nSkill 不是写完就完的。它会迭代、修复、重构。没有版本管理：\n\n- 用户不知道该不该升级\n- 升级后出问题不知道改了什么\n- 团队协作时互相覆盖\n\n## 语义化版本号\n\n格式：MAJOR.MINOR.PATCH\n\n- MAJOR：不兼容的 API 变更（升级需注意）\n- MINOR：向后兼容的新功能\n- PATCH：向后兼容的 Bug 修复\n\n## SKILL.md 中声明版本\n\n```yaml\n---\nname: my-skill\nversion: 2.1.0\nminOpenClawVersion: 1.5.0\n---\n\n# My Skill\n\n## 变更日志\n\n### v2.1.0 (2026-04-24)\n- 新增：支持批量操作\n- 修复：超时处理逻辑\n\n### v2.0.0 (2026-04-10)\n- 破坏性变更：输出格式从 text 改为 json\n- 新增：错误重试机制\n```\n\n## 变更日志规范\n\n每条记录包含：\n\n1. 新增（Added）：新功能\n2. 变更（Changed）：行为变化\n3. 修复（Fixed）：Bug 修复\n4. 废弃（Deprecated）：即将移除的功能\n5. 移除（Removed）：已删除的功能\n\n## 升级指南\n\n对于 MAJOR 版本升级，提供迁移指南：\n\n```markdown\n## 从 v1.x 升级到 v2.x\n\n1. 输出解析改为 JSON：替换 text 解析逻辑\n2. 配置格式变更：参见新 SKILL.md\n3. 废弃的参数：remove --verbose 改用 --log-level\n```\n\n## Git 标签\n\n```bash\ngit tag -a v2.1.0 -m \"新增批量操作\"\ngit push origin v2.1.0\n```\n\n这样每个版本都有明确锚点，可随时回退。"
+  },
+  {
+    "slug": "agent-skill-with-webhooks",
+    "title": "Agent Skill + Webhook：让 AI 响应外部事件",
+    "description": "通过 Webhook 让 Agent Skill 响应 GitHub 事件、支付通知、表单提交等外部触发，实现事件驱动架构。",
+    "tags": [
+      "webhook",
+      "event-driven",
+      "integration",
+      "intermediate"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-24",
+    "featured": false,
+    "content": "## 从轮询到事件驱动\n\n轮询（每5分钟查一次）简单但浪费资源。Webhook 是反向的——事件发生时对方主动通知你。\n\nAgent + Webhook = AI 只在需要时才工作。\n\n## 架构\n\n```\n外部服务 -> Webhook -> Skill 处理 -> Agent 响应\n```\n\n## 实现：接收 GitHub Webhook\n\n### 步骤 1：创建接收端点\n\n```javascript\n// api/webhook/github.js\nexport default async function handler(req, res) {\n  const event = req.headers['x-github-event'];\n  const payload = req.body;\n  \n  // 验证签名\n  const signature = req.headers['x-hub-signature-256'];\n  if (!verifySignature(payload, signature)) {\n    return res.status(401).json({ error: '签名验证失败' });\n  }\n  \n  // 处理事件\n  if (event === 'pull_request' && payload.action === 'opened') {\n    await handleNewPR(payload);\n  }\n  \n  res.status(200).json({ ok: true });\n}\n```\n\n### 步骤 2：触发 Agent\n\n```javascript\nasync function handleNewPR(pr) {\n  // 调用 Agent Skill 分析 PR\n  const analysis = await runSkill('code-reviewer', {\n    repo: pr.repository.full_name,\n    prNumber: pr.number\n  });\n  \n  // 把分析结果评论到 PR\n  await postPRComment(pr, analysis);\n}\n```\n\n### 步骤 3：在 GitHub 中注册 Webhook\n\nSettings -> Webhooks -> Add webhook\n- Payload URL: https://your-domain.com/api/webhook/github\n- Content type: application/json\n- Secret: 你的签名密钥\n\n## 常见 Webhook 场景\n\n- GitHub：PR/Issue 事件 -> 自动代码审查\n- Stripe：支付成功 -> 发送确认消息\n- Typeform：表单提交 -> 数据入库 + 通知\n- Uptime Robot：服务宕机 -> 告警 + 自动修复\n\n## 安全要点\n\n- 必须验证 Webhook 签名\n- 设置超时防止阻塞\n- 幂等处理：同一事件多次触发不重复执行"
+  },
+  {
+    "slug": "openclaw-skill-publishing",
+    "title": "发布你的 Skill 到 ClawHub：从本地到社区",
+    "description": "一步步带你把本地调试好的 Skill 发布到 ClawHub 社区市场，让其他人安装使用。",
+    "tags": [
+      "clawhub",
+      "publishing",
+      "community",
+      "beginner"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-24",
+    "featured": false,
+    "content": "## 为什么要发布\n\n写好的 Skill 如果只给自己用，价值有限。发布到 ClawHub：\n\n- 其他人可以一键安装\n- 获得社区反馈和贡献\n- 建立你的开发者声誉\n\n## 发布前检查清单\n\n1. SKILL.md 格式正确且完整\n2. 脚本经过测试，没有 bug\n3. 没有硬编码的 API Key\n4. README 清晰说明了用途和用法\n5. 版本号正确\n\n## 步骤 1：安装 ClawHub CLI\n\n```bash\nnpm install -g clawhub\n```\n\n## 步骤 2：登录\n\n```bash\nclawhub login\n```\n\n## 步骤 3：验证 Skill 结构\n\n```bash\nclawhub validate ./my-skill\n```\n\n这会检查 SKILL.md 必填字段、脚本可执行性等。\n\n## 步骤 4：发布\n\n```bash\nclawhub publish ./my-skill\n```\n\n首次发布会创建条目，后续发布会更新版本。\n\n## 步骤 5：维护更新\n\n```bash\n# 更新版本号\nclawhub bump ./my-skill --minor  # 2.0.0 -> 2.1.0\n\n# 重新发布\nclawhub publish ./my-skill\n```\n\n## 常见问题\n\n### 发布失败\n- 检查 SKILL.md 中的 name 是否已被占用\n- 确认没有敏感信息泄露\n\n### 安装后无法运行\n- 确认依赖在 scripts/ 中声明\n- 检查运行环境要求（Node.js 版本等）\n\n## 社区最佳实践\n\n- 写清楚使用示例\n- 及时回复用户反馈\n- 定期更新保持兼容性"
   }
 ]
