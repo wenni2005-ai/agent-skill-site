@@ -1,5 +1,80 @@
 [
   {
+    "slug": "deepseek-v4-release",
+    "title": "DeepSeek v4 正式发布：支持推理与非推理双模式",
+    "summary": "DeepSeek 新一代大模型 v4 发布，引入 flash 和 pro 两个版本，原生支持推理与非推理双模式切换。",
+    "source": "DeepSeek 官方",
+    "sourceUrl": "https://api-docs.deepseek.com/",
+    "publishedAt": "2026-04-25",
+    "tags": [
+      "deepseek",
+      "llm",
+      "api",
+      "reasoning"
+    ],
+    "content": "## DeepSeek v4 核心特性\n\nDeepSeek v4 带来两项重要模型变体：\n\n- **deepseek-v4-flash**：轻量高速版本，适合实时交互场景\n- **deepseek-v4-pro**：完整能力版本，支持复杂任务处理\n\n### 双模式架构\n\nv4 最大的架构升级是原生支持推理与非推理的双模式：\n\n- **非推理模式**：快速响应，适合对话和简单任务\n- **推理模式**：通过 `thinking: enabled` 开启，可进行深度推理链，适合代码、数学、逻辑任务\n\n### API 兼容\n\nDeepSeek v4 保持与 OpenAI、Anthropic API 的双兼容：\n\n| 格式 | Base URL |\n|------|----------|\n| OpenAI | `https://api.deepseek.com` |\n| Anthropic | `https://api.deepseek.com/anthropic` |\n\n### 重要变更\n\n旧版 `deepseek-chat` 和 `deepseek-reasoner` 将于 2026/07/24 弃用，分别映射到 v4-flash 的非推理和推理模式。\n\n> 成本优势：v4-pro 的定价相比 GPT-4 系列具有显著优势，适合大规模接入。"
+  },
+  {
+    "slug": "google-invest-anthropic-40b",
+    "title": "Google 拟向 Anthropic 追加投资高达 400 亿美元",
+    "summary": "Google 计划向 Anthropic 投资至多 400 亿美元，强化其在 AI Agent 赛道的布局，与 OpenAI-Microsoft 联盟形成三足鼎立。",
+    "source": "Bloomberg",
+    "sourceUrl": "https://www.bloomberg.com/news/articles/2026-04-24/google-plans-to-invest-up-to-40-billion-in-anthropic",
+    "publishedAt": "2026-04-25",
+    "tags": [
+      "google",
+      "anthropic",
+      "investment",
+      "claude"
+    ],
+    "content": "## Google-Anthropic 投资事件背景\n\n据 Bloomberg 报道，Google 正在谈判向 Anthropic 投资至多 **400 亿美元**，这将是 AI 领域最大的一笔投资之一。\n\n### 投资细节\n\n- **投资方**：Google（母公司 Alphabet）\n- **金额**：至多 400 亿美元\n- **标的**：Anthropic（Claude 系列模型开发商）\n- **当前状态**：谈判进行中\n\n### 战略意义\n\n这笔投资将重塑 AI Agent 竞争格局：\n\n1. **三足鼎立形成**：\n - OpenAI + Microsoft\n - Anthropic + Google\n - DeepSeek + 独立路线\n\n2. **Google 的 AI 布局**：\n - 自研 Gemini 系列模型\n - 通过 Cloud 提供 Claude API\n - 现在直接战略投资 Anthropic\n\n3. **对 Claude 生态的影响**：\n - 资金充裕将加速 Claude 迭代\n - Claude Code 等 Agent 工具投入将加大\n - MCP 生态可能获得更多支持\n\n> 这笔投资标志着 AI 赛道的资本竞争进入白热化阶段。"
+  },
+  {
+    "slug": "openai-gpt-5-5-api-release",
+    "title": "OpenAI GPT-5.5 和 GPT-5.5 Pro 正式登陆 API",
+    "summary": "OpenAI 发布 GPT-5.5 系列 API，支持更长的上下文窗口和更强的代码能力，成为新一代 Agent 开发的首选模型。",
+    "source": "OpenAI 官方",
+    "sourceUrl": "https://developers.openai.com/api/docs/changelog",
+    "publishedAt": "2026-04-25",
+    "tags": [
+      "openai",
+      "gpt-5.5",
+      "api",
+      "llm"
+    ],
+    "content": "## GPT-5.5 系列 API 特性\n\nOpenAI 正式向 API 用户开放 GPT-5.5 系列模型，包含两个版本：\n\n### 模型变体\n\n| 模型 | 定位 | 特点 |\n|------|------|------|\n| GPT-5.5 | 标准版 | 平衡性能与成本，适合大多数场景 |\n| GPT-5.5 Pro | 专业版 | 更强推理和代码能力，适合复杂 Agent |\n\n### 关键改进\n\n- **上下文窗口**：支持 256k tokens，可处理更大代码库\n- **代码能力**：编程任务准确率提升显著\n- **工具调用**：Function calling 延迟降低\n- **多模态**：支持图片输入（Pro 版）\n\n### 定价策略\n\n相比 GPT-4 系列，GPT-5.5 提供更具竞争力的定价：\n\n- GPT-5.5：比 GPT-4 Turbo 低 50%\n- GPT-5.5 Pro：与 GPT-4 Turbo 持平，性能更强\n\n### 对 Agent 开发的影响\n\nGPT-5.5 系列成为构建复杂 Agent 的首选底层模型，特别是在：\n- 代码 Agent（如 Codex CLI）\n- 多步骤推理 Agent\n- 长上下文文档处理\n\n> 建议 Agent 开发者尽快迁移至 GPT-5.5 系列以获得更好性价比。"
+  },
+  {
+    "slug": "openclaw-2026-04-23-release",
+    "title": "OpenClaw 2026.4.23 发布：图像生成、子 Agent 上下文继承大幅增强",
+    "summary": "OpenClaw 发布 2026.4.23 版本，新增 gpt-image-2 图像生成支持、子 Agent 上下文继承、timeout 配置等 20+ 项改进和修复。",
+    "source": "OpenClaw GitHub",
+    "sourceUrl": "https://github.com/openclaw/openclaw/releases/tag/v2026.4.23",
+    "publishedAt": "2026-04-25",
+    "tags": [
+      "openclaw",
+      "release",
+      "image-generation",
+      "mcp"
+    ],
+    "content": "## OpenClaw 2026.4.23 重点更新\n\n### 核心新功能\n\n**1. 图像生成增强**\n- 支持 `openai/gpt-image-2` 通过 Codex OAuth 生成图像（无需 OPENAI_API_KEY）\n- OpenRouter 图像生成支持\n- 支持图像编辑和参考图像功能\n- 支持质量、输出格式、背景类型等参数\n\n**2. 子 Agent 上下文继承**\n- `sessions_spawn` 支持 `context: fork` 选项\n- 子 Agent 可继承父 Agent 的对话上下文\n- 保持默认隔离模式，按需开启继承\n\n**3. 工具超时配置**\n- 图像、视频、音乐、TTS 生成工具支持 `timeoutMs` 参数\n- 针对特定生成任务延长超时时间\n\n**4. 本地嵌入上下文可调**\n- `memorySearch.local.contextSize` 可配置\n- 默认 4096，适合资源受限主机\n\n### 关键修复\n\n- **Codex 集成**：修复 `request_user_input` 路由、权限审批流\n- **Windows 支持**：修复 `codex.cmd` shim 解析\n- **Telegram**：修复 Markdown 图片语法解析\n- **安全加固**：MCP 工具权限控制、mpload/exec 权限审查\n\n### 升级命令\n\n    npm install -g openclaw@latest\n\n> 推荐所有用户升级，特别是使用 Codex 和图像生成功能的用户。"
+  },
+  {
+    "slug": "claude-context-mcp-server",
+    "title": "claude-context MCP Server：将整个代码库作为 Claude 上下文",
+    "summary": "Zilliz 开源 claude-context MCP Server，通过语义代码搜索将百万行代码库作为 Claude Code 的上下文，大幅降低 Token 成本。",
+    "source": "Zilliz GitHub",
+    "sourceUrl": "https://github.com/zilliztech/claude-context",
+    "publishedAt": "2026-04-25",
+    "tags": [
+      "mcp",
+      "claude-code",
+      "code-search",
+      "vector-db"
+    ],
+    "content": "## claude-context 核心能力\n\n**claude-context** 是一个 MCP Server，为 Claude Code 和其他 AI 编码 Agent 提供语义代码搜索能力。\n\n### 核心特性\n\n- **完整代码库作为上下文**：通过语义搜索从百万行代码中找到相关代码\n- **多级语义理解**：支持函数、变量、注释、架构等多维度检索\n- **成本优化**：仅将相关代码加载到上下文，避免加载整个目录\n- **多平台支持**：Claude Code、OpenAI Codex CLI、Gemini CLI\n\n### 技术架构\n\n1. **向量数据库**：基于 Milvus/Zilliz Cloud 存储代码向量\n2. **嵌入模型**：使用 OpenAI 文本嵌入模型生成代码向量\n3. **语义索引**：自动解析代码结构并建立语义关联\n4. **MCP 协议**：标准化接口，支持多客户端\n\n### 配置示例\n\n    claude mcp add claude-context \\\n      -e OPENAI_API_KEY=sk-xxx \\\n      -e MILVUS_ADDRESS=xxx \\\n      -e MILVUS_TOKEN=xxx \\\n      -- npx @zilliz/claude-context-mcp@latest\n\n### 定价策略\n\n- **Zilliz Cloud**：免费起步套餐\n- **OpenAI 嵌入**：按 token 计费\n- **总体成本**：相比加载整个目录，成本降低 80%+\n\n> 适合大型代码库的项目，是 MCP 生态中代码搜索方向的标杆项目。"
+  },
+  {
     "slug": "openclaw-v16-release",
     "title": "OpenClaw v16 发布：App Router 全面升级",
     "summary": "OpenClaw 核心框架更新至 v16，App Router 支持更灵活的 Agent 编排，新增 Streaming 响应模式。",
