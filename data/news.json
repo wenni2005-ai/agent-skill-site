@@ -511,5 +511,165 @@
       "cost"
     ],
     "content": "## 要点\n\n- AI Gateway 新增智能路由功能\n- 规则引擎：简单请求走小模型，复杂请求走大模型\n- 支持回退链：首选模型不可用时自动切到备选\n- 每请求成本追踪和预算控制\n\n## 路由策略示例\n\n```\nif task.type == 'formatting' -> route to gemma-4\nif task.type == 'reasoning' -> route to gpt-4\nif task.type == 'code' -> route to codex\nfallback -> route to claude-sonnet\n```\n\n## 对 Agent 架构的影响\n\n这正是 OpenClaw 多 Agent 模型配置的理念——不同 Agent 用不同模型。Vercel 把这个能力做进了网关层。\n\n> 网关层路由 + Agent 层配置，两个维度控制成本和质量。"
+  },
+  {
+    "slug": "gpt-5-general-availability",
+    "title": "OpenAI 正式发布 GPT-5：多模态原生、Agent 框架内置",
+    "summary": "GPT-5 全面开放 API，原生支持图像/音频/视频输入输出，内置 Agent 编排框架。",
+    "source": "OpenAI Blog",
+    "sourceUrl": "https://openai.com/blog/gpt-5",
+    "publishedAt": "2026-04-20",
+    "tags": [
+      "openai",
+      "gpt-5",
+      "multimodal",
+      "agent",
+      "api"
+    ],
+    "content": "## GPT-5 正式发布\n\n### 关键更新\n\n- **原生多模态**：不再需要独立的 DALL-E 或 Whisper，一个模型处理文本/图像/音频/视频\n- **Agent 框架**：内置 `Responses API`，支持工具调用、并行执行和状态管理\n- **128K 上下文**：默认 128K，最高可扩展至 1M\n- **成本降低**：比 GPT-4.1 便宜 40%，速度提升 3x\n\n### Agent 开发新范式\n\n```python\nresponse = client.responses.create(\n    model=\"gpt-5\",\n    instructions=\"你是一个研究助手\",\n    tools=[{\"type\": \"web_search\"}, {\"type\": \"code_interpreter\"}],\n    input=\"分析 2026 年 AI Agent 市场趋势\"\n)\n```\n\n### 影响\n\nGPT-5 的 Agent 原生设计将大幅降低 Agent 开发门槛，预计会催生大量新应用。"
+  },
+  {
+    "slug": "claude-4-anthropic-release",
+    "title": "Anthropic 发布 Claude 4：扩展思维链和计算机使用能力",
+    "summary": "Claude 4 带来超长思维链和原生计算机操控能力，Agent 自主性大幅提升。",
+    "source": "Anthropic Blog",
+    "sourceUrl": "https://www.anthropic.com/news/claude-4",
+    "publishedAt": "2026-04-18",
+    "tags": [
+      "anthropic",
+      "claude-4",
+      "thinking",
+      "computer-use",
+      "agent"
+    ],
+    "content": "## Claude 4 发布\n\n### 核心升级\n\n- **扩展思维链**：支持 10 万 token 内部推理，复杂问题拆解更深入\n- **计算机使用**：原生支持屏幕截图、鼠标点击、键盘输入\n- **持久 Agent**：支持长时间运行的自主 Agent，可跨越多小时任务\n- **安全对齐**：Constitutional AI 2.0，更强的安全边界\n\n### 计算机使用示例\n\n```python\nresult = client.messages.create(\n    model=\"claude-4-opus\",\n    tools=[{\"type\": \"computer_2026\"}],\n    messages=[{\"role\": \"user\", \"content\": \"打开浏览器，搜索最新的 AI 新闻，整理成列表\"}]\n)\n```\n\n### 评价\n\nClaude 4 的计算机操控能力是目前最成熟的，适合需要 GUI 交互的自动化场景。"
+  },
+  {
+    "slug": "llama-4-meta-open-source",
+    "title": "Meta 开源 Llama 4：MoE 架构、400B 参数、多模态支持",
+    "summary": "Llama 4 采用 MoE 架构，400B 总参数/50B 活跃参数，支持图像理解。",
+    "source": "Meta AI Blog",
+    "sourceUrl": "https://ai.meta.com/blog/llama-4/",
+    "publishedAt": "2026-04-15",
+    "tags": [
+      "meta",
+      "llama-4",
+      "open-source",
+      "moe",
+      "multimodal"
+    ],
+    "content": "## Llama 4 开源发布\n\n### 架构亮点\n\n- **MoE 架构**：400B 总参数，每次推理只激活 50B，效率极高\n- **多模态**：Llama 4 Scout 和 Maverick 支持图像理解\n- **超长上下文**：Scout 支持 10M token 上下文窗口\n- **完全开源**：MIT 协议，可商用\n\n### 模型对比\n\n| 模型 | 总参数 | 活跃参数 | 上下文 | 多模态 |\n|------|--------|----------|--------|--------|\n| Scout | 400B | 50B | 10M | ✅ |\n| Maverick | 400B | 50B | 1M | ✅ |\n| Behemoth | 2T | 200B | 256K | ✅ |\n\n### 对行业影响\n\nLlama 4 的开源将再次推动本地部署和私有化 Agent 方案的发展。"
+  },
+  {
+    "slug": "openclaw-2026-4-release",
+    "title": "OpenClaw 2026.4 发布：记忆系统、多模型调度和 TTS 语音",
+    "summary": "OpenClaw 大版本更新，新增 Agent 记忆系统、智能模型路由和语音合成。",
+    "source": "OpenClaw Docs",
+    "sourceUrl": "https://docs.openclaw.ai/changelog",
+    "publishedAt": "2026-04-22",
+    "tags": [
+      "openclaw",
+      "release",
+      "memory",
+      "tts",
+      "multi-model"
+    ],
+    "content": "## OpenClaw 2026.4 发布\n\n### 新功能\n\n1. **Agent 记忆系统**\n   - HOT/WARM/COLD 三层记忆分层\n   - 遗忘曲线自动衰减\n   - 访问追踪和重要度评分\n\n2. **多模型智能调度**\n   - 根据任务类型自动选择最优模型\n   - 成本优化：简单任务用轻量模型\n   - 降级容错：主模型失败自动切换\n\n3. **TTS 语音合成**\n   - ElevenLabs 集成\n   - 支持多种语音风格\n   - 故事模式：用语音讲述长内容\n\n### 升级建议\n\n```bash\nnpm update -g openclaw\nopenclaw gateway restart\n```"
+  },
+  {
+    "slug": "nextjs-16-turbopack-stable",
+    "title": "Next.js 16 正式发布：Turbopack 稳定、Server Actions 增强",
+    "summary": "Next.js 16 将 Turbopack 提升为默认构建器，开发构建速度提升 700%。",
+    "source": "Vercel Blog",
+    "sourceUrl": "https://nextjs.org/blog/next-16",
+    "publishedAt": "2026-04-19",
+    "tags": [
+      "nextjs",
+      "turbopack",
+      "vercel",
+      "release",
+      "performance"
+    ],
+    "content": "## Next.js 16 发布\n\n### 关键更新\n\n- **Turbopack 默认**：开发构建速度提升 700%，生产构建提升 5x\n- **Server Actions 增强**：支持流式返回、中间件、权限控制\n- **Partial Prerendering**：静态+动态混合渲染，无需全页 SSR\n- **Node.js 24 支持**：原生 TypeScript 支持、更快的启动\n\n### 迁移指南\n\n```bash\nnpx next@latest upgrade\n```\n\n主要破坏性变更：\n- `next/font` 配置格式调整\n- `Image` 组件默认使用 `width/height` 而非 `layout`\n- 最低要求 Node.js 20\n\n### 性能对比\n\n| 指标 | Next.js 15 | Next.js 16 |\n|------|-----------|-----------|\n| 开发 HMR | 500ms | 70ms |\n| 生产构建 | 45s | 9s |\n| 冷启动 | 2.3s | 0.8s |"
+  },
+  {
+    "slug": "crewai-3-multi-agent-framework",
+    "title": "CrewAI 3.0：可视化 Agent 编排和内置工具市场",
+    "summary": "CrewAI 3.0 引入可视化流程编辑器和内置工具市场，Agent 开发门槛进一步降低。",
+    "source": "CrewAI Blog",
+    "sourceUrl": "https://crewai.com/blog/crewai-3",
+    "publishedAt": "2026-04-21",
+    "tags": [
+      "crewai",
+      "multi-agent",
+      "framework",
+      "visual-editor",
+      "tools"
+    ],
+    "content": "## CrewAI 3.0 发布\n\n### 新功能\n\n- **可视化编排**：拖拽式流程编辑器，零代码构建 Agent 工作流\n- **工具市场**：内置 100+ 预构建工具，一键安装\n- **记忆系统**：短期/长期记忆 + 知识检索\n- **Guardrails**：输出验证和安全护栏\n\n### 对比其他框架\n\n| 特性 | CrewAI 3 | LangGraph | AutoGen |\n|------|---------|-----------|---------|\n| 可视化编辑 | ✅ | ❌ | ❌ |\n| 工具市场 | ✅ | 部分 | ❌ |\n| 内置记忆 | ✅ | 需自建 | 需自建 |\n| 学习曲线 | 低 | 中 | 高 |\n\n### 适用场景\n\n适合快速原型和非技术人员构建 Agent 工作流。"
+  },
+  {
+    "slug": "nodejs-24-release",
+    "title": "Node.js 24 LTS 发布：原生 TypeScript、更快的 V8 和 WebSocket",
+    "summary": "Node.js 24 成为 LTS 版本，原生支持 TypeScript 执行和 WebSocket 客户端。",
+    "source": "Node.js Blog",
+    "sourceUrl": "https://nodejs.org/en/blog/release/v24.0.0",
+    "publishedAt": "2026-04-17",
+    "tags": [
+      "nodejs",
+      "typescript",
+      "v8",
+      "websocket",
+      "release"
+    ],
+    "content": "## Node.js 24 LTS 发布\n\n### 关键更新\n\n- **原生 TypeScript**：无需 ts-node，直接 `node app.ts`\n- **WebSocket 客户端**：内置 `WebSocket` API，不再需要 `ws` 库\n- **V8 13.5**：性能提升 15%，内存占用减少 10%\n- **`require(ESM)`**：可以在 CommonJS 中直接 import ESM 模块\n- **SQLite 内置**：`node:sqlite` 模块，无需额外安装\n\n### TypeScript 示例\n\n```typescript\n// 直接运行，无需编译\ntype User = { name: string; age: number }\n\nfunction greet(user: User): string {\n  return `Hello, ${user.name}!`\n}\n\nconsole.log(greet({ name: \"东哥\", age: 30 }))\n```\n\n```bash\nnode app.ts  # 直接执行！\n```"
+  },
+  {
+    "slug": "ai-video-generation-trend-2026",
+    "title": "AI 视频生成赛道 2026：Kling、Sora、Veo 三足鼎立",
+    "summary": "2026 年 AI 视频生成进入爆发期，字节 Kling、OpenAI Sora、Google Veo 各有优势。",
+    "source": "36氪",
+    "sourceUrl": "https://36kr.com/p/ai-video-2026",
+    "publishedAt": "2026-04-23",
+    "tags": [
+      "ai-video",
+      "kling",
+      "sora",
+      "veo",
+      "trend"
+    ],
+    "content": "## AI 视频生成赛道 2026\n\n### 格局\n\n| 产品 | 公司 | 时长 | 质量 | API |\n|------|------|------|------|-----|\n| Kling 2.0 | 字节 | 60s | ⭐⭐⭐⭐⭐ | ✅ |\n| Sora | OpenAI | 30s | ⭐⭐⭐⭐ | ✅ |\n| Veo 2 | Google | 30s | ⭐⭐⭐⭐ | ✅ |\n| Runway Gen-4 | Runway | 15s | ⭐⭐⭐ | ✅ |\n\n### 趋势\n\n1. **时长突破**：从 5s 到 60s，接近短视频需求\n2. **API 普及**：全部提供 API，Agent 可调用\n3. **成本下降**：每分钟视频生成成本降到 $0.5\n4. **版权争议**：训练数据版权问题仍在法律博弈中\n\n### 对开发者的影响\n\nAI 视频生成 + Agent = 自动化内容工厂，预计 2026 下半年会有大量视频 Agent 应用涌现。"
+  },
+  {
+    "slug": "ai-safety-regulation-update",
+    "title": "全球 AI 安全监管最新进展：EU AI Act 生效、中国算法备案更新",
+    "summary": "EU AI Act 全面生效，中国更新算法备案要求，AI 安全合规成为刚需。",
+    "source": "Reuters",
+    "sourceUrl": "https://reuters.com/ai-regulation-2026",
+    "publishedAt": "2026-04-16",
+    "tags": [
+      "ai-safety",
+      "regulation",
+      "eu-ai-act",
+      "compliance",
+      "policy"
+    ],
+    "content": "## 全球 AI 安全监管更新\n\n### EU AI Act 全面生效\n\n- **高风险系统**：医疗、金融、执法领域 AI 必须通过合规审查\n- **透明度要求**：AI 生成内容必须标注\n- **罚款**：违规最高处全球营收 6% 罚款\n\n### 中国算法备案更新\n\n- **生成式 AI**：所有面向公众的生成式 AI 必须备案\n- **安全评估**：上线前必须通过安全评估\n- **数据来源**：训练数据必须可追溯\n\n### 对开发者影响\n\n1. 合规成本增加，但标准化后反而降低法律风险\n2. 开源模型在合规上更有优势（可审计）\n3. Agent 自动化操作需额外考虑责任归属\n\n### 建议\n\n- 面向欧盟用户的应用：做好 AI 标注和合规审查\n- 面向中国用户的应用：提前完成算法备案\n- 通用建议：保留 Agent 操作日志，便于审计追溯"
+  },
+  {
+    "slug": "mistral-large-3-release",
+    "title": "Mistral 发布 Large 3：开源挑战者，性能逼近 GPT-5",
+    "summary": "Mistral Large 3 在多项基准上逼近 GPT-5，Apache 2.0 协议完全开源。",
+    "source": "Mistral Blog",
+    "sourceUrl": "https://mistral.ai/news/mistral-large-3",
+    "publishedAt": "2026-04-24",
+    "tags": [
+      "mistral",
+      "open-source",
+      "llm",
+      "benchmark",
+      "apache"
+    ],
+    "content": "## Mistral Large 3 发布\n\n### 基准成绩\n\n| 基准 | Mistral Large 3 | GPT-5 | Claude 4 |\n|------|----------------|-------|---------|\n| MMLU | 92.1% | 93.5% | 92.8% |\n| HumanEval | 89.2% | 91.0% | 88.5% |\n| MATH | 78.3% | 82.1% | 80.5% |\n\n### 优势\n\n- **完全开源**：Apache 2.0 协议，无使用限制\n- **本地部署**：量化后单张 A100 可运行\n- **多语言**：中英文能力显著提升\n- **函数调用**：原生支持，格式兼容 OpenAI\n\n### 适用场景\n\n- 需要数据私有化的企业\n- 对成本敏感的 Agent 应用\n- 需要深度定制的场景\n\n```bash\n# 本地部署\nollama pull mistral-large-3\n```"
   }
 ]

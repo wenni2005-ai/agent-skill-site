@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "nextjs-16-app-router-stable",
+    "title": "Next.js 16 App Router 稳定版发布：性能提升 40%",
+    "summary": "Next.js 16 带来 App Router 稳定版，Server Components 性能大幅提升，Turbopack 成为默认构建工具。",
+    "source": "Vercel Blog",
+    "sourceUrl": "https://nextjs.org/blog/next-16",
+    "publishedAt": "2026-04-25",
+    "tags": ["nextjs", "react", "framework", "release"],
+    "content": "## Next.js 16 核心更新\n\n### App Router 稳定版\n\n历时 2 年的 App Router 终于进入稳定状态：\n\n- **Server Components 优化**：首屏渲染速度提升 40%\n- **Streaming 改进**：Suspense 边界更智能\n- **嵌套 Layout 性能**：复杂布局场景优化明显\n\n### Turbopack 成为默认\n\n- 取代 Webpack 成为默认构建工具\n- 开发模式热更新速度提升 10 倍\n- 内存占用降低 50%\n\n### AI SDK 深度集成\n\n```tsx\n// AI Streaming 原生支持\nexport async function POST() {\n  const response = await ai.stream({\n    model: 'gpt-5',\n    messages: [...]\n  });\n  return response.toNextResponse();\n}\n```\n\n### 迁移指南\n\n官方提供 codemod 自动迁移：\n\n```bash\nnpx @next/codemod@latest app-router-migration\n```\n\n> Page Router 将继续维护，但新功能优先在 App Router 开发。"
+  },
+  {
+    "slug": "vercel-v4-release",
+    "title": "Vercel Platform v4 发布：Edge Functions 支持 GPU 推理",
+    "summary": "Vercel v4 带来 Edge Functions GPU 支持、全局 Edge Config 和增强的 AI Gateway 功能。",
+    "source": "Vercel",
+    "sourceUrl": "https://vercel.com/blog/vercel-v4",
+    "publishedAt": "2026-04-24",
+    "tags": ["vercel", "edge", "deployment", "ai", "gpu"],
+    "content": "## Vercel v4 核心功能\n\n### Edge Functions GPU 支持\n\n革命性的更新——Edge Functions 现在可以访问 GPU：\n\n- **支持的 GPU**：NVIDIA T4、A10G、L4\n- **AI 推理场景**：图像生成、向量 embedding、小模型推理\n- **按需计费**：按 GPU 使用时间计费，空闲不收费\n\n### 使用示例\n\n```typescript\nexport const config = {\n  runtime: 'edge',\n  gpu: 'nvidia-t4'\n};\n\nexport default async function handler(req) {\n  // 使用 GPU 进行 AI 推理\n  const embedding = await model.encode(req.body.text);\n  return Response.json({ embedding });\n}\n```\n\n### AI Gateway 增强\n\n- **统一缓存**：跨模型响应缓存\n- **智能回退**：首选模型失败自动切换到备选\n- **Token 用量追踪**：精细化成本分析\n\n### 开发者体验\n\n- `vc env pull` 支持多环境管理\n- 本地开发支持 GPU 模拟\n- 增强的 Build Cache\n\n> Edge + GPU 的组合让低延迟 AI 应用成为可能。"
+  },
+  {
+    "slug": "docker-desktop-ai-features",
+    "title": "Docker Desktop 4.40 发布：内置 AI 助手和容器智能优化",
+    "summary": "Docker Desktop 4.40 带来内置 AI 助手，可以自然语言管理容器，同时推出智能镜像优化功能。",
+    "source": "Docker Blog",
+    "sourceUrl": "https://www.docker.com/blog/docker-desktop-4-40/",
+    "publishedAt": "2026-04-23",
+    "tags": ["docker", "container", "ai", "desktop"],
+    "content": "## Docker Desktop 4.40 更新\n\n### 内置 AI 助手 Moby\n\n自然语言管理 Docker 资源：\n\n```\n> 启动我的数据库容器\n> 查看占用内存最多的容器\n> 构建一个 Node.js 18 镜像\n> 分析我的容器为什么启动失败\n```\n\n### 智能镜像优化\n\n- **自动分层建议**：AI 分析 Dockerfile 给出优化建议\n- **安全扫描**：集成 Snyk，扫描漏洞并提供修复建议\n- **镜像瘦身**：推荐多阶段构建优化方案\n\n### 性能提升\n\n- 文件系统事件监控改进（Mac 上 inode 缓存）\n- VirtioFS 写入性能提升 2 倍\n- 内存占用降低 25%\n\n### Dev Environments 增强\n\n- 支持 docker-compose 定义开发环境\n- 一键分享开发环境配置\n- 团队模板库\n\n> Docker 不再是「基础设施」，正在成为「开发伙伴」。"
+  },
+  {
+    "slug": "nodejs-24-lts-release",
+    "title": "Node.js 24 LTS 发布：原生 TypeScript 支持和性能突破",
+    "summary": "Node.js 24 带来原生 TypeScript 支持（无需 ts-node）、V8 引擎升级和权限模型改进。",
+    "source": "Node.js Foundation",
+    "sourceUrl": "https://nodejs.org/en/blog/announcements/v24-release-announce/",
+    "publishedAt": "2026-04-22",
+    "tags": ["nodejs", "typescript", "javascript", "release"],
+    "content": "## Node.js 24 核心特性\n\n### 原生 TypeScript 支持\n\n终于来了——无需额外配置即可运行 TypeScript：\n\n```bash\n# 以前\nnpx ts-node server.ts\n\n# Node.js 24\nnode server.ts\n```\n\n支持：\n- 直接执行 `.ts` 文件\n- Experimental 的装饰器语法\n- 更好的错误堆栈追踪\n\n### V8 12.0 升级\n\n- Array.fromAsync 原生支持\n- Promise.withResolvers 标准化\n- 性能提升 15%\n\n### 权限模型改进\n\n```bash\n# 细粒度权限控制\nnode --permission-fs-read=/data --permission-fs-write=/tmp app.js\n```\n\n支持的权限：\n- `--permission-fs-read`\n- `--permission-fs-write`\n- `--permission-child-process`\n- `--permission-worker`\n- `--permission-network`\n\n### 其他改进\n\n- Test runner 更完善的断言库\n- WebSocket 客户端原生支持\n- fetch API 稳定版\n\n> TypeScript 原生支持是 Node.js 史上最重要的开发者体验改进之一。"
+  },
+  {
+    "slug": "bun-2-release",
+    "title": "Bun 2.0 发布：Node.js 兼容性达到 99%",
+    "summary": "Bun 2.0 发布，与 Node.js API 兼容性达到 99%，新增 Windows 原生支持和云原生部署工具。",
+    "source": "Bun Blog",
+    "sourceUrl": "https://bun.sh/blog/bun-2",
+    "publishedAt": "2026-04-21",
+    "tags": ["bun", "javascript", "runtime", "performance"],
+    "content": "## Bun 2.0 主要更新\n\n### Node.js 兼容性\n\n测试套件通过率达到 99%：\n- 所有主流 npm 包可直接运行\n- 支持复杂的 native addon\n- 兼容大多数 Node.js 工具链\n\n### Windows 原生支持\n\n不再依赖 WSL，原生 Windows 版本发布：\n- 性能与 Linux 版本接近\n- 完整的 CLI 功能\n- 支持 Windows Service\n\n### 云原生工具\n\n```bash\n# 一键 Dockerfile 生成\nbun docker init\n\n# 容器镜像构建\nbun docker build -t myapp\n\n# Kubernetes 部署配置\nbun k8s init\n```\n\n### 性能基准\n\n\n| 测试 | Node.js 24 | Bun 2.0 |\n|------|-----------|---------|\n| HTTP 吞吐量 | 基准 | +3.2x |\n| 启动时间 | 基准 | -80% |\n| 内存占用 | 基准 | -40% |\n| WebSocket | 基准 | +2.8x |\n\n### 包管理器改进\n\n- workspace 协议完全支持\n- peer dependencies 自动解析\n- 更快的安装速度（比 pnpm 快 1.5x）\n\n> Bun 2.0 标志着它从「实验性 runtime」变成「生产可用」。"
+  },
+  {
+    "slug": "github-copilot-workspace-ga",
+    "title": "GitHub Copilot Workspace 正式 GA：从 Issue 到 PR 全自动",
+    "summary": "Copilot Workspace 从预览版进入正式版，支持自然语言需求描述直接生成可运行的代码和 PR。",
+    "source": "GitHub Blog",
+    "sourceUrl": "https://github.blog/news-insights/product-news/copilot-workspace-ga/",
+    "publishedAt": "2026-04-20",
+    "tags": ["github", "copilot", "ai", "developer-tool"],
+    "content": "## GitHub Copilot Workspace GA\n\n### 核心能力\n\n从自然语言描述到可运行代码：\n\n1. **理解需求**：解析 Issue 或自然语言描述\n2. **规划方案**：AI 制定实现计划\n3. **生成代码**：跨文件修改，保持一致性\n4. **创建 PR**：自动生成 PR 描述和变更说明\n\n### 使用示例\n\n在 Issue 中描述：\n\n```\n为用户资料页面添加深色模式切换按钮。\n按钮位置在右上角，使用系统偏好作为默认值。\n```\n\nCopilot Workspace 会自动：\n- 创建新的 React 组件\n- 修改现有样式文件\n- 添加 localStorage 持久化\n- 生成 PR\n\n### 与现有工具对比\n\n\n| 特性 | Copilot Inline | Copilot Chat | Copilot Workspace |\n|------|---------------|--------------|-------------------|\n| 上下文范围 | 当前文件 | 多文件 | 整个仓库 |\n| 输出形式 | 代码片段 | 回答/代码 | 可运行代码 |\n| 人工介入 | 需要 | 需要 | 可选全自动 |\n| 适用场景 | 补全代码 | 解答问题 | 完整功能开发 |\n\n### 安全与审查\n\n- 所有代码变更可审查\n- 支持 AI-diff 查看修改影响\n- 与 GitHub Advanced Security 集成\n\n> 「从想法到 PR，只需一次对话。」\n\n> 定价：每月 $19（Pro）起，Enterprise 包含在现有订阅中。"
+  }
+]

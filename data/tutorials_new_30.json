@@ -1,0 +1,40 @@
+[
+  {
+    "slug": "agent-tool-chain-building",
+    "title": "Agent 工具调用链构建：串联多个 MCP Server",
+    "description": "将多个 MCP Server 串联成工具调用链，实现复杂任务的分步执行和数据流转——从设计到实现的全流程指南。",
+    "tags": ["mcp", "tool-chain", "agent", "orchestration"],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-25",
+    "featured": false,
+    "content": "## 什么是工具调用链\n\n复杂任务往往需要多个工具协作完成。工具调用链（Tool Chain）就是把多个工具按顺序串联，上一步的输出作为下一步的输入。\n\n典型场景：\n- 查询天气 → 推荐着装 → 生成日程提醒\n- 搜索论文 → 下载 PDF → 提取摘要 → 存入知识库\n- 读取 GitHub PR → 代码审查 → 生成评论\n\n## 步骤 1：设计调用链结构\n\n以「智能日程规划」为例：\n\n```\n[天气查询] → [地点推荐] → [时间规划] → [日历创建]\n    ↓              ↓              ↓              ↓\n  weather      geo-search     time-slot     calendar\n```\n\n## 步骤 2：数据流转实现\n\n```python\nfrom fast_agent import FastAgent\n\nfast = FastAgent('schedule-planner')\n\n@fast.agent('weather', servers=['weather-mcp'])\n@fast.agent('recommender', servers=['geo-mcp'])\n@fast.agent('scheduler', servers=['calendar-mcp'])\nasync def plan_day(location: str, date: str):\n    # Step 1: 获取天气\n    weather = await fast.agents.weather(f'查询{location}{date}的天气')\n    \n    # Step 2: 根据天气推荐活动地点\n    if '雨' in weather:\n        indoor_places = await fast.agents.recommender(f'{location}室内场所推荐')\n    else:\n        outdoor_places = await fast.agents.recommender(f'{location}户外活动推荐')\n    \n    # Step 3: 创建日程\n    schedule = await fast.agents.scheduler(\n        f'根据推荐创建{date}的日程安排'\n    )\n    \n    return schedule\n```\n\n## 步骤 3：错误处理\n\n```python\nasync def safe_chain_step(tool_call, retries=3):\n    for i in range(retries):\n        try:\n            return await tool_call()\n        except Exception as e:\n            if i == retries - 1:\n                raise ChainError(f'步骤失败: {e}')\n            await asyncio.sleep(2 ** i)\n```\n\n## 最佳实践\n\n1. **幂等设计**：每个工具可重复调用无副作用\n2. **超时设置**：每个步骤设置合理超时\n3. **降级策略**：某步失败时提供默认值\n4. **日志追踪**：记录完整调用链和耗时\n5. **并行优化**：无依赖的步骤并行执行"
+  },
+  {
+    "slug": "agent-retry-strategy",
+    "title": "Agent 错误重试策略：从指数退避到熔断",
+    "description": "构建生产级 Agent 的重试机制——覆盖指数退避、抖动、熔断器、死信队列等完整策略。",
+    "tags": ["agent", "retry", "resilience", "error-handling"],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-25",
+    "featured": false,
+    "content": "## 为什么需要重试策略\n\nAgent 依赖的外部服务会不稳定：API 超时、网络抖动、限流触发。没有重试机制，一次失败就结束任务，用户体验极差。\n\n## 基础：指数退避\n\n```python\nimport asyncio\nimport random\n\nasync def exponential_backoff_retry(\n    fn,\n    max_retries=5,\n    base_delay=1,\n    max_delay=60\n):\n    for attempt in range(max_retries):\n        try:\n            return await fn()\n        except TransientError as e:\n            delay = min(base_delay * (2 ** attempt), max_delay)\n            print(f'重试 {attempt + 1}/{max_retries}, {delay}秒后...')\n            await asyncio.sleep(delay)\n    raise MaxRetriesExceeded()\n```\n\n## 进阶：抖动（Jitter）\n\n```python\ndelay = min(base_delay * (2 ** attempt), max_delay)\njitter = random.uniform(0, delay * 0.5)\nawait asyncio.sleep(delay + jitter)\n```\n\n## 熔断器模式\n\n```python\nclass CircuitBreaker:\n    def __init__(self, failure_threshold=5, recovery_timeout=60):\n        self.failure_threshold = failure_threshold\n        self.recovery_timeout = recovery_timeout\n        self.failures = 0\n        self.last_failure_time = None\n        self.state = 'CLOSED'\n    \n    async def call(self, fn):\n        if self.state == 'OPEN':\n            if time.time() - self.last_failure_time > self.recovery_timeout:\n                self.state = 'HALF_OPEN'\n            else:\n                raise CircuitOpenError('熔断器开启中')\n        \n        try:\n            result = await fn()\n            self._on_success()\n            return result\n        except Exception as e:\n            self._on_failure()\n            raise e\n    \n    def _on_failure(self):\n        self.failures += 1\n        self.last_failure_time = time.time()\n        if self.failures >= self.failure_threshold:\n            self.state = 'OPEN'\n    \n    def _on_success(self):\n        self.failures = 0\n        self.state = 'CLOSED'\n```\n\n## 配置建议\n\n| 场景 | 重试次数 | 退避策略 | 熔断阈值 |\n|------|----------|----------|----------|\n| LLM API | 3 | 指数退避 + 抖动 | 10/60s |\n| 数据库 | 5 | 线性退避 | 5/30s |\n| 第三方API | 3 | 指数退避 | 5/60s |\n| Webhook | 2 | 固定间隔 | 3/120s |"
+  },
+  {
+    "slug": "streaming-output-handling",
+    "title": "流式输出处理：让 AI 响应实时可见",
+    "description": "掌握 LLM 流式输出技术——实现逐字显示、中途打断、流式解析，打造丝滑的用户体验。",
+    "tags": ["streaming", "sse", "llm", "real-time"],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-25",
+    "featured": false,
+    "content": "## 为什么要流式输出\n\n传统方式：等待 LLM 完整生成后再显示，用户盯着「加载中」干等。\n流式输出：LLM 每生成一个 token 就立即显示，用户实时看到内容生成。\n\n效果：感知延迟降低 80%，用户体验大幅提升。\n\n## 技术原理\n\n```\nClient ← -------------- 完整响应 (3s等待) ← Server  // 传统\nClient ← token1 ← token2 ← token3 ← ... ← Server  // 流式\n```\n\n## 实现方式一：Server-Sent Events (SSE)\n\n```javascript\n// 后端 (Node.js)\napp.get('/api/chat/stream', (req, res) => {\n  res.setHeader('Content-Type', 'text/event-stream');\n  res.setHeader('Cache-Control', 'no-cache');\n  \n  const stream = openai.chat.completions.create({\n    model: 'gpt-4',\n    messages: req.body.messages,\n    stream: true\n  });\n  \n  for await (const chunk of stream) {\n    const content = chunk.choices[0]?.delta?.content || '';\n    res.write(`data: ${JSON.stringify({ content })}\\n\\n`);\n  }\n  \n  res.write('data: [DONE]\\n\\n');\n  res.end();\n});\n```\n\n```javascript\n// 前端\nconst eventSource = new EventSource('/api/chat/stream');\neventSource.onmessage = (event) => {\n  if (event.data === '[DONE]') {\n    eventSource.close();\n    return;\n  }\n  const data = JSON.parse(event.data);\n  appendText(data.content);\n};\n```\n\n## 实现方式二：WebSocket\n\n更适合双向通信场景（中途打断、指令注入）：\n\n```javascript\nconst ws = new WebSocket('wss://api.example.com/chat');\n\nws.onmessage = (event) => {\n  const data = JSON.parse(event.data);\n  if (data.type === 'token') {\n    appendText(data.content);\n  } else if (data.type === 'tool_start') {\n    showToolIndicator(data.tool);\n  }\n};\n\n// 中途打断\nstopButton.onclick = () => {\n  ws.send(JSON.stringify({ type: 'interrupt' }));\n};\n```\n\n## 流式解析技巧\n\nLLM 生成结构化内容时，需要边流边解析：\n\n```javascript\nlet buffer = '';\nlet currentJSON = null;\n\nstream.onData((chunk) => {\n  buffer += chunk;\n  \n  // 尝试解析完整JSON对象\n  const lines = buffer.split('\\n');\n  buffer = lines.pop(); // 保留不完整的最后一行\n  \n  for (const line of lines) {\n    try {\n      const data = JSON.parse(line);\n      handleCompleteData(data);\n    } catch {\n      // 等待更多数据\n    }\n  }\n});\n```\n\n## 性能优化\n\n- 设置缓冲区，每 50ms 批量刷新一次，减少 DOM 更新\n- 使用 requestAnimationFrame 优化渲染\n- Token 累积到一定长度再刷新，平衡实时性和性能"
+  },
+  {
+    "slug": "model-fine-tuning-basics",
+    "title": "模型微调基础：从数据准备到部署上线",
+    "description": "学习模型微调（Fine-tuning）全流程——数据清洗、训练配置、评估验证、部署整合。",
+    "tags": ["fine-tuning", "llm", "ml-ops", "ai"],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-25",
+    "featured": false,
+    "content": "## 什么时候需要微调\n\n尝试 Prompt 优化和 RAG 后，仍无法满足特定任务需求时考虑微调：\n\n- 需要输出特定格式（公司报告模板、代码规范）\n- 领域知识深度整合（法律、医疗专业术语）\n- 保持特定角色一致性（品牌客服、专业顾问）\n\n## 微调前的自查清单\n\n- [ ] 尝试 Few-shot Prompt 未达到效果\n- [ ] 确认问题不是知识库不足（RAG 可解决）\n- [ ] 有 100+ 高质量样本数据\n- [ ] 愿意投入计算资源\n\n## 步骤 1：数据准备\n\n格式（对话式微调）：\n\n```json\n{\n  \"messages\": [\n    {\"role\": \"system\", \"content\": \"你是专业客服\"},\n    {\"role\": \"user\", \"content\": \"订单什么时候发货？\"},\n    {\"role\": \"assistant\", \"content\": \"您的订单...\"}\n  ]\n}\n```\n\n数据清洗：\n- 去除 PII（姓名、电话、地址）\n- 统一格式和编码\n- 检查

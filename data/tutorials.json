@@ -458,5 +458,197 @@
     "createdAt": "2026-04-24",
     "featured": false,
     "content": "## 为什么要发布\n\n写好的 Skill 如果只给自己用，价值有限。发布到 ClawHub：\n\n- 其他人可以一键安装\n- 获得社区反馈和贡献\n- 建立你的开发者声誉\n\n## 发布前检查清单\n\n1. SKILL.md 格式正确且完整\n2. 脚本经过测试，没有 bug\n3. 没有硬编码的 API Key\n4. README 清晰说明了用途和用法\n5. 版本号正确\n\n## 步骤 1：安装 ClawHub CLI\n\n```bash\nnpm install -g clawhub\n```\n\n## 步骤 2：登录\n\n```bash\nclawhub login\n```\n\n## 步骤 3：验证 Skill 结构\n\n```bash\nclawhub validate ./my-skill\n```\n\n这会检查 SKILL.md 必填字段、脚本可执行性等。\n\n## 步骤 4：发布\n\n```bash\nclawhub publish ./my-skill\n```\n\n首次发布会创建条目，后续发布会更新版本。\n\n## 步骤 5：维护更新\n\n```bash\n# 更新版本号\nclawhub bump ./my-skill --minor  # 2.0.0 -> 2.1.0\n\n# 重新发布\nclawhub publish ./my-skill\n```\n\n## 常见问题\n\n### 发布失败\n- 检查 SKILL.md 中的 name 是否已被占用\n- 确认没有敏感信息泄露\n\n### 安装后无法运行\n- 确认依赖在 scripts/ 中声明\n- 检查运行环境要求（Node.js 版本等）\n\n## 社区最佳实践\n\n- 写清楚使用示例\n- 及时回复用户反馈\n- 定期更新保持兼容性"
+  },
+  {
+    "slug": "multi-agent-collaboration",
+    "title": "多 Agent 协作开发实战",
+    "description": "用 OpenClaw 搭建多 Agent 团队：任务拆解、并行开发、代码审查自动化。",
+    "tags": [
+      "agent",
+      "multi-agent",
+      "collaboration",
+      "openclaw",
+      "workflow"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-25",
+    "featured": true,
+    "content": "## 多 Agent 协作开发实战\n\n### 架构设计\n\n一个高效的多 Agent 团队需要明确的角色分工：\n\n```\n执行官（coordinator）\n  ├── 编程员（coder）— 写代码\n  ├── 研究员（researcher）— 搜索调研\n  ├── 编辑（writer）— 总结润色\n  └── 运维（operator）— 执行检查\n```\n\n### Step 1：配置 Agent 团队\n\n在 `openclaw.json` 中定义你的 Agent 团队：\n\n```json\n{\n  \"agents\": {\n    \"list\": [\n      {\"id\": \"coordinator\", \"model\": \"nvidia/z-ai/glm5\"},\n      {\"id\": \"coder\", \"model\": \"openai-codex/gpt-5.4\"},\n      {\"id\": \"researcher\", \"model\": \"nvidia/moonshotai/kimi-k2.5\"},\n      {\"id\": \"writer\", \"model\": \"openrouter/qwen/qwen3.6-plus:free\"}\n    ]\n  }\n}\n```\n\n### Step 2：任务拆解与分发\n\n执行官收到需求后，拆解为子任务并分发：\n\n```markdown\n需求：开发一个 API 端点\n\n拆解：\n1. researcher → 调研最佳实践和竞品实现\n2. coder → 编写 API 代码和测试\n3. writer → 编写 API 文档\n4. operator → 部署到测试环境\n```\n\n### Step 3：结果整合\n\n所有子任务完成后，执行官负责：\n- 去重：去掉重复内容\n- 纠偏：修正方向偏差\n- 补洞：发现遗漏并补充\n- 定稿：输出最终可交付成果\n\n### 关键原则\n\n1. **专人专事**：不要让 coder 去做搜索\n2. **串行 vs 并行**：有依赖关系的串行，独立的并行\n3. **轻量沟通**：子任务结果不要原样转发，先提炼再传递"
+  },
+  {
+    "slug": "agent-memory-architecture",
+    "title": "Agent 记忆系统设计",
+    "description": "为 AI Agent 构建持久记忆：分层存储、遗忘曲线和上下文加载策略。",
+    "tags": [
+      "agent",
+      "memory",
+      "architecture",
+      "persistence",
+      "context"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-25",
+    "featured": true,
+    "content": "## Agent 记忆系统设计\n\n### 为什么需要记忆？\n\nAgent 每次启动都是「失忆」状态，没有记忆就无法：\n- 记住用户偏好\n- 延续昨日工作\n- 从错误中学习\n\n### 三层记忆架构\n\n```\n🔥 HOT  — 当前活跃任务（每次加载）\n🌡️ WARM — 稳定偏好配置（偶尔更新）\n❄️ COLD — 历史归档（按需检索）\n```\n\n### 遗忘曲线\n\n不是所有记忆都值得保留，用衰减公式自动淘汰：\n\n```\nscore = similarity × exp(-0.05 × days) + 0.2 × ln(1 + access_count)\n```\n\n- score > 0.7 → HOT\n- 0.3 ~ 0.7 → WARM\n- ≤ 0.3 → COLD\n\n### 实现方案\n\n```markdown\nmemory/\n├── hot/HOT_MEMORY.md      ← 每次启动必读\n├── warm/WARM_MEMORY.md    ← 稳定偏好\n├── cold/COLD_MEMORY.md    ← 历史归档\n├── 2026-04-25.md          ← 今日日志\n├── archive/               ← 7天前日志\n├── weekly/                ← 周摘要\n└── memory-meta.json       ← 遗忘曲线元数据\n```\n\n### 加载策略\n\n```python\n# 每次启动\nload(\"memory/hot/HOT_MEMORY.md\")  # 必须\nload(\"memory/warm/WARM_MEMORY.md\") # 可选\n\n# 按需检索\nif relevant:\n    search(\"memory/cold/COLD_MEMORY.md\")\n    search(\"memory/archive/\")\n```"
+  },
+  {
+    "slug": "rag-app-from-scratch",
+    "title": "从零搭建 RAG 应用",
+    "description": "完整 RAG 应用开发：文档加载、分块策略、向量索引、检索增强生成。",
+    "tags": [
+      "rag",
+      "vector-database",
+      "llm",
+      "embedding",
+      "knowledge-base"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-25",
+    "featured": false,
+    "content": "## 从零搭建 RAG 应用\n\n### 什么是 RAG？\n\nRetrieval-Augmented Generation：先检索相关知识，再让 LLM 基于检索结果生成答案，避免幻觉。\n\n### 完整流程\n\n```\n1. 文档加载 → 2. 文本分块 → 3. 向量化 → 4. 存入索引\n                                         ↓\n5. 用户提问 → 6. 问题向量化 → 7. 相似检索 → 8. LLM 生成\n```\n\n### Step 1：文档加载与分块\n\n```python\nfrom langchain.text_splitter import RecursiveCharacterTextSplitter\n\nsplitter = RecursiveCharacterTextSplitter(\n    chunk_size=512,\n    chunk_overlap=50,\n    separators=[\"\\n## \", \"\\n### \", \"\\n\\n\", \"\\n\", \"。\", \" \"]\n)\n\nchunks = splitter.split_text(document)\n```\n\n### Step 2：向量化与索引\n\n```python\nfrom chromadb import Client\n\nclient = Client()\ncollection = client.create_collection(\"my_knowledge\")\n\ncollection.add(\n    documents=chunks,\n    ids=[f\"chunk_{i}\" for i in range(len(chunks))],\n    metadatas=[{\"source\": \"doc1\"} for _ in chunks]\n)\n```\n\n### Step 3：检索 + 生成\n\n```python\nresults = collection.query(query_texts=[question], n_results=5)\ncontext = \"\\n\".join(results[\"documents\"][0])\n\nprompt = f\"\"\"基于以下知识回答问题：\n\n{context}\n\n问题：{question}\n\n请只基于提供的信息回答，不确定的部分请说明。\"\"\"\n\nanswer = llm.generate(prompt)\n```"
+  },
+  {
+    "slug": "prompt-engineering-practice",
+    "title": "Prompt 工程实践指南",
+    "description": "从基础到高级的 Prompt 技巧：角色设定、Few-shot、思维链和结构化输出。",
+    "tags": [
+      "prompt",
+      "engineering",
+      "few-shot",
+      "chain-of-thought",
+      "best-practices"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-25",
+    "featured": false,
+    "content": "## Prompt 工程实践指南\n\n### 核心原则\n\n1. **具体胜于模糊**：「写一篇 500 字的产品介绍」> 「写点东西」\n2. **示例胜于描述**：给 2-3 个例子比写 10 行说明更有效\n3. **结构胜于散漫**：用 Markdown、JSON、YAML 组织输出格式\n\n### 技巧 1：角色设定\n\n```markdown\n你是一位有 10 年经验的技术架构师，擅长微服务和云原生。\n回答时：\n- 用简洁的技术语言\n- 给出具体的架构方案\n- 标注权衡和取舍\n```\n\n### 技巧 2：Few-shot 学习\n\n```markdown\n将用户输入分类：\n\n输入：我无法登录 → 分类：认证问题\n输入：页面很慢 → 分类：性能问题\n输入：想退款 → 分类：商务问题\n\n输入：{user_input} → 分类：\n```\n\n### 技巧 3：思维链（Chain of Thought）\n\n```markdown\n请一步步思考：\n1. 先分析问题的核心需求\n2. 列出可能的解决方案\n3. 对比各方案的优劣\n4. 给出最终推荐\n\n在每一步都展示你的推理过程。\n```\n\n### 技巧 4：结构化输出\n\n```markdown\n请以 JSON 格式输出：\n```json\n{\n  \"summary\": \"一句话总结\",\n  \"keyPoints\": [\"要点1\", \"要点2\"],\n  \"recommendation\": \"建议\",\n  \"confidence\": 0.85\n}\n```\n\n### 反模式\n\n- ❌ 过长的系统提示（超过 2000 字效果递减）\n- ❌ 矛盾的指令（既要详细又要简短）\n- ❌ 假设模型知道上下文（每次对话是独立的）"
+  },
+  {
+    "slug": "docker-deploy-guide",
+    "title": "Docker 容器化部署全指南",
+    "description": "从 Dockerfile 编写到多容器编排、CI/CD 集成的完整部署流程。",
+    "tags": [
+      "docker",
+      "deployment",
+      "dockerfile",
+      "compose",
+      "ci-cd"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-25",
+    "featured": false,
+    "content": "## Docker 容器化部署全指南\n\n### Step 1：编写高效 Dockerfile\n\n```dockerfile\n# 多阶段构建\nFROM node:24-alpine AS builder\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --only=production\nCOPY . .\nRUN npm run build\n\nFROM node:24-alpine AS runner\nWORKDIR /app\nCOPY --from=builder /app/.next ./.next\nCOPY --from=builder /app/node_modules ./node_modules\nCOPY --from=builder /app/package.json ./\nEXPOSE 3000\nCMD [\"npm\", \"start\"]\n```\n\n### Step 2：Docker Compose 编排\n\n```yaml\nversion: '3.8'\nservices:\n  app:\n    build: .\n    ports: [\"3000:3000\"]\n    environment:\n      DATABASE_URL: postgres://db:5432/myapp\n    depends_on: [db, redis]\n  db:\n    image: postgres:16\n    volumes: [pgdata:/var/lib/postgresql/data]\n  redis:\n    image: redis:7-alpine\n    volumes: [redisdata:/data]\n\nvolumes:\n  pgdata:\n  redisdata:\n```\n\n### Step 3：健康检查\n\n```yaml\nhealthcheck:\n  test: [\"CMD\", \"curl\", \"-f\", \"http://localhost:3000/api/health\"]\n  interval: 30s\n  timeout: 10s\n  retries: 3\n```\n\n### Step 4：CI/CD 集成\n\n```yaml\n# GitHub Actions\n- name: Build & Push\n  run: |\n    docker build -t myapp:$GITHUB_SHA .\n    docker push myapp:$GITHUB_SHA\n- name: Deploy\n  run: |\n    ssh deploy@server \"docker pull myapp:$GITHUB_SHA && docker-compose up -d\"\n```"
+  },
+  {
+    "slug": "email-automation-workflow",
+    "title": "邮件自动化工作流",
+    "description": "用 Agent 自动处理邮件：分类、摘要、草拟回复、定时巡检。",
+    "tags": [
+      "email",
+      "automation",
+      "gmail",
+      "workflow",
+      "productivity"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-25",
+    "featured": false,
+    "content": "## 邮件自动化工作流\n\n### 架构\n\n```\n定时触发 → 拉取未读邮件 → AI 分类 → 处理流程\n                                          ├── 重要邮件 → 通知 + 草拟回复\n                                          ├── 常规邮件 → 归档 + 标签\n                                          └── 垃圾邮件 → 直接删除\n```\n\n### Step 1：配置 Gmail API\n\n使用 OpenClaw 的 gog skill 连接 Gmail：\n\n```bash\nclawhub install gog\nopenclaw config set channels.gmail.enabled true\n```\n\n### Step 2：分类规则\n\n```json\n{\n  \"rules\": [\n    {\"from\": \"*@client.com\", \"label\": \"客户\", \"priority\": \"high\"},\n    {\"subject\": \"*urgent*\", \"label\": \"紧急\", \"notify\": true},\n    {\"from\": \"noreply@*\", \"label\": \"通知\", \"autoArchive\": true},\n    {\"subject\": \"*invoice*\", \"label\": \"财务\", \"forward\": \"finance@team.com\"}\n  ]\n}\n```\n\n### Step 3：Cron 定时巡检\n\n```json\n{\n  \"schedule\": \"*/15 * * * *\",\n  \"task\": \"检查未读邮件，分类处理，重要邮件生成摘要并通知\"\n}\n```\n\n### Step 4：回复草稿\n\n```markdown\n收到客户邮件后，Agent 自动：\n1. 分析邮件意图\n2. 查找相关知识库文档\n3. 生成回复草稿\n4. 等待确认后发送\n\n> ⚠️ 自动发送需谨慎，建议默认草稿模式，确认后再发\n```"
+  },
+  {
+    "slug": "vercel-deploy-optimization",
+    "title": "Vercel 部署优化指南",
+    "description": "Next.js 项目 Vercel 部署最佳实践：性能优化、Analytics、Edge Runtime。",
+    "tags": [
+      "vercel",
+      "nextjs",
+      "deployment",
+      "performance",
+      "edge"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-25",
+    "featured": false,
+    "content": "## Vercel 部署优化指南\n\n### 1. 构建优化\n\n```javascript\n// next.config.js\nmodule.exports = {\n  experimental: {\n    optimizeCss: true,\n    optimizePackageImports: ['lucide-react', 'date-fns']\n  },\n  images: {\n    formats: ['image/avif', 'image/webp']\n  }\n}\n```\n\n### 2. 开启 Analytics\n\n```bash\nnpm install @vercel/analytics @vercel/speed-insights\n```\n\n```tsx\nimport { Analytics } from '@vercel/analytics/react'\nimport { SpeedInsights } from '@vercel/speed-insights/next'\n\nexport default function Layout({ children }) {\n  return (\n    <html>\n      <body>{children}</body>\n      <Analytics />\n      <SpeedInsights />\n    </html>\n  )\n}\n```\n\n### 3. Edge Runtime\n\n```typescript\nexport const runtime = 'edge'\n\nexport async function GET(request: Request) {\n  // 在边缘节点执行，延迟更低\n  return Response.json({ status: 'ok' })\n}\n```\n\n### 4. ISR 增量静态再生\n\n```typescript\n// 每 60 秒重新验证\nexport const revalidate = 60\n\nexport default async function Page() {\n  const data = await fetch('https://api.example.com/data')\n  return <Component data={data} />\n}\n```\n\n### 5. 环境变量管理\n\n```bash\n# 通过 Vercel CLI 设置\nvercel env add DATABASE_URL production\nvercel env add API_SECRET preview\n```"
+  },
+  {
+    "slug": "ssl-auto-renewal",
+    "title": "SSL 证书自动续期",
+    "description": "用 Let's Encrypt + Certbot 实现 SSL 证书自动申请和续期。",
+    "tags": [
+      "ssl",
+      "lets-encrypt",
+      "certbot",
+      "automation",
+      "nginx"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-25",
+    "featured": false,
+    "content": "## SSL 证书自动续期\n\n### Step 1：安装 Certbot\n\n```bash\napt install certbot python3-certbot-nginx\n```\n\n### Step 2：申请证书\n\n```bash\ncertbot --nginx -d example.com -d www.example.com\n```\n\n### Step 3：自动续期\n\nCertbot 安装时已自动创建 cron/systemd timer，验证：\n\n```bash\nsystemctl list-timers | grep certbot\ncertbot renew --dry-run\n```\n\n### Step 4：Nginx 安全配置\n\n```nginx\nserver {\n    listen 443 ssl http2;\n    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;\n    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;\n\n    # 安全配置\n    ssl_protocols TLSv1.2 TLSv1.3;\n    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256;\n    ssl_prefer_server_ciphers off;\n\n    # HSTS\n    add_header Strict-Transport-Security \"max-age=63072000\" always;\n}\n```\n\n### Step 5：监控\n\n```bash\n# 检查证书到期日\necho | openssl s_client -connect example.com:443 2>/dev/null | \\\n  openssl x509 -noout -dates\n```\n\n设置 Agent 定时检查，到期前 30 天自动续期并通知。"
+  },
+  {
+    "slug": "github-event-driven-automation",
+    "title": "GitHub 事件驱动自动化",
+    "description": "用 Webhook 监听 GitHub 事件，自动触发代码审查、部署和通知。",
+    "tags": [
+      "github",
+      "webhook",
+      "automation",
+      "ci-cd",
+      "event-driven"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-25",
+    "featured": false,
+    "content": "## GitHub 事件驱动自动化\n\n### 架构\n\n```\nGitHub Webhook → Agent 接收 → 路由匹配 → 执行工作流\n                                      ├── PR opened → 代码审查\n                                      ├── Issue created → 自动分类\n                                      └── Push main → 自动部署\n```\n\n### Step 1：配置 Webhook\n\n在 GitHub 仓库 Settings → Webhooks 中添加：\n\n- **Payload URL**: `https://your-agent.com/webhook/github`\n- **Content type**: `application/json`\n- **Events**: Push, Pull request, Issues\n\n### Step 2：事件路由\n\n```json\n{\n  \"routes\": [\n    {\n      \"event\": \"pull_request\",\n      \"action\": \"opened\",\n      \"workflow\": \"code-reviewer\",\n      \"filter\": {\"base.ref\": \"main\"}\n    },\n    {\n      \"event\": \"issues\",\n      \"action\": \"opened\",\n      \"workflow\": \"issue-triage\"\n    },\n    {\n      \"event\": \"push\",\n      \"filter\": {\"ref\": \"refs/heads/main\"},\n      \"workflow\": \"deploy\"\n    }\n  ]\n}\n```\n\n### Step 3：PR 自动审查\n\n收到 PR 事件后，Agent 自动：\n1. 获取 diff 内容\n2. AI 分析代码质量和安全风险\n3. 在 PR 上添加行级评论\n4. 生成审查摘要\n\n### 安全注意事项\n\n- 验证 Webhook 签名（HMAC-SHA256）\n- 限制可触发的操作范围\n- 敏感操作需人工确认"
+  },
+  {
+    "slug": "cron-task-orchestration",
+    "title": "定时任务编排实战",
+    "description": "用 Cron + Agent 构建定时自动化：数据采集、报告生成、系统巡检。",
+    "tags": [
+      "cron",
+      "scheduling",
+      "automation",
+      "monitoring",
+      "task-orchestration"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-25",
+    "featured": false,
+    "content": "## 定时任务编排实战\n\n### 常见定时任务场景\n\n| 场景 | 频率 | 说明 |\n|------|------|------|\n| 邮件巡检 | 每 15 分钟 | 检查未读邮件 |\n| 数据采集 | 每日 8:00 | 采集行业新闻 |\n| 报告生成 | 每周一 9:00 | 生成周报 |\n| 依赖更新 | 每日 2:00 | 检查并更新依赖 |\n| SSL 检查 | 每日 | 证书到期预警 |\n\n### OpenClaw Cron 配置\n\n```json\n{\n  \"crons\": [\n    {\n      \"schedule\": \"*/15 * * * *\",\n      \"task\": \"检查未读邮件，分类并通知重要邮件\",\n      \"model\": \"nvidia/z-ai/glm4_7\"\n    },\n    {\n      \"schedule\": \"0 8 * * *\",\n      \"task\": \"采集 AI 领域最新资讯，更新到知识库\",\n      \"model\": \"nvidia/moonshotai/kimi-k2.5\"\n    },\n    {\n      \"schedule\": \"0 9 * * 1\",\n      \"task\": \"生成上周项目进展周报，发送到团队频道\",\n      \"model\": \"openrouter/qwen/qwen3.6-plus:free\"\n    }\n  ]\n}\n```\n\n### 模型选择策略\n\n- **简单巡检**：用轻量模型（glm4_7）节省成本\n- **调研分析**：用搜索能力强的模型（kimi-k2.5）\n- **文案写作**：用写作能力好的模型（qwen3.6-plus）\n- **编程任务**：用代码专长模型（gpt-5.4）\n\n### 错误处理\n\n```markdown\n1. 超时 → 记录日志，跳过本次执行\n2. 输出异常 → 降级到备用模型重试\n3. 连续失败 3 次 → 停止 cron，通知人工处理\n```"
+  },
+  {
+    "slug": "data-collection-pipeline",
+    "title": "数据采集流水线搭建",
+    "description": "构建自动化数据采集管线：多源采集、清洗转换、存储入库。",
+    "tags": [
+      "data-collection",
+      "etl",
+      "web-scraping",
+      "pipeline",
+      "automation"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-25",
+    "featured": false,
+    "content": "## 数据采集流水线搭建\n\n### 架构\n\n```\n数据源 → 采集器 → 清洗器 → 转换器 → 存储\n  ↑                                    ↓\n调度器 ←─────── 状态监控 ←─────── 反馈\n```\n\n### Step 1：定义数据源\n\n```json\n{\n  \"sources\": [\n    {\"type\": \"rss\", \"url\": \"https://hnrss.org/newest?points=100\"},\n    {\"type\": \"api\", \"url\": \"https://api.github.com/repos/{owner}/{repo}/releases\"},\n    {\"type\": \"web\", \"url\": \"https://example.com/news\", \"selector\": \".article-item\"}\n  ]\n}\n```\n\n### Step 2：清洗规则\n\n```json\n{\n  \"cleaning\": [\n    {\"field\": \"title\", \"rules\": [\"strip\", \"normalize_whitespace\"]},\n    {\"field\": \"content\", \"rules\": [\"strip_html\", \"remove_ads\", \"truncate:5000\"]},\n    {\"field\": \"date\", \"rules\": [\"parse_iso8601\", \"timezone:UTC\"]},\n    {\"field\": \"tags\", \"rules\": [\"lowercase\", \"deduplicate\"]}\n  ]\n}\n```\n\n### Step 3：去重策略\n\n```python\n# 基于 URL 去重\nseen_urls = set()\nfor item in new_items:\n    if item['url'] not in seen_urls:\n        seen_urls.add(item['url'])\n        yield item\n\n# 基于内容相似度去重（阈值 0.95）\nfrom difflib import SequenceMatcher\nfor new_item in candidates:\n    if not any(SequenceMatcher(None, new_item['content'], old['content']).ratio() > 0.95 for old in existing):\n        yield new_item\n```"
+  },
+  {
+    "slug": "blog-auto-publish",
+    "title": "博客自动发布工作流",
+    "description": "从写作到发布的全自动化：AI 辅助写作、SEO 优化、多平台分发。",
+    "tags": [
+      "blog",
+      "automation",
+      "seo",
+      "publishing",
+      "content-creation"
+    ],
+    "author": "AgentSkill Hub",
+    "createdAt": "2026-04-25",
+    "featured": false,
+    "content": "## 博客自动发布工作流\n\n### 流程\n\n```\n选题 → AI 辅助写作 → SEO 优化 → 预览 → 发布 → 分发\n```\n\n### Step 1：AI 辅助写作\n\n```markdown\n输入选题和要点：\n\n主题：OpenClaw Agent 记忆系统\n要点：\n- 三层记忆架构\n- 遗忘曲线\n- 实战经验\n\nAgent 输出：\n- 2000 字完整文章\n- 自动生成标题和摘要\n- 配图建议\n```\n\n### Step 2：SEO 优化\n\n```json\n{\n  \"title\": \"AI Agent 记忆系统：三层架构与遗忘曲线设计\",\n  \"description\": \"为 AI Agent 构建持久记忆系统，三层分层架构配合遗忘曲线自动衰减\",\n  \"keywords\": [\"AI Agent\", \"记忆系统\", \"遗忘曲线\", \"OpenClaw\"],\n  \"ogImage\": \"/images/agent-memory.png\"\n}\n```\n\n### Step 3：自动发布\n\n```bash\n# Git 推送触发部署\ngit add content/blog/agent-memory.md\ngit commit -m \"📝 new: Agent 记忆系统设计\"\ngit push\n\n# Vercel 自动构建部署\n```\n\n### Step 4：多平台分发\n\n```json\n{\n  \"platforms\": [\"twitter\", \"weibo\", \"linkedin\", \"juejin\"],\n  \"adapt\": true,\n  \"schedule\": \"2026-04-26T09:00:00+08:00\"\n}\n```"
   }
 ]
