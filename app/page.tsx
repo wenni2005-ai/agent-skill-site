@@ -4,7 +4,8 @@ import { Hero } from "@/components/sections/hero";
 import { CategoryNav } from "@/components/category-nav";
 import { RecentUpdates } from "@/components/recent-updates";
 import { TagCloud } from "@/components/tag-cloud";
-import { Newsletter } from "@/components/newsletter";
+// Newsletter disabled — no backend wired yet
+// import { Newsletter } from "@/components/newsletter";
 import { NewsCard } from "@/components/news-card";
 import { SectionHeading } from "@/components/section-heading";
 import { SkillCard } from "@/components/skill-card";
@@ -140,7 +141,7 @@ export default function HomePage() {
         </section>
 
         {/* 功能 6：Newsletter 订阅 */}
-        <Newsletter />
+      {/* Newsletter disabled */}
       </div>
     </>
   );
