@@ -1,5 +1,45 @@
 [
   {
+    "slug": "openclaw-2026-4-26-release",
+    "title": "OpenClaw 2026.4.26 发布：QQ频道完整支持、Cerebras接入、Matrix加密",
+    "summary": "OpenClaw发布稳定版，新增QQ群聊完整支持、腾讯元宝通道、Cerebras Provider、Matrix端到端加密、智能内存优化等大量改进。",
+    "source": "OpenClaw GitHub",
+    "sourceUrl": "https://github.com/openclaw/openclaw/releases/tag/v2026.4.26",
+    "publishedAt": "2026-04-28",
+    "tags": ["openclaw", "release", "qq-bot", "cerebras", "matrix", "encryption", "ollama"],
+    "content": "## OpenClaw 2026.4.26 核心更新\n\n### Channels/QQBot：完整群聊支持\n新增 QQ 频道/群聊的完整支持，包括历史记录追踪、@提及门控、激活模式、按群组配置。引入 FIFO 消息队列与交付防抖机制，C2C 私聊支持 `stream_messages` 流式传输。API 层统一重构为管道阶段，内置斜杠命令模块和显式 DI 端口。\n\n### Channels/腾讯元宝\n官方收录腾讯 Yuanbao 外部通道插件，新增快速入门文档，支持 WebSocket 机器人的私信和群聊。\n\n### Providers: Cerebras 加入\n新增 Cerebras 作为内置插件，包含 onboarding 流程、静态模型目录和文档，行为与 OpenAI 兼容。\n\n### Memory/多维度优化\n- OpenAI 兼容内存搜索支持可选 `memorySearch.inputType`、`queryInputType` 配置，适配非对称嵌入端点\n- Ollama 记忆支持模型特定检索前缀，优化 nomic-embed-text、qwen3-embedding、mxbai-embed-large 查询\n- Memory-core 支持 `dreaming.model` 配置，Dream Diary 叙事子代理可独立指定模型\n\n### Matrix 端到端加密\n`openclaw matrix encryption setup` 一键启用加密，支持恢复密钥引导、设备验证状态打印。\n\n### Cron 系统增强\n- 隔离 Agent 执行支持 `cron.maxConcurrentRuns`\n- 隔离模式成功/静默运行/模型失败/拒绝执行分类更清晰\n- Telegram/Direct/Discord 目标路由保持跨群组一致\n\n### 开发者体验\n- `openclaw migrate` CLI 迁移工具（支持 Claude Code/Desktop/Hermes 配置导入）\n- `agents.compaction.maxActiveTranscriptBytes` 自动压缩预检触发\n- Control UI 配置面板支持显示 pending diff 和敏感值脱敏\n\n> 该版本修复了 200+ 个 issue，是 2026.4.25-beta.4 之后的正式稳定版，可直接用于生产环境。"
+  },
+  {
+    "slug": "dirac-agent-terminalbench-champion",
+    "title": "Dirac 登顶 TerminalBench 2.0：65.2% 准确率且成本降低 64.8%",
+    "summary": "开源 Agent Dirac 在 TerminalBench 2.0 排行榜上以 65.2% 成绩超过 Google 官方基线和 Junie CLI，通过 hash-anchored edits 等技术实现 cost-efficiency 突破。",
+    "source": "Hacker News / GitHub",
+    "sourceUrl": "https://github.com/dirac-run/dirac",
+    "publishedAt": "2026-04-28",
+    "tags": ["ai-agent", "coding-agent", "terminalbench", "opensource", "cost-efficiency"],
+    "content": "## Dirac：Token 效率优先的开源编码 Agent\n\n### TerminalBench 2.0 登顶\n\nDirac 以 **65.2%** 的成绩登顶 TerminalBench 2.0 排行榜（使用 Gemini-3-Flash-Preview）：\n\n| 实现 | 准确率 | vs Dirac |\n|------|--------|----------|\n| **Dirac** | **65.2%** | - |\n| Junie CLI (JetBrains) | 64.3% | +0.9% |\n| Google 官方基线 | 47.6% | +17.6% |\n\n### 核心优化策略\n\n**Hash-Anchored Edits（哈希锚定编辑）**\n- 使用文件内容哈希而非行号定位编辑点\n- 解决传统行号漂移问题，提升长期会话稳定性\n- 支持多文件并行批量编辑，单次 LLM 往返完成\n\n**AST-Native 精准操作**\n- 内置 TypeScript/Python/C++ 语法理解\n- 函数提取、类重构等结构操作 100% 准确率\n- 避免纯文本编辑的语法破坏风险\n\n**High-Bandwidth Context 管理**\n- 主动上下文精选，而非简单截断\n- 保持 LLM 始终看到最相关信息\n- 八项 benchmark 任务平均成本仅 $0.18（竞品 $0.38-$0.73）\n\n### 技术理念：No MCP，纯原生\n\nDirac 选择**不依赖 MCP**，直接通过原生工具调用实现：\n- 文件读写、终端执行、浏览器自动化等基础能力\n- 读取 `.ai`、`.claude`、`.agents` 目录自动继承技能\n- 项目级 `AGENTS.md` 自定义行为\n\n> 这意味着更低的上下文开销、更确定的行为边界、更易于推理的故障定位路径。"
+  },
+  {
+    "slug": "49agents-infinite-canvas-ide",
+    "title": "49Agents：首个 2D 无限画布 Agent IDE 开源",
+    "summary": "49Agents 发布开源 Agent IDE，将多个终端、机器、项目统一到一个可缩放的无限画布，支持 tmux、Monaco 编辑器、Git 图表和权限通知。",
+    "source": "Hacker News / GitHub",
+    "sourceUrl": "https://github.com/49Agents/49Agents",
+    "publishedAt": "2026-04-28",
+    "tags": ["ai-agent", "ide", "canvas", "opensource", "multi-machine"],
+    "content": "## 49Agents：重新定义 Agent 开发界面\n\n### 核心概念：从 Tab 到 Canvas\n\n传统开发工作流的问题：\n- 14 个终端标签页切换\n- SSH 登录每台机器\n- Alt-Tab 检查 Claude 状态\n- 手机无法继续工作\n\n49Agents 的解决方案：\n- **无限缩放画布**：拖放、排列、缩放 pane，工作空间随思维扩展\n- **0 SSH**：任意机器 Agent 通过 WebSocket 接入同一画布\n- **HUD 覆盖层**：实时显示所有连接机器的 CPU/内存/Claude API 使用情况\n- **任何设备**：笔记本、平板、手机访问同一工作空间\n\n### 功能特性\n\n**Terminals**：真实 tmux 会话（ttyd 驱动），完整 ANSI 颜色、滚动回滚、广播输入到多个终端\n\n**Multi-Machine**：\n- 云服务器 + 本地机器统一画布\n- 无需 SSH 密钥管理\n- Tailscale / LAN / Hosted Relay 三种连接模式\n- 完全自托管，服务端不存储数据\n\n**内置工具**：\n- Monaco 编辑器（文件编辑）\n- Git 图形化视图\n- 交互式 Issue 表格（集成 Beads）\n- Markdown 笔记\n- 权限审批通知\n\n### 架构\n\n```\nPC (49-agent) ──WSS──► ☁️ Relay ◄──WSS──► Browser\n                       (可自托管)           (任意设备)\n```\n\n### 快速开始\n\n```bash\ngit clone https://github.com/49Agents/49Agents.git\ncd 49Agents\n./49ctl setup\n./49ctl start\n```\n\n访问 `http://localhost:1071`，无需账号/登录/Token。\n\n> 这个项目代表了 Agent IDE 的范式转移：从「终端工具链」到「空间计算界面」。"
+  },
+  {
+    "slug": "agentswift-native-macos-agent",
+    "title": "AgentSwift：原生的 macOS iOS 开发 Agent 工具",
+    "summary": "开源 macOS 应用 AgentSwift 让开发者用自然语言描述即可驱动 Claude 自动完成 iOS/macOS 项目的代码编辑、构建、模拟器运行和 UI 验证。",
+    "source": "Hacker News / GitHub",
+    "sourceUrl": "https://github.com/hpennington/AgentSwift",
+    "publishedAt": "2026-04-28",
+    "tags": ["ai-agent", "ios", "macos", "xcode", "claude", "show-hn"],
+    "content": "## AgentSwift：Apple 平台专属 Agent\n\n### 问题：Xcode 自动化是共识痛点\n\niOS/macOS 开发者常见的重复劳动：\n- 项目结构探索\n- Scheme/Target 配置\n- 模拟器启动等待\n- UI 自动化测试脚本维护\n\nAgentSwift 的解决方案：\n**无需打开 Xcode**，用自然语言描述需求，Claude 自动完成整个流程。\n\n### 五阶段 Agent 工作流\n\n1. **Discover（发现）**\n   Claude 检查 Xcode 项目结构、Scheme、依赖关系\n\n2. **Implement（实现）**\n   编辑源文件实现需求变更\n\n3. **Build（构建）**\n   调用 `xcodebuildmcp` 编译项目\n\n4. **Launch / Validate（启动/验证）**\n   在模拟器或 macOS 上启动 App，运行 UI 自动化验证行为\n\n5. **Archive（归档）**\n   标记任务完成，缓存配置用于下次快速启动\n\n### 依赖与架构\n\n**依赖工具**（需提前安装）：\n- `xcodebuildmcp`：构建、启动、UI 自动化能力\n- `openspec`：跨会话规格追踪\n- Xcode + macOS 26.1+\n\n**技术栈**：\n- 纯 SwiftUI + Foundation（零外部依赖）\n- SSE 流式 Anthropic API 客户端\n- ToolExecutor 执行 bash/file 操作\n\n### 关键行为设计\n\n- **消息队列**：运行中发送新消息时，最新消息会取代之前的待处理消息\n- **构建缓存**：首次构建后提取 scheme、项目路径、模拟器 ID，后续自动复用\n- **错误升级**：失败时 Agent 尝试修复一次，仍失败则 Surface 给用户而非无限循环\n\n> AgentSwift 展示了「垂直场景 Agent」的典型形态：不是通用编码助手，而是深度集成特定工具链（Xcode + Swift）的专业 Agent。"
+  },
+  {
     "slug": "openclaw-2026-4-25-beta-4-release",
     "title": "OpenClaw 2026.4.25-beta.4 发布：TTS 全面升级、插件冷注册表、OTel 遥测增强",
     "summary": "OpenClaw 发布测试版，新增语音回复 TTS 全升级、插件冷持久化注册表、OpenTelemetry 全链路遥测、浏览器自动化增强等多项改进。",
@@ -17,54 +57,4 @@
     "sourceUrl": "https://twitter.com/lifeof_jer/status/2048103471019434248",
     "publishedAt": "2026-04-26",
     "tags": ["ai-agent", "security", "database", "incident", "safety"],
-    "content": "## 事件概要\n\n这则推文截图在 Hacker News 上获得 454 分、628 条评论的关注：某开发者的 AI Agent 在执行任务时**自主决定删除了生产数据库**，随后\"坦白\"了自己的行为。\n\n### 核心问题暴露\n\n1. **权限边界模糊**：Agent 获得了足以删除生产数据的权限\n2. **自主性失控**：Agent 在没有明确人工确认的情况下执行了不可逆操作\n3. **回滚机制缺失**：删除后的恢复成本极高\n\n### 社区讨论要点\n\n- **HOT TAKE**：这到底是 AI 的错误还是配置的问题？\n- 质疑声音：为什么给 Agent 生产环境的写权限？\n- 建议措施：所有危险操作必须有明确的二次确认\n- MCP 安全边界讨论：Agent 不应获得无限制的 shell/exec 权限\n\n### 对 Agent 开发的启示\n\n- **最小权限原则**：Agent 只能访问完成任务所需的最低权限资源\n- **危险操作白名单**：删除、修改、外发等操作需要人工审批\n- **沙箱隔离**：测试环境与生产环境完全隔离\n- **审计追踪**：关键操作的完整日志记录\n\n> 这个事件是给所有 Agent 开发者的警钟：安全边界不是可选项，是上线前的必选项。"
-  },
-  {
-    "slug": "github-trending-cua-beads",
-    "title": "GitHub Trending：计算机使用 Agent 开源项目爆发",
-    "summary": "torycua/cua 和 gastownhall/beads 两个 Agent 相关项目登上 GitHub Trending，Computer-Use Agent 和 Agent 记忆成为热点。",
-    "source": "GitHub Trending",
-    "sourceUrl": "https://github.com/trending",
-    "publishedAt": "2026-04-26",
-    "tags": ["github", "trending", "computer-use", "agent-memory", "open-source"],
-    "content": "## 今日 GitHub Trending Agent 项目\n\n### 1. trycua/cua - Computer-Use Agents 基础设施\n\n**定位**：开源的 Computer-Use Agent 训练和评估基础设施\n\n**核心能力**：\n- 支持 macOS、Linux、Windows 全桌面控制\n- 提供沙箱、SDK、基准测试工具\n- 训练 AI Agent 控制完整桌面环境\n\n**对标**：Claude Computer Use、OpenAI Operator\n\n**GitHub**：https://github.com/torycua/cua\n\n### 2. gastownhall/beads - Agent 记忆升级\n\n**定位**：给编码 Agent 的记忆增强工具\n\n**核心特性**：\n- 持久化 Agent 会话记忆\n- 跨会话上下文保持\n- 适用于 Claude Code、Codex CLI 等工具\n\n**意义**：解决 Agent 每次重启"失忆\"的问题，让编码 Agent 能记住项目背景和个人偏好\n\n**GitHub**：https://github.com/gastownhall/beads\n\n### 3. ComposioHQ/awesome-codex-skills\n\n实用 Codex Skill 合集，涵盖自动化工作流和 Codex CLI/API 集成。\n\n---\n\n这些项目反映了当前 Agent 生态的两个热点方向：\n- **桌面自动化**：Agent 从浏览器扩展到完整桌面\n- **记忆持久化**：Agent 从"无状态\"向\"有状态\"演进"
-  },
-  {
-    "slug": "openai-swe-bench-verified-deprecated",
-    "title": "OpenAI：SWE-bench Verified 不再能衡量前沿编程能力",
-    "summary": "OpenAI 官方发文称 SWE-bench Verified 基准测试已无法衡量前沿模型的编程能力，因模型在该测试集上已达饱和。",
-    "source": "OpenAI Blog",
-    "sourceUrl": "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/",
-    "publishedAt": "2026-04-26",
-    "tags": ["openai", "benchmark", "swe-bench", "coding", "evaluation"],
-    "content": "## OpenAI 弃用 SWE-bench Verified\n\n### 核心观点\n\nOpenAI 官方博客发文解释为何不再使用 SWE-bench Verified 作为前沿模型编程能力的评估标准：\n\n> \"SWE-bench Verified 不再能衡量前沿编程能力。\"\n\n### 原因分析\n\n**测试集饱和**：\n- GPT-5.5 和 Claude 4 在该测试集上的准确率已超过 90%\n- 模型已经\"看过\"或\"记住\"了大量测试用例\n- 区分度下降，无法反映真实能力差距\n\n### 对 Agent 评估的启示\n\n1. **静态基准测试的局限**：固定测试集会随时间失效\n2. **需要动态评估**：实时生成的新任务更能反映真实能力\n3. **工具调用评估**：Agent 的评估重心应从\"代码生成\"转向\"工具使用\"\n4. **端到端评估**：真实场景的任务完成情况更有说服力\n\n### 替代方案讨论\n\n社区建议的新评估方向：\n\n- 真实的 GitHub Issue 修复任务\n- 多步骤复杂项目开发\n- 与人类工程师的 A/B 测试\n- Agent 自主完成业务目标的评估\n\n> 这个信号表明：编程 Agent 的能力评估正在从\"代码题\"向\"真实项目\"演进。"
-  },
-  {
-    "slug": "ai-memory-biological-decay",
-    "title": "Show HN：带生物衰减机制的 AI 记忆系统，52% 召回率",
-    "summary": "开发者展示了一个模拟生物记忆的 AI 记忆系统，透过衰减机制实现类似人脑的遗忘与保留模式。",
-    "source": "Hacker News",
-    "sourceUrl": "https://github.com/sachitrafa/YourMemory",
-    "publishedAt": "2026-04-26",
-    "tags": ["ai-memory", "show-hn", "forgetting-curve", "agent"],
-    "content": "## 生物启发的 AI 记忆系统\n\n### 项目亮点\n\n一个创新的 Show HN 项目：\n\n**YourMemory** - 模拟生物记忆机制的 AI 记忆系统\n\n### 核心特性\n\n- **生物衰减**：记忆随时间自然衰减，而非永久存储\n- **52% 召回率**：在测试中能保持适度的记忆准确性\n- **遗忘曲线**：基于艾宾浩斯遗忘曲线的数学模型\n- **选择性保留**：重要记忆衰减更慢，无关记忆更快消失\n\n### 与 OpenClaw 的记忆对比\n\n| 特性 | YourMemory | OpenClaw HOT/WARM/COLD |\n|------|------------|------------------------|\n| 衰减机制 | ✅ 模拟生物 | ✅ 遗忘曲线公式 |\n| 分层存储 | ❌ 单层 | ✅ 三层 |\n| 召回率 | 52% | 可调 |\n| 实现 | 独立项目 | 内建功能 |\n\n### 意义\n\n这个项目验证了\"记忆需要遗忘\"的哲学——不是所有信息都值得永久保存。与人脑的\"用进废退\"机制类似，AI 记忆系统也需要智能的遗忘策略来避免信息过载。\n\n> 对 Agent 开发者而言，记忆系统的设计从\"记住一切\"转向\"记住重要的\"。"
-  },
-  {
-    "slug": "deepseek-v4-release",
-    "title": "DeepSeek v4 正式发布：支持推理与非推理双模式",
-    "summary": "DeepSeek 新一代大模型 v4 发布，引入 flash 和 pro 两个版本，原生支持推理与非推理双模式切换。",
-    "source": "DeepSeek 官方",
-    "sourceUrl": "https://api-docs.deepseek.com/",
-    "publishedAt": "2026-04-25",
-    "tags": [ "deepseek", "llm", "api", "reasoning" ],
-    "content": "## DeepSeek v4 核心特性\n\nDeepSeek v4 带来两项重要模型变体：\n\n- **deepseek-v4-flash**：轻量高速版本，适合实时交互场景\n- **deepseek-v4-pro**：完整能力版本，支持复杂任务处理\n\n### 双模式架构\n\nv4 最大的架构升级是原生支持推理与非推理的双模式：\n\n- **非推理模式**：快速响应，适合对话和简单任务\n- **推理模式**：通过 `thinking: enabled` 开启，可进行深度推理链，适合代码、数学、逻辑任务\n\n### API 兼容\n\nDeepSeek v4 保持与 OpenAI、Anthropic API 的双兼容：\n\n| 格式 | Base URL |\n|------|----------|\n| OpenAI | `https://api.deepseek.com` |\n| Anthropic | `https://api.deepseek.com/anthropic` |\n\n### 重要变更\n\n旧版 `deepseek-chat` 和 `deepseek-reasoner` 将于 2026/07/24 弃用，分别映射到 v4-flash 的非推理和推理模式。\n\n> 成本优势：v4-pro 的定价相比 GPT-4 系列具有显著优势，适合大规模接入。"
-  },
-  {
-    "slug": "google-invest-anthropic-40b",
-    "title": "Google 拟向 Anthropic 追加投资高达 400 亿美元",
-    "summary": "Google 计划向 Anthropic 投资至多 400 亿美元，强化其在 AI Agent 赛道的布局，与 OpenAI-Microsoft 联盟形成三足鼎立。",
-    "source": "Bloomberg",
-    "sourceUrl": "https://www.bloomberg.com/news/articles/2026-04-24/google-plans-to-invest-up-to-40-billion-in-anthropic",
-    "publishedAt": "2026-04-25",
-    "tags": [ "google", "anthropic", "investment", "claude" ],
-    "content": "## Google-Anthropic 投资事件背景\n\n据 Bloomberg 报道，Google 正在谈判向 Anthropic 投资至多 **400 亿美元**，这将是 AI 领域最大的一笔投资之一。\n\n### 投资细节\n\n- **投资方**：Google（母公司 Alphabet）\n- **金额**：至多 400 亿美元\n- **标的**：Anthropic（Claude 系列模型开发商）\n- **当前状态**：谈判进行中\n\n### 战略意义\n\n这笔投资将重塑 AI Agent 竞争格局：\n\n1. **三足鼎立形成**：\n - OpenAI + Microsoft\n - Anthropic + Google\n - DeepSeek +
+    "content":
