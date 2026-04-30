@@ -1600,5 +1600,89 @@
     "createdAt": "2026-04-25",
     "featured": false,
     "content": "## SEO Auditor\n\n全面 SEO 审计工具，覆盖技术 SEO、内容质量、外链和搜索表现。\n\n```bash\nclawhub install seo-auditor\n```\n\n### 核心功能\n\n- **技术审计**：Core Web Vitals、移动适配、结构化数据、Sitemap\n- **内容分析**：关键词密度、标题层级、内链结构、内容重复\n- **外链分析**：引用域名、锚文本分布、有毒链接检测\n- **竞品对比**：与竞品的 SEO 指标对比\n- **优化建议**：按优先级排序的可执行优化清单\n\n### 审计报告摘要\n\n```\n🎯 总分：72/100\n\n🔴 高优先级（5项）：\n- LCP 4.2s → 优化图片，目标 <2.5s\n- 缺少 H1 标签（3 个页面）\n- robots.txt 屏蔽了 /api/ 目录\n\n🟡 中优先级（8项）：\n- 12 个页面缺少 meta description\n- 内链密度偏低（平均 3 个内链/页）\n\n🟢 低优先级（4项）：\n- Open Graph 图片尺寸不一致\n```"
+  },
+  {
+    "slug": "anything-analyzer",
+    "title": "Anything Analyzer — 全能协议分析",
+    "description": "全能协议分析工具：浏览器抓包 + MITM 代理 + JS Hook + 指纹伪装 + AI 分析 + MCP Server，一条龙逆向分析。2100+ Stars。",
+    "category": "security",
+    "tags": [
+      "protocol-analysis",
+      "mitm",
+      "reverse-engineering",
+      "mcp",
+      "browser",
+      "traffic-analysis",
+      "fingerprint"
+    ],
+    "version": "1.0.0",
+    "author": "Mouseww",
+    "githubUrl": "https://github.com/Mouseww/anything-analyzer",
+    "downloadUrl": "https://github.com/Mouseww/anything-analyzer/archive/refs/heads/main.zip",
+    "platform": [
+      "openclaw",
+      "claude-code",
+      "cursor",
+      "copilot"
+    ],
+    "createdAt": "2026-04-12",
+    "featured": true,
+    "content": "# Anything Analyzer — 全能协议分析\n\n浏览器抓包 + MITM 代理 + JS Hook + 指纹伪装 + AI 分析 + MCP Server，为 AI Agent 提供完整的协议逆向能力。\n\n## 功能介绍\n\nAnything Analyzer 是目前 GitHub 上最热门的协议分析 MCP 工具（2100+ Stars），专为 AI Agent 和安全研究者设计。它将传统的流量分析能力以 MCP 协议暴露给 AI Agent，让 Agent 能够自主理解、分析和逆向网络协议。\n\n核心能力：\n- **浏览器抓包**：内置浏览器引擎，自动捕获所有网络请求和响应\n- **MITM 代理**：中间人代理拦截 HTTPS 流量，自动解密分析\n- **JS Hook**：注入 JavaScript Hook，拦截和修改前端 API 调用\n- **指纹伪装**：模拟不同浏览器和设备指纹，绕过反爬检测\n- **AI 分析**：将抓取的流量数据交由 AI 自动分析协议结构\n- **MCP Server**：标准 MCP 协议接口，被 Claude/Cursor/Copilot 等直接调用\n\n## 安装步骤\n\n```bash\n# 克隆仓库\ngit clone https://github.com/Mouseww/anything-analyzer.git\ncd anything-analyzer\n\n# 安装依赖\nnpm install\n\n# 启动 MCP Server\nnpm run mcp\n```\n\n### MCP 客户端配置\n\n```json\n{\n  \"mcpServers\": {\n    \"anything-analyzer\": {\n      \"command\": \"node\",\n      \"args\": [\"/path/to/anything-analyzer/src/mcp-server.js\"]\n    }\n  }\n}\n```\n\n## 使用示例\n\n```\n分析 https://api.example.com 的请求协议结构\n抓取目标网站的所有 API 调用并整理为 OpenAPI 文档\n检测这个 App 的网络请求中是否有敏感数据泄露\n```\n\n> **适用场景**：API 逆向工程、安全审计、协议文档生成、反爬虫研究。\n\n**GitHub**: https://github.com/Mouseww/anything-analyzer (2.1k stars)"
+  },
+  {
+    "slug": "cve-mcp-server",
+    "title": "CVE MCP Server — 安全情报工具",
+    "description": "生产级安全情报 MCP 服务器，27 个工具覆盖 21 个 API：CVE 查询、EPSS 评分、CISA KEV、MITRE ATT&CK、Shodan、VirusTotal 等。",
+    "category": "security",
+    "tags": [
+      "cve",
+      "security-intelligence",
+      "mcp",
+      "threat-intelligence",
+      "mitre-attack",
+      "shodan",
+      "virustotal",
+      "cisa-kev"
+    ],
+    "version": "1.0.0",
+    "author": "mukul975",
+    "githubUrl": "https://github.com/mukul975/cve-mcp-server",
+    "downloadUrl": "https://github.com/mukul975/cve-mcp-server/archive/refs/heads/main.zip",
+    "platform": [
+      "openclaw",
+      "claude-code",
+      "cursor",
+      "copilot"
+    ],
+    "createdAt": "2026-04-14",
+    "featured": true,
+    "content": "# CVE MCP Server — 安全情报工具\n\n生产级安全情报 MCP 服务器——27 个工具 × 21 个 API，让 AI Agent 成为专业安全分析师。\n\n## 功能介绍\n\nCVE MCP Server 是目前最全面的安全情报 MCP 工具（287 Stars），为 AI Agent 提供从漏洞查询到威胁情报的完整能力链。基于 FastMCP 构建，所有工具通过标准 MCP 协议暴露，被任何 MCP 客户端直接调用。\n\n27 个核心工具覆盖 21 个 API：\n- **漏洞查询**：NVD CVE 数据库、OSV 开源漏洞、GitHub Advisory\n- **风险评估**：EPSS 漏洞利用预测评分、CISA KEV 已知被利用漏洞目录\n- **威胁情报**：MITRE ATT&CK 战术和技术映射、Shodan 互联网资产搜索\n- **恶意软件**：VirusTotal 文件/URL/域名扫描、MalwareBazaar 样本查询\n- **攻击面**：Shodan 互联网资产发现、Censys 主机搜索\n- **补丁信息**：GitHub Security Advisory、Snyk 漏洞数据库\n- **合规检查**：CISA BOD 绑定操作指令状态\n\n## 安装步骤\n\n```bash\n# 使用 uvx 直接运行（推荐）\nuvx cve-mcp-server\n\n# 或克隆安装\ngit clone https://github.com/mukul975/cve-mcp-server.git\ncd cve-mcp-server\npip install -e .\n```\n\n### MCP 客户端配置\n\n```json\n{\n  \"mcpServers\": {\n    \"cve\": {\n      \"command\": \"uvx\",\n      \"args\": [\"cve-mcp-server\"],\n      \"env\": {\n        \"SHODAN_API_KEY\": \"your-key\",\n        \"VIRUSTOTAL_API_KEY\": \"your-key\"\n      }\n    }\n  }\n}\n```\n\n## 使用示例\n\n```\n查询 CVE-2026-1234 的详情和 EPSS 评分\n这个 IP 上有哪些开放端口和安全风险？\n列出 CISA KEV 目录中所有与 Apache 相关的高危漏洞\n用 MITRE ATT&CK 框架分析这个入侵事件的攻击路径\n```\n\n> **注意**：NVD、CISA KEV、EPSS 等公共 API 无需 Key；Shodan 和 VirusTotal 需要各自平台的 API Key。\n\n**GitHub**: https://github.com/mukul975/cve-mcp-server (287 stars)"
+  },
+  {
+    "slug": "stash-agent-memory",
+    "title": "Stash — Agent 持久化记忆层",
+    "description": "基于 PostgreSQL 的 AI Agent 持久化记忆层。存储 Episodes、Facts 和 Working Context，内置 MCP Server。单二进制自托管，无需云服务。565+ Stars。",
+    "category": "agent-framework",
+    "tags": [
+      "agent-memory",
+      "persistence",
+      "postgresql",
+      "mcp",
+      "self-hosted",
+      "episodic-memory"
+    ],
+    "version": "1.0.0",
+    "author": "alash3al",
+    "githubUrl": "https://github.com/alash3al/stash",
+    "downloadUrl": "https://github.com/alash3al/stash/archive/refs/heads/main.zip",
+    "platform": [
+      "openclaw",
+      "claude-code",
+      "cursor",
+      "copilot"
+    ],
+    "createdAt": "2026-04-24",
+    "featured": true,
+    "content": "# Stash — Agent 持久化记忆层\n\n基于 PostgreSQL 的 AI Agent 持久化记忆——让 Agent 拥有真正的跨会话回忆能力。\n\n## 功能介绍\n\nStash 是一个轻量但强大的 Agent 记忆层（565+ Stars），解决了 AI Agent 最大的痛点：对话结束即遗忘。它将 Agent 的记忆存储在 PostgreSQL 中，通过结构化的三层模型实现持久化回忆。\n\n三层记忆模型：\n- **Episodes（事件记忆）**：记录对话中的关键事件和交互，带时间戳和上下文标签\n- **Facts（事实记忆）**：持久化存储关于用户、项目、偏好等稳定事实\n- **Working Context（工作上下文）**：当前活跃任务的短期上下文，自动清理过期内容\n\n技术特色：\n- **单二进制部署**：Go 编写，编译为单一可执行文件，无运行时依赖\n- **PostgreSQL 后端**：利用 PG 的全文搜索和 JSONB 能力，高效检索\n- **MCP Server 内置**：标准 MCP 协议接口，被任何 MCP 客户端直接调用\n- **自托管**：数据完全在本地，不依赖任何云服务\n- **语义搜索**：基于向量的相似度检索，找到最相关的记忆\n\n## 安装步骤\n\n```bash\n# 下载最新 release（Linux/macOS/Windows）\ngithub.com/alash3al/stash/releases\n\n# 或从源码构建\ngit clone https://github.com/alash3al/stash.git\ncd stash && go build -o stash .\n\n# 初始化（创建 PG 表结构）\n./stash init --db \"postgres://user:pass@localhost/stash\"\n\n# 启动 MCP Server\n./stash serve --port 8080\n```\n\n### MCP 客户端配置\n\n```json\n{\n  \"mcpServers\": {\n    \"stash\": {\n      \"command\": \"./stash\",\n      \"args\": [\"mcp\", \"--db\", \"postgres://user:pass@localhost/stash\"]\n    }\n  }\n}\n```\n\n## 使用示例\n\n```\n记住：用户偏好深色主题，语言为中文\n上次我们讨论了什么？\n搜索所有关于项目 Alpha 的记忆\n清理 30 天前的工作上下文\n```\n\n> **对比 MCP Memory Server**：Stash 用 PostgreSQL 存储比 JSON-LD 更适合大规模数据；三层模型比扁平知识图谱更适合 Agent 的实际使用模式。\n\n**GitHub**: https://github.com/alash3al/stash (565 stars)"
   }
 ]
