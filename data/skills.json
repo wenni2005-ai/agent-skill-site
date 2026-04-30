@@ -1684,5 +1684,79 @@
     "createdAt": "2026-04-24",
     "featured": true,
     "content": "# Stash — Agent 持久化记忆层\n\n基于 PostgreSQL 的 AI Agent 持久化记忆——让 Agent 拥有真正的跨会话回忆能力。\n\n## 功能介绍\n\nStash 是一个轻量但强大的 Agent 记忆层（565+ Stars），解决了 AI Agent 最大的痛点：对话结束即遗忘。它将 Agent 的记忆存储在 PostgreSQL 中，通过结构化的三层模型实现持久化回忆。\n\n三层记忆模型：\n- **Episodes（事件记忆）**：记录对话中的关键事件和交互，带时间戳和上下文标签\n- **Facts（事实记忆）**：持久化存储关于用户、项目、偏好等稳定事实\n- **Working Context（工作上下文）**：当前活跃任务的短期上下文，自动清理过期内容\n\n技术特色：\n- **单二进制部署**：Go 编写，编译为单一可执行文件，无运行时依赖\n- **PostgreSQL 后端**：利用 PG 的全文搜索和 JSONB 能力，高效检索\n- **MCP Server 内置**：标准 MCP 协议接口，被任何 MCP 客户端直接调用\n- **自托管**：数据完全在本地，不依赖任何云服务\n- **语义搜索**：基于向量的相似度检索，找到最相关的记忆\n\n## 安装步骤\n\n```bash\n# 下载最新 release（Linux/macOS/Windows）\ngithub.com/alash3al/stash/releases\n\n# 或从源码构建\ngit clone https://github.com/alash3al/stash.git\ncd stash && go build -o stash .\n\n# 初始化（创建 PG 表结构）\n./stash init --db \"postgres://user:pass@localhost/stash\"\n\n# 启动 MCP Server\n./stash serve --port 8080\n```\n\n### MCP 客户端配置\n\n```json\n{\n  \"mcpServers\": {\n    \"stash\": {\n      \"command\": \"./stash\",\n      \"args\": [\"mcp\", \"--db\", \"postgres://user:pass@localhost/stash\"]\n    }\n  }\n}\n```\n\n## 使用示例\n\n```\n记住：用户偏好深色主题，语言为中文\n上次我们讨论了什么？\n搜索所有关于项目 Alpha 的记忆\n清理 30 天前的工作上下文\n```\n\n> **对比 MCP Memory Server**：Stash 用 PostgreSQL 存储比 JSON-LD 更适合大规模数据；三层模型比扁平知识图谱更适合 Agent 的实际使用模式。\n\n**GitHub**: https://github.com/alash3al/stash (565 stars)"
+  },
+  {
+    "slug": "memori",
+    "title": "Memori — Agent 长期记忆 SDK",
+    "description": "基于 Memori SDK 的 OpenClaw Agent 长期记忆方案。自动捕获对话上下文，配备显式工具让 Agent 主动回忆、检索和反馈记忆内容，实现跨会话持久化记忆。",
+    "category": "agent-framework",
+    "tags": [
+      "memory",
+      "persistence",
+      "memori",
+      "sdk",
+      "agent",
+      "cross-session"
+    ],
+    "version": "1.0.8",
+    "author": "memori-ai",
+    "githubUrl": "https://clawhub.ai/skills/memori",
+    "downloadUrl": "https://clawhub.ai/skills/memori",
+    "platform": [
+      "openclaw"
+    ],
+    "createdAt": "2026-04-30",
+    "featured": false,
+    "content": "# Memori — Agent 长期记忆 SDK\n\n为 OpenClaw Agent 提供结构化的长期记忆能力——自动捕获对话上下文，Agent 主动回忆，跨会话持久化。\n\n## 功能介绍\n\nMemori 解决了 AI Agent 最大的痛点之一：对话结束即遗忘。与简单的文本记忆文件不同，Memori 使用专业 SDK 实现结构化存储和智能检索。\n\n核心设计理念：**Agent 控制记忆，而非记忆注入 Agent**。\n\n传统做法是将记忆自动注入 prompt，导致上下文膨胀。Memori 采用完全不同的范式——提供显式工具让 Agent 自主决定何时、如何检索记忆：\n\n- **memori_recall**：根据查询检索相关记忆片段，Agent 在需要时主动调用\n- **memori_recall_summary**：获取记忆摘要，快速了解历史上下文\n- **memori_feedback**：对记忆质量进行反馈，帮助系统优化存储策略\n\n关键特性：\n- **项目隔离**：通过 `projectId` 划分记忆空间，不同项目/工作区的记忆互不干扰\n- **防止上下文膨胀**：不再自动注入记忆到 prompt，Agent 按需检索，保持上下文精简\n- **自动捕获**：对话内容自动存入 Memori，无需手动记录\n- **智能压缩**：检索结果自动压缩为紧凑格式，最大化信息密度\n- **行为规则**：Agent 不会在不知道某事时直接声称不知道，而是先检查记忆再回答\n\n## 安装步骤\n\n```bash\n# 通过 ClawHub 安装\nclawhub install memori\n```\n\n### 配置\n\n在 OpenClaw 配置文件中添加：\n\n```json\n{\n  \"memori\": {\n    \"projectId\": \"your-project-id\",\n    \"apiKey\": \"your-memori-api-key\"\n  }\n}\n```\n\n## 使用示例\n\n安装后，Agent 在需要时自动调用记忆工具：\n\n```\n用户：上次我们讨论的架构方案是什么？\nAgent → 调用 memori_recall(\"架构方案\") → 检索到相关记忆 → 回答\n\n用户：总结一下我们之前的交流\nAgent → 调用 memori_recall_summary() → 获取摘要 → 回答\n```\n\n行为规则：\n- Agent 不会在不知道某事时直接声称不知道，而是先检查记忆\n- 记忆检索是显式和有意的，防止上下文窗口膨胀\n- 摘要和反馈通过专用工具完成，确保检索结果紧凑且相关\n\n> **对比 Stash/MCP Memory**：Memori 强调 Agent 主动控制检索时机而非自动注入，适合需要精细管理上下文窗口的高级场景。v1.0.8 新增结构化记忆、Agent 控制回忆和更严格的行为规则。\n\n**ClawHub**: https://clawhub.ai/skills/memori (333 下载, 1 星)"
+  },
+  {
+    "slug": "nexlink",
+    "title": "Nexlink — 企业连接器",
+    "description": "一站式企业连接器，集成 Nextcloud、Exchange 和 YouTube。支持邮件、日历、任务、文件管理、文档理解和视频分析。Firma de AI 出品。",
+    "category": "integration",
+    "tags": [
+      "nextcloud",
+      "exchange",
+      "youtube",
+      "enterprise",
+      "email",
+      "calendar",
+      "file-management"
+    ],
+    "version": "0.15.2",
+    "author": "firma-de-ai",
+    "githubUrl": "https://clawhub.ai/skills/nexlink",
+    "downloadUrl": "https://clawhub.ai/skills/nexlink",
+    "platform": [
+      "openclaw"
+    ],
+    "createdAt": "2026-04-30",
+    "featured": false,
+    "content": "# Nexlink — 企业连接器\n\nNextcloud + Exchange + YouTube 三合一企业连接器，让 Agent 直接操控企业协作平台。\n\n## 功能介绍\n\nNexlink 由 Firma de AI 开发，是一个面向企业的多平台集成 Skill。它将三大常用企业服务的 API 封装为统一的 Agent 工具接口，一个 Skill 搞定三个平台。\n\n### Nextcloud 集成\n\n通过 CalDAV、WebDAV 和 Notes API 与 Nextcloud 实例交互：\n- **笔记管理**：创建、编辑、搜索 Nextcloud 笔记\n- **任务管理**：CalDAV TODO 任务的 CRUD 操作\n- **日历**：查看和管理 Nextcloud 日历事件\n- **文件管理**：WebDAV 文件上传、下载、目录浏览\n- **联系人**：CardDAV 联系人查询和管理\n\n### Exchange 集成\n\n通过 Microsoft Graph API 与 Exchange Online 交互：\n- **邮件**：读取、搜索、发送 Exchange 邮件\n- **日历**：查看和创建 Exchange 日历事件\n- **联系人**：查询组织内联系人信息\n- **任务**：Microsoft To Do 任务管理\n\n### YouTube 集成\n\n通过 YouTube Data API v3 交互：\n- **视频搜索**：按关键词、频道、时间范围搜索视频\n- **播放列表**：管理和创建播放列表\n- **频道数据**：获取频道统计和视频列表\n- **评论管理**：读取和回复视频评论\n- **视频分析**：获取视频观看数据和互动统计\n\n## 安装步骤\n\n```bash\nclawhub install nexlink\n```\n\n### 配置\n\n根据需要启用的平台，配置对应的认证信息：\n\n```yaml\n# Nextcloud（自托管）\nnextcloud:\n  url: https://cloud.example.com\n  username: agent\n  password: app-password\n\n# Exchange Online（OAuth）\nexchange:\n  tenantId: your-tenant-id\n  clientId: your-client-id\n  clientSecret: your-client-secret\n\n# YouTube（Google OAuth）\nyoutube:\n  apiKey: your-youtube-api-key\n```\n\n## 使用示例\n\n```\n把这份报告上传到 Nextcloud 的 /Documents/报告 目录\n查看我明天的 Exchange 日历安排\n搜索 YouTube 上关于 AI Agent 的最新视频\n从 Nextcloud 下载上次会议的纪要\n```\n\n> **提示**：三个平台可以独立配置，不需要同时设置所有凭据。只需配置你要使用的平台即可。v0.15.2 修复了安全文档问题。\n\n**ClawHub**: https://clawhub.ai/skills/nexlink (313 下载, 1 星)"
+  },
+  {
+    "slug": "paired",
+    "title": "Paired — 蓝牙手机桥接",
+    "description": "通过蓝牙和 ADB 将 OpenClaw Agent 桥接到用户手机。支持短信收发（MAP/MNS）、电话拨打（HFP）、通知读取，让 Agent 成为手机智能助手。",
+    "category": "integration",
+    "tags": [
+      "bluetooth",
+      "adb",
+      "sms",
+      "phone",
+      "hfp",
+      "mobile-bridge"
+    ],
+    "version": "1.0.4",
+    "author": "paired-ai",
+    "githubUrl": "https://clawhub.ai/skills/paired",
+    "downloadUrl": "https://clawhub.ai/skills/paired",
+    "platform": [
+      "openclaw",
+      "linux"
+    ],
+    "createdAt": "2026-04-30",
+    "featured": false,
+    "content": "# Paired — 蓝牙手机桥接\n\n通过蓝牙 + ADB 将 OpenClaw Agent 连接到你的手机，让 Agent 成为真正的手机智能助手。\n\n## 功能介绍\n\nPaired 是一个创新的 Skill，它打破了 Agent 和手机之间的隔离墙。通过蓝牙 MAP（Message Access Profile）和 ADB（Android Debug Bridge），Agent 能够直接与你的手机交互。\n\n核心能力：\n- **短信接收**：通过蓝牙 MAP/MNS 实时接收新短信通知，无需打开手机\n- **短信发送**：通过 ADB 自动发送短信，支持选择 SIM 卡\n- **电话拨打**：通过 HFP（Hands-Free Profile）拨打电话，免提操控\n- **通知读取**：读取手机上的各类通知内容，不错过重要消息\n- **来电处理**：接听、挂断、静音来电，语音助手体验\n\n技术架构：\n- **蓝牙层**：使用 MAP 协议收发短信，MNS 推送新消息通知\n- **HFP 层**：免提协议实现电话拨打和接听\n- **ADB 层**：USB/无线 ADB 作为蓝牙的补充通道，处理自动发送等操作\n- **Systemd 服务**：后台守护进程管理蓝牙连接生命周期，开机自启\n\n安全设计：\n- 所有写操作（发短信、拨电话）需要用户明确确认\n- 连接仅限用户自己的手机，不支持远程连接他人设备\n- ADB 调试需要手动授权，防止未授权访问\n- 信任门控（Trust Gate）：底层拨号原语需要额外确认\n\n## 安装步骤\n\n```bash\nclawhub install paired\n```\n\n### 前置条件\n\n1. Linux 主机（需要 BlueZ 蓝牙栈）\n2. 蓝牙适配器（内置或 USB 蓝牙 dongle）\n3. Android 手机，开启蓝牙和 USB 调试\n4. 手机与主机完成蓝牙配对\n\n### 配对流程\n\n```bash\n# 1. 蓝牙配对\nbluetoothctl\n> scan on\n> pair XX:XX:XX:XX:XX:XX\n> trust XX:XX:XX:XX:XX:XX\n\n# 2. ADB 连接（USB 或 WiFi）\nadb devices\nadb shell pm grant com.android.mms android.permission.READ_SMS\n\n# 3. 启动 Paired 服务\nsystemctl --user start paired\nsystemctl --user enable paired  # 开机自启\n```\n\n## 使用示例\n\n```\n读一下我最近收到的短信\n给张三发一条短信：会议改到下午三点\n拨打李四的电话\n我的手机上有什么未读通知？\n挂断当前来电\n```\n\n> **注意**：当前仅支持 Android 手机。iOS 因系统限制无法使用 ADB 和完整 MAP 功能。v1.0.4 修复了打包问题，确保 wrapper 和 systemd 配置文件正确安装。\n\n**ClawHub**: https://clawhub.ai/skills/paired"
   }
 ]
